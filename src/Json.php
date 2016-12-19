@@ -10,7 +10,7 @@
  * @license    https://opensource.org/licenses/MIT - The MIT License (MIT)
  * @version    1.0.0
  * @link       https://github.com/Josantonius/PHP-Json
- * @since      File available since 1.0.0 - Update: 2016-12-14
+ * @since      File available since 1.0.0 - Update: 2016-12-19
  */
 
 namespace Josantonius\Json;
@@ -77,7 +77,7 @@ class Json {
             return $jsonArray;
         } 
 
-        throw new JsonException('File not found in ' . $pathfile, 300);    
+        throw new JsonException('File not found in ' . $pathfile, 605);    
     }
 
     /**
@@ -93,17 +93,17 @@ class Json {
             case JSON_ERROR_NONE:
                  return true;
             case JSON_ERROR_UTF8:
-                throw new JsonException('Malformed UTF-8 characters', 300);
+                throw new JsonException('Malformed UTF-8 characters', 606);
             case JSON_ERROR_DEPTH:
-                throw new JsonException('Maximum stack depth exceeded', 300);
+                throw new JsonException('Maximum stack depth exceeded', 607);
             case JSON_ERROR_SYNTAX:
-                throw new JsonException('Syntax error, malformed JSON', 300);
+                throw new JsonException('Syntax error, malformed JSON', 608);
             case JSON_ERROR_CTRL_CHAR:
-                throw new JsonException('Unexpected control char found', 300);
+                throw new JsonException('Unexpected control char found', 609);
             case JSON_ERROR_STATE_MISMATCH:
-                throw new JsonException('Underflow or the modes mismatch', 300);
+                throw new JsonException('Underflow or the modes mismatch', 610);
             default:
-                throw new JsonException('Unknown error', 300);
+                throw new JsonException('Unknown error', 995);
         }
     }
 }
