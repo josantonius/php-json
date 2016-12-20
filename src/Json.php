@@ -20,7 +20,7 @@ use Josantonius\Json\Exception\JsonException;
 /**
  * Json handler.
  *
- * @since 1.0.0
+ * @since 1.0.0 
  */
 class Json { 
 
