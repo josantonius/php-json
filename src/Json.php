@@ -26,7 +26,9 @@ class Json {
 
     /**
      * Creating JSON file from array.
-     * 
+     *
+     * @since 1.0.0
+     *
      * @param array  $array    → array to be converted to JSON file
      * @param string $pathfile → path to the file
      *
@@ -58,7 +60,9 @@ class Json {
 
     /**
      * Save to array the JSON file content.
-     * 
+     *
+     * @since 1.0.0
+     *
      * @param string $pathfile → path to JSON file
      *
      * @throws JsonException → there is no file
@@ -82,6 +86,8 @@ class Json {
 
     /**
      * Check for errors.
+     *
+     * @since 1.0.0
      *
      * @throws JsonException → JSON (encode-decode) error
      * @return true
