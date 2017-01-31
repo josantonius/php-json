@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 /**
  * PHP simple library for managing Json files.
  * 
@@ -8,9 +8,9 @@
  * @author     Josantonius - info@josantonius.com
  * @copyright  Copyright (c) 2016 JST PHP Framework
  * @license    https://opensource.org/licenses/MIT - The MIT License (MIT)
- * @version    1.0.0
+ * @version    1.1.0
  * @link       https://github.com/Josantonius/PHP-Json
- * @since      File available since 1.0.0 - Update: 2016-12-19
+ * @since      File available since 1.0.0 - Update: 2017-01-30
  */
 
 namespace Josantonius\Json;
@@ -35,7 +35,7 @@ class Json {
      * @throws JsonException → couldn't create file
      * @return bool true     → if the file is created
      */
-    public static function arrayToFile(array $array, string $pathfile): bool {
+    public static function arrayToFile($array, $pathfile) {
 
         $path = str_replace(basename($pathfile), '', $pathfile);
 
@@ -68,7 +68,7 @@ class Json {
      * @throws JsonException → there is no file
      * @return array         → JSON format
      */
-    public static function fileToArray(string $pathfile): array {
+    public static function fileToArray($pathfile) {
 
         if (is_file($pathfile)) {
 
