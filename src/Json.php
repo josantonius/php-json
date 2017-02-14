@@ -2,15 +2,11 @@
 /**
  * PHP simple library for managing Json files.
  * 
- * @category   JST
- * @package    Json
- * @subpackage Json
  * @author     Josantonius - info@josantonius.com
  * @copyright  Copyright (c) 2016 JST PHP Framework
  * @license    https://opensource.org/licenses/MIT - The MIT License (MIT)
- * @version    1.1.0
  * @link       https://github.com/Josantonius/PHP-Json
- * @since      File available since 1.0.0 - Update: 2017-01-30
+ * @since      File available since 1.0.0 - Update: 2017-02-14
  */
 
 namespace Josantonius\Json;
@@ -74,7 +70,7 @@ class Json {
 
             $jsonString = file_get_contents($pathfile);
             
-            $jsonArray = json_decode("", true);
+            $jsonArray = json_decode($jsonString, true);
 
             self::jsonLastError();
 

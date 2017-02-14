@@ -70,7 +70,7 @@ $array = [
 
 $pathfile = __DIR__ . '/filename.json';
 
-var_dump(Json::arrayToFile($pathfile, $array)); //bool(true)
+var_dump(Json::arrayToFile($array, $pathfile)); //bool(true)
 
 /* Esto creará el archivo "filename.json" en el directorio "tests". */
 ```
