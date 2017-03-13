@@ -1,12 +1,12 @@
-<?php
+<?php 
 /**
  * PHP simple library for managing Json files.
  * 
- * @author     Josantonius - info@josantonius.com
- * @copyright  Copyright (c) 2016 JST PHP Framework
+ * @author     Josantonius - hola@josantonius.com
+ * @copyright  Copyright (c) 2016 - 2017
  * @license    https://opensource.org/licenses/MIT - The MIT License (MIT)
  * @link       https://github.com/Josantonius/PHP-Json
- * @since      File available since 1.0.0 - Update: 2017-02-14
+ * @since      1.0.0
  */
 
 namespace Josantonius\Json;
