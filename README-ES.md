@@ -30,7 +30,7 @@ Para instalar PHP Json library, simplemente escribe:
 
     $ composer require Josantonius/Json
 
-El comando anterior solamente instalará los archivos necesarios, si prefieres descargar todo el código, incluyendo tests, puedes utilizar:
+El comando anterior sólo instalará los archivos necesarios, si prefieres descargar todo el código fuente (incluyendo tests, directorio vendor, excepciones no utilizadas, documentos...) puedes utilizar:
 
     $ composer require Josantonius/Json --prefer-source
 
