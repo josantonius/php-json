@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.1.2 - 2017-05-31
+
+* The file exception not found in the `fileToArray()` method was deleted. Now if it does not exist the file will create it with an empty array.
+
+* `JSON_PRETTY_PRINT` was added at time to create the json file.
+
 ## 1.1.1 - 2017-03-18
 * Some files were excluded from download and comments and readme files were updated.
 

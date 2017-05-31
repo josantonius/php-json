@@ -40,13 +40,15 @@ class Json {
             mkdir($path, 0755, true);
         }
 
-        $json = json_encode($array);
+        $json = json_encode($array, JSON_PRETTY_PRINT);
 
         self::jsonLastError();
         
-        if (!$file = fopen($pathfile, 'w+')) { 
+        if (!$file = fopen($pathfile, 'w+')) {
+
+            $message = 'Could not create file in';
             
-            throw new JsonException('Could not create file in ' . $pathfile, 300);
+            throw new JsonException($message . ' ' . $pathfile, 605);
         }
 
         fwrite($file, $json);
@@ -61,23 +63,22 @@ class Json {
      *
      * @param string $pathfile → path to JSON file
      *
-     * @throws JsonException → there is no file
-     * @return array         → JSON format
+     * @return array
      */
     public static function fileToArray($pathfile) {
 
-        if (is_file($pathfile)) {
+        if (!is_file($pathfile)) {
 
-            $jsonString = file_get_contents($pathfile);
+            self::arrayToFile([], $pathFile);
+        }
+
+        $jsonString = file_get_contents($pathfile);
             
-            $jsonArray = json_decode($jsonString, true);
+        $jsonArray = json_decode($jsonString, true);
 
-            self::jsonLastError();
+        self::jsonLastError();
 
-            return $jsonArray;
-        } 
-
-        throw new JsonException('File not found in ' . $pathfile, 605);    
+        return $jsonArray;  
     }
 
     /**

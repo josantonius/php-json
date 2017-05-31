@@ -44,7 +44,7 @@ Esta ĺibrería es soportada por versiones de PHP 5.6 o superiores y es compatib
 
 ### Cómo empezar y ejemplos
 
-Para utilizar esta librería, simplemente:
+Para utilizar esta biblioteca, simplemente:
 
 ```php
 require __DIR__ . '/vendor/autoload.php';
@@ -53,7 +53,7 @@ use Josantonius\Json\Json;
 ```
 ### Métodos disponibles
 
-Métodos disponibles en esta librería:
+Métodos disponibles en esta biblioteca:
 
 ```php
 Json::arrayToFile();
@@ -62,7 +62,7 @@ Json::jsonLastError();
 ```
 ### Uso
 
-Ejemplo de uso para esta librería:
+Ejemplo de uso para esta biblioteca:
 
 ```php
 <?php
@@ -95,7 +95,7 @@ $loader->addPsr4('Josantonius\\Json\\Tests\\', __DIR__ . '/vendor/josantonius/js
 
 use Josantonius\Json\Tests\JsonTest;
 ```
-Métodos de prueba disponibles en esta librería:
+Métodos de prueba disponibles en esta biblioteca:
 
 ```php
 JsonTest::testArrayToFile();
@@ -106,7 +106,7 @@ JsonTest::testFileToArrayError();
 
 ### Manejador de excepciones
 
-Esta librería utiliza [control de excepciones](src/Exception) que puedes personalizar a tu gusto.
+Esta biblioteca utiliza [control de excepciones](src/Exception) que puedes personalizar a tu gusto.
 ### Contribuir
 1. Comprobar si hay incidencias abiertas o abrir una nueva para iniciar una discusión en torno a un fallo o función.
 1. Bifurca la rama del repositorio en GitHub para iniciar la operación de ajuste.
