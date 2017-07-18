@@ -4,7 +4,7 @@
 
 [English version](README.md)
 
-Librería PHP para la gestión de archivos JSON.
+Biblioteca PHP para la gestión de archivos JSON.
 
 ---
 
@@ -25,7 +25,7 @@ Librería PHP para la gestión de archivos JSON.
 <p align="center"><strong>Echa un vistazo al código</strong></p>
 
 <p align="center">
-  <a href="" title="Echa un vistazo al código">
+  <a href="https://youtu.be/5Tpx-iZ8ktA" title="Echa un vistazo al código">
   	<img src="https://raw.githubusercontent.com/Josantonius/PHP-Algorithm/master/resources/youtube-thumbnail.jpg">
   </a>
 </p>
