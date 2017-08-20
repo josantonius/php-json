@@ -25,34 +25,22 @@ class Json {
      *
      * @since 1.0.0
      *
-     * @param array  $array    → array to be converted to JSON file
-     * @param string $pathfile → path to the file
+     * @param array  $array → array to be converted to JSON
+     * @param string $file  → path to the file
      *
      * @throws JsonException → couldn't create file
      *
      * @return boolean true → if the file is created
      */
-    public static function arrayToFile($array, $pathfile) {
+    public static function arrayToFile($array, $file) {
 
-        $path = str_replace(basename($pathfile), '', $pathfile);
-
-        if (!empty($path) && !is_dir($path)) {
-
-            mkdir($path, 0755, true);
-        }
+        self::_createDirectory($file);
 
         $json = json_encode($array, JSON_PRETTY_PRINT);
 
         $json = self::_jsonLastError() ? json_encode($json, 128) : $json;
-        
-        if (!$file = fopen($pathfile, 'w+')) {
 
-            $message = 'Could not create file in';
-            
-            throw new JsonException($message . ' ' . $pathfile, 605);
-        }
-
-        fwrite($file, $json);
+        self::_saveFile($file, $json);
 
         return true; 
     }
@@ -70,7 +58,7 @@ class Json {
 
         if (!is_file($file) && !filter_var($file, FILTER_VALIDATE_URL)) {
 
-            self::arrayToFile([], $pathFile);
+            self::arrayToFile([], $file);
         }
 
         $jsonString = file_get_contents($file);
@@ -78,6 +66,54 @@ class Json {
         $jsonArray = json_decode($jsonString, true);
         
         return self::_jsonLastError() ?: $jsonArray;  
+    }
+
+    /**
+     * Create directory recursively if it doesn't exist.
+     *
+     * @since 1.1.3
+     *
+     * @param string $file → path to the directory
+     *
+     * @throws JsonException → couldn't create directory
+     *
+     * @return void
+     */
+    private static function _createDirectory($file) {
+
+        $path = str_replace(basename($file), '', $file);
+
+        if (!empty($path) && !is_dir($path)) {
+
+            if (!mkdir($path, 0755, true)) {
+
+                $message = 'Could not create directory in';
+            
+                throw new JsonException($message . ' ' . $path, 605);
+            }
+        }
+    }
+
+    /**
+     * Create directory recursively.
+     *
+     * @since 1.1.3
+     *
+     * @param string $file → path to the file
+     * @param string $json → json string
+     *
+     * @throws JsonException → couldn't create file
+     *
+     * @return void
+     */
+    private static function _saveFile($file, $json) {
+
+        if (file_put_contents($file, $json) === false) {
+
+            $message = 'Could not create file in';
+            
+            throw new JsonException($message . ' ' . $file, 606);
+        }
     }
 
     /**

@@ -3,6 +3,8 @@
 ## 1.1.3 - 2017-08-20
 
 * Added `Josantonius\Json\Json::_jsonLastError()` method.
+* Added `Josantonius\Json\Json::_createDirectory()` method.
+* Added `Josantonius\Json\Json::_saveFile()` method.
 
 * Removed `Josantonius\Json\Json::jsonLastError()` method.
 
