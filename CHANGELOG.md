@@ -8,7 +8,9 @@
 
 * Now in the `fileToArray()` method files can be obtained from external urls.
 
-* Now checking json last error returns an array with the error instead of an exception. 
+* Now checking json last error returns an array with the error instead of an exception.
+
+* New errors available from PHP 7.0 to check for errors from `json_last_error()` were added.
 
 ## 1.1.2 - 2017-05-31
 
