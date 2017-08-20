@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 1.1.3 - 2017-08-20
+
+* Added `Josantonius\Json\Json::_jsonLastError()` method.
+
+* Removed `Josantonius\Json\Json::jsonLastError()` method.
+
+* Now in the `fileToArray()` method files can be obtained from external urls.
+
+* Now checking json last error returns an array with the error instead of an exception.
+
 ## 1.1.2 - 2017-05-31
 
 * The file exception not found in the `fileToArray()` method was deleted. Now if it does not exist the file will create it with an empty array.

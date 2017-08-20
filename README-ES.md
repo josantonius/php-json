@@ -68,7 +68,6 @@ Métodos disponibles en esta biblioteca:
 ```php
 Json::arrayToFile();
 Json::fileToArray();
-Json::jsonLastError();
 ```
 ### Uso
 

@@ -29,7 +29,8 @@ class Json {
      * @param string $pathfile → path to the file
      *
      * @throws JsonException → couldn't create file
-     * @return bool true     → if the file is created
+     *
+     * @return boolean true → if the file is created
      */
     public static function arrayToFile($array, $pathfile) {
 
@@ -42,7 +43,7 @@ class Json {
 
         $json = json_encode($array, JSON_PRETTY_PRINT);
 
-        self::jsonLastError();
+        $json = self::_jsonLastError() ? json_encode($json, 128) : $json;
         
         if (!$file = fopen($pathfile, 'w+')) {
 
@@ -61,52 +62,92 @@ class Json {
      *
      * @since 1.0.0
      *
-     * @param string $pathfile → path to JSON file
+     * @param string $file → path or external url to JSON file
      *
-     * @return array
+     * @return array|false
      */
-    public static function fileToArray($pathfile) {
+    public static function fileToArray($file) {
 
-        if (!is_file($pathfile)) {
+        if (!is_file($file) && !filter_var($file, FILTER_VALIDATE_URL)) {
 
             self::arrayToFile([], $pathFile);
         }
 
-        $jsonString = file_get_contents($pathfile);
+        $jsonString = file_get_contents($file);
             
         $jsonArray = json_decode($jsonString, true);
-
-        self::jsonLastError();
-
-        return $jsonArray;  
+        
+        return self::_jsonLastError() ?: $jsonArray;  
     }
 
     /**
      * Check for errors.
      *
-     * @since 1.0.0
+     * @since 1.1.3
      *
-     * @throws JsonException → JSON (encode-decode) error
-     * @return true
+     * @return array|null
      */
-    public static function jsonLastError() {
+    private static function _jsonLastError() {
 
         switch (json_last_error()) {
 
-            case JSON_ERROR_NONE:
-                 return true;
-            case JSON_ERROR_UTF8:
-                throw new JsonException('Malformed UTF-8 characters', 606);
+            case JSON_ERROR_NONE: return null;
+
             case JSON_ERROR_DEPTH:
-                throw new JsonException('Maximum stack depth exceeded', 607);
-            case JSON_ERROR_SYNTAX:
-                throw new JsonException('Syntax error, malformed JSON', 608);
-            case JSON_ERROR_CTRL_CHAR:
-                throw new JsonException('Unexpected control char found', 609);
+                return [
+                    'message'    => 'Maximum stack depth exceeded',
+                    'error-code' => 1
+                ];
             case JSON_ERROR_STATE_MISMATCH:
-                throw new JsonException('Underflow or the modes mismatch', 610);
+                return [
+                    'message'    => 'Underflow or the modes mismatch',
+                    'error-code' => 2
+                ];
+            case JSON_ERROR_CTRL_CHAR:
+                return [
+                    'message'    => 'Unexpected control char found',
+                    'error-code' => 3
+                ];
+            case JSON_ERROR_SYNTAX:
+                return [
+                    'message'    => 'Syntax error, malformed JSON',
+                    'error-code' => 4
+                ];
+            case JSON_ERROR_UTF8:
+                return [
+                    'message'    => 'Malformed UTF-8 characters',
+                    'error-code' => 5
+                ];
+            case JSON_ERROR_RECURSION:
+                return [
+                    'message'    => 'Recursion error in value to be encoded',
+                    'error-code' => 6
+                ];
+            case JSON_ERROR_INF_OR_NAN:
+                return [
+                    'message'    => 'Error NAN/INF in value to be encoded',
+                    'error-code' => 7
+                ];
+            case JSON_ERROR_UNSUPPORTED_TYPE:
+                return [
+                    'message'    => 'Type value given cannot be encoded',
+                    'error-code' => 8
+                ];
+            case 9: // JSON_ERROR_INVALID_PROPERTY_NAME (PHP 7.0.0)
+                return [
+                    'message'    => 'Name value given cannot be encoded',
+                    'error-code' => 9
+                ];
+            case 10: //JSON_ERROR_UTF16 (PHP 7.0.0)
+                return [
+                    'message'    => 'Malformed UTF-16 characters',
+                    'error-code' => 10
+                ];
             default:
-                throw new JsonException('Unknown error', 995);
+                return [
+                    'message'    => 'Unknown error',
+                    'error-code' => 999
+                ];
         }
     }
 }
