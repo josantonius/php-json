@@ -8,7 +8,7 @@
 
 * Now in the `fileToArray()` method files can be obtained from external urls.
 
-* Now checking json last error returns an array with the error instead of an exception.
+* Now checking json last error returns an array with the error instead of an exception. 
 
 ## 1.1.2 - 2017-05-31
 
