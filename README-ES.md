@@ -1,6 +1,6 @@
 # PHP Json library
 
-[![Latest Stable Version](https://poser.pugx.org/josantonius/json/v/stable)](https://packagist.org/packages/josantonius/json) [![Total Downloads](https://poser.pugx.org/josantonius/json/downloads)](https://packagist.org/packages/josantonius/json) [![Latest Unstable Version](https://poser.pugx.org/josantonius/json/v/unstable)](https://packagist.org/packages/josantonius/json) [![License](https://poser.pugx.org/josantonius/json/license)](https://packagist.org/packages/josantonius/json)
+[![Latest Stable Version](https://poser.pugx.org/josantonius/json/v/stable)](https://packagist.org/packages/josantonius/json) [![Total Downloads](https://poser.pugx.org/josantonius/json/downloads)](https://packagist.org/packages/josantonius/json) [![Latest Unstable Version](https://poser.pugx.org/josantonius/json/v/unstable)](https://packagist.org/packages/josantonius/json) [![License](https://poser.pugx.org/josantonius/json/license)](https://packagist.org/packages/josantonius/json) [![Travis](https://travis-ci.org/Josantonius/PHP-Json.svg)](https://travis-ci.org/Josantonius/PHP-Json)
 
 [English version](README.md)
 
@@ -19,16 +19,6 @@ Biblioteca PHP para la gestión de archivos JSON.
 - [Repositorio](#repositorio)
 - [Licencia](#licencia)
 - [Copyright](#copyright)
-
----
-
-<p align="center"><strong>Echa un vistazo al código</strong></p>
-
-<p align="center">
-  <a href="https://youtu.be/5Tpx-iZ8ktA" title="Echa un vistazo al código">
-  	<img src="https://raw.githubusercontent.com/Josantonius/PHP-Algorithm/master/resources/youtube-thumbnail.jpg">
-  </a>
-</p>
 
 ---
 
@@ -94,24 +84,13 @@ var_dump(Json::arrayToFile($array, $pathfile)); //bool(true)
 
 ### Tests 
 
-Para utilizar la clase de [pruebas](tests), simplemente:
+Para ejecutar las [pruebas](tests/Json/test) simplemente:
 
-```php
-<?php
-$loader = require __DIR__ . '/vendor/autoload.php';
+    $ git clone https://github.com/Josantonius/PHP-Json.git
+    
+    $ cd PHP-Json
 
-$loader->addPsr4('Josantonius\\Json\\Tests\\', __DIR__ . '/vendor/josantonius/json/tests');
-
-use Josantonius\Json\Tests\JsonTest;
-```
-Métodos de prueba disponibles en esta biblioteca:
-
-```php
-JsonTest::testArrayToFile();
-JsonTest::testArrayToFileError();
-JsonTest::testFileToArray();
-JsonTest::testFileToArrayError();
-```
+    $ phpunit
 
 ### Manejador de excepciones
 
