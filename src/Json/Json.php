@@ -61,11 +61,11 @@ class Json {
 
         $jsonString = @file_get_contents($file);
             
-        $jsonArray = json_decode($jsonString, true);
+        $array = json_decode($jsonString, true);
         
         $error = self::_jsonLastError();
 
-        return isset($error['error-code']) ? false : $jsonArray;  
+        return (!$array || isset($error['error-code'])) ? false : $array;  
     }
 
     /**
