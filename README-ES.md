@@ -15,6 +15,7 @@ Biblioteca PHP para la gestión de archivos JSON.
 - [Uso](#uso)
 - [Tests](#tests)
 - [Manejador de excepciones](#manejador-de-excepciones)
+- [Tareas pendientes](#-tareas-pendientes)
 - [Contribuir](#contribuir)
 - [Repositorio](#repositorio)
 - [Licencia](#licencia)
@@ -95,7 +96,14 @@ Para ejecutar las [pruebas](tests/Json/test) simplemente:
 ### Manejador de excepciones
 
 Esta biblioteca utiliza [control de excepciones](src/Exception) que puedes personalizar a tu gusto.
+
+### ☑ Tareas pendientes
+
+- [x] Completar tests
+- [ ] Mejorar la documentación
+
 ### Contribuir
+
 1. Comprobar si hay incidencias abiertas o abrir una nueva para iniciar una discusión en torno a un fallo o función.
 1. Bifurca la rama del repositorio en GitHub para iniciar la operación de ajuste.
 1. Escribe una o más pruebas para la nueva característica o expón el error.

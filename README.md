@@ -15,6 +15,7 @@ PHP simple library for managing Json files.
 - [Usage](#usage)
 - [Tests](#tests)
 - [Exception Handler](#exception-handler)
+- [TODO](#-todo)
 - [Contribute](#contribute)
 - [Repository](#repository)
 - [License](#license)
@@ -91,6 +92,11 @@ To run [tests](tests/Json/test) simply:
     $ cd PHP-Json
 
     $ phpunit
+
+### ☑ TODO
+
+- [x] Create tests
+- [ ] Improve documentation
 
 ### Exception Handler
 
