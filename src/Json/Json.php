@@ -65,7 +65,8 @@ class Json {
         
         $error = self::_jsonLastError();
 
-        return $array===false || isset($error['error-code']) ? false : $array;
+
+        return $array===null || isset($error['error-code']) ? false : $array;
     }
 
     /**
