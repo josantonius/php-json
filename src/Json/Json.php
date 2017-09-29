@@ -65,7 +65,7 @@ class Json {
         
         $error = self::_jsonLastError();
 
-        return (!$array || isset($error['error-code'])) ? false : $array;  
+        return $array===false || isset($error['error-code']) ? false : $array;
     }
 
     /**
@@ -91,13 +91,13 @@ class Json {
 
                 $message = 'Could not create directory in';
             
-                throw new JsonException($message . ' ' . $path, 605);
+                throw new JsonException($message . ' ' . $path);
             }
         }
     }
 
     /**
-     * Create directory recursively.
+     * Save file.
      *
      * @since 1.1.3
      *
@@ -114,7 +114,7 @@ class Json {
 
             $message = 'Could not create file in';
             
-            throw new JsonException($message . ' ' . $file, 606);
+            throw new JsonException($message . ' ' . $file);
         }
     }
 
