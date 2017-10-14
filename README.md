@@ -85,7 +85,7 @@ var_dump(Json::arrayToFile($array, $pathfile)); //bool(true)
 
 ### Tests 
 
-To run [tests](tests/Json/test) simply:
+To run [tests](tests/Json/Test) simply:
 
     $ git clone https://github.com/Josantonius/PHP-Json.git
     
