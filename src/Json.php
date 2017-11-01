@@ -1,12 +1,12 @@
-<?php 
+<?php
 /**
  * PHP simple library for managing Json files.
- * 
- * @author     Josantonius - hello@josantonius.com
- * @copyright  Copyright (c) 2016 - 2017
- * @license    https://opensource.org/licenses/MIT - The MIT License (MIT)
- * @link       https://github.com/Josantonius/PHP-Json
- * @since      1.0.0
+ *
+ * @author    Josantonius <hello@josantonius.com>
+ * @copyright 2016 - 2017 (c) Josantonius - PHP-Json
+ * @license   https://opensource.org/licenses/MIT - The MIT License (MIT)
+ * @link      https://github.com/Josantonius/PHP-Json
+ * @since     1.0.0
  */
 
 namespace Josantonius\Json;
@@ -16,10 +16,10 @@ use Josantonius\Json\Exception\JsonException;
 /**
  * Json handler.
  *
- * @since 1.0.0 
+ * @since 1.0.0
  */
-class Json { 
-
+class Json
+{
     /**
      * Creating JSON file from array.
      *
@@ -30,17 +30,17 @@ class Json {
      *
      * @return boolean → true if the file is created without errors
      */
-    public static function arrayToFile($array, $file) {
-
-        self::_createDirectory($file);
+    public static function arrayToFile($array, $file)
+    {
+        self::createDirectory($file);
 
         $json = json_encode($array, JSON_PRETTY_PRINT);
 
-        $json = self::_jsonLastError() ? json_encode($json, 128) : $json;
+        $json = self::jsonLastError() ? json_encode($json, 128) : $json;
 
-        self::_saveFile($file, $json);
+        self::saveFile($file, $json);
 
-        return (!isset($json['error-code'])); 
+        return (!isset($json['error-code']));
     }
 
     /**
@@ -52,21 +52,17 @@ class Json {
      *
      * @return array|false
      */
-    public static function fileToArray($file) {
-
+    public static function fileToArray($file)
+    {
         if (!is_file($file) && !filter_var($file, FILTER_VALIDATE_URL)) {
-
             self::arrayToFile([], $file);
         }
 
         $jsonString = @file_get_contents($file);
-            
-        $array = json_decode($jsonString, true);
-        
-        $error = self::_jsonLastError();
+        $array      = json_decode($jsonString, true);
+        $error      = self::jsonLastError();
 
-
-        return $array===null || isset($error['error-code']) ? false : $array;
+        return $array === null || isset($error['error-code']) ? false : $array;
     }
 
     /**
@@ -80,18 +76,14 @@ class Json {
      *
      * @return void
      */
-    private static function _createDirectory($file) {
-
+    private static function createDirectory($file)
+    {
         $basename = is_string($file) ? basename($file) : '';
-
-        $path = str_replace($basename, '', $file);
+        $path     = str_replace($basename, '', $file);
 
         if (!empty($path) && !is_dir($path)) {
-
             if (!mkdir($path, 0755, true)) {
-
                 $message = 'Could not create directory in';
-            
                 throw new JsonException($message . ' ' . $path);
             }
         }
@@ -109,12 +101,10 @@ class Json {
      *
      * @return void
      */
-    private static function _saveFile($file, $json) {
-
+    private static function saveFile($file, $json)
+    {
         if (@file_put_contents($file, $json) === false) {
-
             $message = 'Could not create file in';
-            
             throw new JsonException($message . ' ' . $file);
         }
     }
@@ -126,66 +116,65 @@ class Json {
      *
      * @return array|null
      */
-    private static function _jsonLastError() {
-
+    private static function jsonLastError()
+    {
         switch (json_last_error()) {
-
-            case JSON_ERROR_NONE: return null;
-
+            case JSON_ERROR_NONE:
+                return null;
             case JSON_ERROR_DEPTH:
                 return [
                     'message'    => 'Maximum stack depth exceeded',
-                    'error-code' => 1
+                    'error-code' => 1,
                 ];
             case JSON_ERROR_STATE_MISMATCH:
                 return [
                     'message'    => 'Underflow or the modes mismatch',
-                    'error-code' => 2
+                    'error-code' => 2,
                 ];
             case JSON_ERROR_CTRL_CHAR:
                 return [
                     'message'    => 'Unexpected control char found',
-                    'error-code' => 3
+                    'error-code' => 3,
                 ];
             case JSON_ERROR_SYNTAX:
                 return [
                     'message'    => 'Syntax error, malformed JSON',
-                    'error-code' => 4
+                    'error-code' => 4,
                 ];
             case JSON_ERROR_UTF8:
                 return [
                     'message'    => 'Malformed UTF-8 characters',
-                    'error-code' => 5
+                    'error-code' => 5,
                 ];
             case JSON_ERROR_RECURSION:
                 return [
                     'message'    => 'Recursion error in value to be encoded',
-                    'error-code' => 6
+                    'error-code' => 6,
                 ];
             case JSON_ERROR_INF_OR_NAN:
                 return [
                     'message'    => 'Error NAN/INF in value to be encoded',
-                    'error-code' => 7
+                    'error-code' => 7,
                 ];
             case JSON_ERROR_UNSUPPORTED_TYPE:
                 return [
                     'message'    => 'Type value given cannot be encoded',
-                    'error-code' => 8
+                    'error-code' => 8,
                 ];
             case 9: // JSON_ERROR_INVALID_PROPERTY_NAME (PHP 7.0.0)
                 return [
                     'message'    => 'Name value given cannot be encoded',
-                    'error-code' => 9
+                    'error-code' => 9,
                 ];
             case 10: //JSON_ERROR_UTF16 (PHP 7.0.0)
                 return [
                     'message'    => 'Malformed UTF-16 characters',
-                    'error-code' => 10
+                    'error-code' => 10,
                 ];
             default:
                 return [
                     'message'    => 'Unknown error',
-                    'error-code' => 999
+                    'error-code' => 999,
                 ];
         }
     }

@@ -1,5 +1,28 @@
 # CHANGELOG
 
+## 1.1.5 - 2017-11-01
+
+* Implemented `PSR-4 autoloader standard` from all library files.
+
+* Implemented `PSR-2 coding standard` from all library PHP files.
+
+* Implemented `PHPCS` to ensure that PHP code complies with `PSR2` code standards.
+
+* Implemented `Codacy` to automates code reviews and monitors code quality over time.
+
+* Implemented `Codecov` to coverage reports.
+
+* Added `Json/phpcs.ruleset.xml` file.
+
+* Deleted `Json/src/bootstrap.php` file.
+
+* Deleted `Json/tests/bootstrap.php` file.
+
+* Deleted `Json/vendor` folder.
+
+* Changed `Josantonius\Json\Test\JsonTest` class to  `Josantonius\Json\JsonTest` class.
+
+
 ## 1.1.4 - 2017-09-10
 
 * Unit tests supported by `PHPUnit` were added.

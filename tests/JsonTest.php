@@ -1,27 +1,26 @@
-<?php 
+<?php
 /**
  * PHP simple library for managing Json files.
- * 
- * @author     Josantonius - hello@josantonius.com
- * @copyright  Copyright (c) 2016 - 2017
- * @license    https://opensource.org/licenses/MIT - The MIT License (MIT)
- * @link       https://github.com/Josantonius/PHP-Json
- * @since      1.1.3
+ *
+ * @author    Josantonius <hello@josantonius.com>
+ * @copyright 2016 - 2017 (c) Josantonius - PHP-Json
+ * @license   https://opensource.org/licenses/MIT - The MIT License (MIT)
+ * @link      https://github.com/Josantonius/PHP-Json
+ * @since     1.1.3
  */
 
-namespace Josantonius\Json\Test;
+namespace Josantonius\Json;
 
-use Josantonius\Json\Json,
-    PHPUnit\Framework\TestCase,
-    Josantonius\Json\Exception\JsonException;
+use Josantonius\Json\Exception\JsonException;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Tests class for Json library.
  *
  * @since 1.1.3
  */
-class JsonTest extends TestCase { 
-
+class JsonTest extends TestCase
+{
     /**
      * Creating JSON file from array.
      *
@@ -29,17 +28,15 @@ class JsonTest extends TestCase {
      *
      * @return void
      */
-    public function testArrayToFile() {
-
+    public function testArrayToFile()
+    {
         $array = [
-
             'name'  => 'Josantonius',
             'email' => 'info@josantonius.com',
-            'url'   => 'https://github.com/josantonius/PHP-Json'
+            'url'   => 'https://github.com/josantonius/PHP-Json',
         ];
 
-        $file = __DIR__ . '/filename.jsond';
-        
+        $file   = __DIR__ . '/filename.jsond';
         $result = Json::arrayToFile($array, $file);
 
         $this->assertFileIsReadable($file);
@@ -54,8 +51,8 @@ class JsonTest extends TestCase {
      *
      * @return void
      */
-    public function testArrayToFileCreateFileException() {
-        
+    public function testArrayToFileCreateFileException()
+    {
         $this->expectException(JsonException::class);
 
         Json::arrayToFile([], '..');
@@ -68,13 +65,13 @@ class JsonTest extends TestCase {
      *
      * @return void
      */
-    public function testFileToArray() {
-
+    public function testFileToArray()
+    {
         $file = __DIR__ . '/filename.jsond';
 
-        $this->assertArrayHasKey('name',  Json::fileToArray($file));
+        $this->assertArrayHasKey('name', Json::fileToArray($file));
         $this->assertArrayHasKey('email', Json::fileToArray($file));
-        $this->assertArrayHasKey('url',   Json::fileToArray($file));
+        $this->assertArrayHasKey('url', Json::fileToArray($file));
 
         unlink($file);
     }
@@ -86,8 +83,8 @@ class JsonTest extends TestCase {
      *
      * @return void
      */
-    public function testFileToArrayCreateFileException() {
-
+    public function testFileToArrayCreateFileException()
+    {
         $this->expectException(JsonException::class);
 
         Json::fileToArray(__DIR__ . '');
@@ -100,13 +97,13 @@ class JsonTest extends TestCase {
      *
      * @return void
      */
-    public function testExternalFileToArray() {
-
+    public function testExternalFileToArray()
+    {
         $file = 'https://raw.githubusercontent.com/Josantonius/PHP-Json/master/composer.json';
 
-        $this->assertArrayHasKey('name',    Json::fileToArray($file));
+        $this->assertArrayHasKey('name', Json::fileToArray($file));
         $this->assertArrayHasKey('version', Json::fileToArray($file));
-        $this->assertArrayHasKey('type',    Json::fileToArray($file));
+        $this->assertArrayHasKey('type', Json::fileToArray($file));
     }
 
     /**
@@ -116,8 +113,8 @@ class JsonTest extends TestCase {
      *
      * @return void
      */
-    public function testExternalFileNonExistentToArray() {
-
+    public function testExternalFileNonExistentToArray()
+    {
         $file = 'https://raw.githubusercontent.com/composer.json';
 
         $this->assertFalse(Json::fileToArray($file));

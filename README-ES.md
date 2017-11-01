@@ -1,6 +1,6 @@
 # PHP Json library
 
-[![Latest Stable Version](https://poser.pugx.org/josantonius/json/v/stable)](https://packagist.org/packages/josantonius/json) [![Total Downloads](https://poser.pugx.org/josantonius/json/downloads)](https://packagist.org/packages/josantonius/json) [![Latest Unstable Version](https://poser.pugx.org/josantonius/json/v/unstable)](https://packagist.org/packages/josantonius/json) [![License](https://poser.pugx.org/josantonius/json/license)](https://packagist.org/packages/josantonius/json) [![Travis](https://travis-ci.org/Josantonius/PHP-Json.svg)](https://travis-ci.org/Josantonius/PHP-Json)
+[![Latest Stable Version](https://poser.pugx.org/josantonius/Json/v/stable)](https://packagist.org/packages/josantonius/Json) [![Latest Unstable Version](https://poser.pugx.org/josantonius/Json/v/unstable)](https://packagist.org/packages/josantonius/Json) [![License](https://poser.pugx.org/josantonius/Json/license)](LICENSE) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ff3e82fba0d44889bc5ae211cffddb72)](https://www.codacy.com/app/Josantonius/PHP-Json?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Josantonius/PHP-Json&amp;utm_campaign=Badge_Grade) [![Total Downloads](https://poser.pugx.org/josantonius/Json/downloads)](https://packagist.org/packages/josantonius/Json) [![Travis](https://travis-ci.org/Josantonius/PHP-Json.svg)](https://travis-ci.org/Josantonius/PHP-Json) [![PSR2](https://img.shields.io/badge/PSR-2-1abc9c.svg)](http://www.php-fig.org/psr/psr-2/) [![PSR4](https://img.shields.io/badge/PSR-4-9b59b6.svg)](http://www.php-fig.org/psr/psr-4/) [![CodeCov](https://codecov.io/gh/Josantonius/PHP-Json/branch/master/graph/badge.svg)](https://codecov.io/gh/Josantonius/PHP-Json)
 
 [English version](README.md)
 
@@ -8,10 +8,10 @@ Biblioteca PHP para la gestión de archivos JSON.
 
 ---
 
-- [Instalación](#instalación)
 - [Requisitos](#requisitos)
-- [Cómo empezar y ejemplos](#cómo-empezar-y-ejemplos)
+- [Instalación](#instalación)
 - [Métodos disponibles](#métodos-disponibles)
+- [Cómo empezar](#cómo-empezar)
 - [Uso](#uso)
 - [Tests](#tests)
 - [Manejador de excepciones](#manejador-de-excepciones)
@@ -23,52 +23,86 @@ Biblioteca PHP para la gestión de archivos JSON.
 
 ---
 
-### Instalación 
+## Requisitos
 
-La mejor forma de instalar esta extensión es a través de [composer](http://getcomposer.org/download/).
+Esta clase es soportada por versiones de **PHP 5.6** o superiores y es compatible con versiones de **HHVM 3.0** o superiores.
 
-Para instalar PHP Json library, simplemente escribe:
+## Instalación 
+
+La mejor forma de instalar esta extensión es a través de [Composer](http://getcomposer.org/download/).
+
+Para instalar **PHP Json library**, simplemente escribe:
 
     $ composer require Josantonius/Json
 
-El comando anterior sólo instalará los archivos necesarios, si prefieres descargar todo el código fuente (incluyendo tests, directorio vendor, excepciones no utilizadas, documentos...) puedes utilizar:
+El comando anterior sólo instalará los archivos necesarios, si prefieres **descargar todo el código fuente** puedes utilizar:
 
     $ composer require Josantonius/Json --prefer-source
 
-También puedes clonar el repositorio completo con Git:
+También puedes **clonar el repositorio** completo con Git:
 
-	$ git clone https://github.com/Josantonius/PHP-Json.git
+  $ git clone https://github.com/Josantonius/PHP-Json.git
 
-### Requisitos
+O **instalarlo manualmente**:
 
-Esta ĺibrería es soportada por versiones de PHP 5.6 o superiores y es compatible con versiones de HHVM 3.0 o superiores.
+[Descargar Json.php](https://raw.githubusercontent.com/Josantonius/PHP-Json/master/src/Json.php):
 
-### Cómo empezar y ejemplos
+    $ wget https://raw.githubusercontent.com/Josantonius/PHP-Json/master/src/Json.php
 
-Para utilizar esta biblioteca, simplemente:
-
-```php
-require __DIR__ . '/vendor/autoload.php';
-
-use Josantonius\Json\Json;
-```
-### Métodos disponibles
+## Métodos disponibles
 
 Métodos disponibles en esta biblioteca:
 
+### - Crear archivo JSON desde array:
+
 ```php
-Json::arrayToFile();
-Json::fileToArray();
+Json::arrayToFile($array, $file);
 ```
-### Uso
 
-Ejemplo de uso para esta biblioteca:
+| Atributo | Descripción | Tipo | Requerido | Predeterminado
+| --- | --- | --- | --- | --- |
+| $array | Array a guardar en archivo JSON. | array | Sí | |
+| $file | Ruta hacia el archivo. | string | Sí | |
+
+**# Return** (boolean)
+
+### - Guardar en array el contenido de archivo JSON:
 
 ```php
-<?php
+Json::fileToArray($file);
+```
+
+| Atributo | Descripción | Tipo | Requerido | Predeterminado
+| --- | --- | --- | --- | --- |
+| $file | Ruta o URL externa al archivo JSON. | string | Sí | |
+
+**# Return** (array|false)
+
+## Cómo empezar
+
+Para utilizar esta biblioteca con **Composer**:
+
+```php
 require __DIR__ . '/vendor/autoload.php';
 
 use Josantonius\Json\Json;
+```
+
+Si la instalaste **manualmente**, utiliza:
+
+```php
+require_once __DIR__ . '/Json.php';
+
+use Josantonius\Json\Json;
+```
+
+## Uso
+
+Ejemplo de uso para esta biblioteca:
+
+### - Crear archivo JSON desde array:
+
+```php
 
 $array = [
 	'name'  => 'Josantonius',
@@ -78,31 +112,51 @@ $array = [
 
 $pathfile = __DIR__ . '/filename.json';
 
-var_dump(Json::arrayToFile($array, $pathfile)); //bool(true)
+Json::arrayToFile($array, $pathfile);
 
-/* Esto creará el archivo "filename.json" en el directorio "tests". */
 ```
 
-### Tests 
+### - Guardar en array el contenido de archivo JSON:
 
-Para ejecutar las [pruebas](tests/Json/Test) simplemente:
+```php
+$pathfile = __DIR__ . '/filename.json';
+
+$array = Json::fileToArray($pathfile);
+
+```
+
+## Tests 
+
+Para ejecutar las [pruebas](tests) necesitarás [Composer](http://getcomposer.org/download/) y seguir los siguientes pasos:
 
     $ git clone https://github.com/Josantonius/PHP-Json.git
     
     $ cd PHP-Json
 
-    $ phpunit
+    $ composer install
 
-### Manejador de excepciones
+Ejecutar pruebas unitarias con [PHPUnit](https://phpunit.de/):
+
+    $ composer phpunit
+
+Ejecutar pruebas de estándares de código [PSR2](http://www.php-fig.org/psr/psr-2/) con [PHPCS](https://github.com/squizlabs/PHP_CodeSniffer):
+
+    $ composer phpcs
+
+Ejecutar todas las pruebas anteriores:
+
+    $ composer tests
+
+## Manejador de excepciones
 
 Esta biblioteca utiliza [control de excepciones](src/Exception) que puedes personalizar a tu gusto.
 
-### ☑ Tareas pendientes
+## ☑ Tareas pendientes
 
 - [x] Completar tests
-- [ ] Mejorar la documentación
+- [x] Mejorar la documentación
 
-### Contribuir
+## Contribuir
 
 1. Comprobar si hay incidencias abiertas o abrir una nueva para iniciar una discusión en torno a un fallo o función.
 1. Bifurca la rama del repositorio en GitHub para iniciar la operación de ajuste.
@@ -112,15 +166,15 @@ Esta biblioteca utiliza [control de excepciones](src/Exception) que puedes perso
 
 Esto está pensado para proyectos grandes y de larga duración.
 
-### Repositorio
+## Repositorio
 
 Los archivos de este repositorio se crearon y subieron automáticamente con [Reposgit Creator](https://github.com/Josantonius/BASH-Reposgit).
 
-### Licencia
+## Licencia
 
 Este proyecto está licenciado bajo **licencia MIT**. Consulta el archivo [LICENSE](LICENSE) para más información.
 
-### Copyright
+## Copyright
 
 2016 -2017 Josantonius, [josantonius.com](https://josantonius.com/)
 
