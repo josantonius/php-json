@@ -8,7 +8,6 @@
  * @link      https://github.com/Josantonius/PHP-Json
  * @since     1.0.0
  */
-
 namespace Josantonius\Json;
 
 use Josantonius\Json\Exception\JsonException;
@@ -28,7 +27,7 @@ class Json
      * @param array  $array → array to be converted to JSON
      * @param string $file  → path to the file
      *
-     * @return boolean → true if the file is created without errors
+     * @return bool → true if the file is created without errors
      */
     public static function arrayToFile($array, $file)
     {
@@ -40,7 +39,7 @@ class Json
 
         self::saveFile($file, $json);
 
-        return (!isset($json['error-code']));
+        return ! isset($json['error-code']);
     }
 
     /**
@@ -54,13 +53,13 @@ class Json
      */
     public static function fileToArray($file)
     {
-        if (!is_file($file) && !filter_var($file, FILTER_VALIDATE_URL)) {
+        if (! is_file($file) && ! filter_var($file, FILTER_VALIDATE_URL)) {
             self::arrayToFile([], $file);
         }
 
         $jsonString = @file_get_contents($file);
-        $array      = json_decode($jsonString, true);
-        $error      = self::jsonLastError();
+        $array = json_decode($jsonString, true);
+        $error = self::jsonLastError();
 
         return $array === null || isset($error['error-code']) ? false : $array;
     }
@@ -73,16 +72,14 @@ class Json
      * @param string $file → path to the directory
      *
      * @throws JsonException → couldn't create directory
-     *
-     * @return void
      */
     private static function createDirectory($file)
     {
         $basename = is_string($file) ? basename($file) : '';
-        $path     = str_replace($basename, '', $file);
+        $path = str_replace($basename, '', $file);
 
-        if (!empty($path) && !is_dir($path)) {
-            if (!mkdir($path, 0755, true)) {
+        if (! empty($path) && ! is_dir($path)) {
+            if (! mkdir($path, 0755, true)) {
                 $message = 'Could not create directory in';
                 throw new JsonException($message . ' ' . $path);
             }
@@ -98,8 +95,6 @@ class Json
      * @param string $json → json string
      *
      * @throws JsonException → couldn't create file
-     *
-     * @return void
      */
     private static function saveFile($file, $json)
     {
@@ -123,57 +118,57 @@ class Json
                 return null;
             case JSON_ERROR_DEPTH:
                 return [
-                    'message'    => 'Maximum stack depth exceeded',
+                    'message' => 'Maximum stack depth exceeded',
                     'error-code' => 1,
                 ];
             case JSON_ERROR_STATE_MISMATCH:
                 return [
-                    'message'    => 'Underflow or the modes mismatch',
+                    'message' => 'Underflow or the modes mismatch',
                     'error-code' => 2,
                 ];
             case JSON_ERROR_CTRL_CHAR:
                 return [
-                    'message'    => 'Unexpected control char found',
+                    'message' => 'Unexpected control char found',
                     'error-code' => 3,
                 ];
             case JSON_ERROR_SYNTAX:
                 return [
-                    'message'    => 'Syntax error, malformed JSON',
+                    'message' => 'Syntax error, malformed JSON',
                     'error-code' => 4,
                 ];
             case JSON_ERROR_UTF8:
                 return [
-                    'message'    => 'Malformed UTF-8 characters',
+                    'message' => 'Malformed UTF-8 characters',
                     'error-code' => 5,
                 ];
             case JSON_ERROR_RECURSION:
                 return [
-                    'message'    => 'Recursion error in value to be encoded',
+                    'message' => 'Recursion error in value to be encoded',
                     'error-code' => 6,
                 ];
             case JSON_ERROR_INF_OR_NAN:
                 return [
-                    'message'    => 'Error NAN/INF in value to be encoded',
+                    'message' => 'Error NAN/INF in value to be encoded',
                     'error-code' => 7,
                 ];
             case JSON_ERROR_UNSUPPORTED_TYPE:
                 return [
-                    'message'    => 'Type value given cannot be encoded',
+                    'message' => 'Type value given cannot be encoded',
                     'error-code' => 8,
                 ];
             case 9: // JSON_ERROR_INVALID_PROPERTY_NAME (PHP 7.0.0)
                 return [
-                    'message'    => 'Name value given cannot be encoded',
+                    'message' => 'Name value given cannot be encoded',
                     'error-code' => 9,
                 ];
             case 10: //JSON_ERROR_UTF16 (PHP 7.0.0)
                 return [
-                    'message'    => 'Malformed UTF-16 characters',
+                    'message' => 'Malformed UTF-16 characters',
                     'error-code' => 10,
                 ];
             default:
                 return [
-                    'message'    => 'Unknown error',
+                    'message' => 'Unknown error',
                     'error-code' => 999,
                 ];
         }

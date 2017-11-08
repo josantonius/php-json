@@ -8,7 +8,6 @@
  * @link      https://github.com/Josantonius/PHP-Json
  * @since     1.1.3
  */
-
 namespace Josantonius\Json;
 
 use Josantonius\Json\Exception\JsonException;
@@ -22,22 +21,52 @@ use PHPUnit\Framework\TestCase;
 class JsonTest extends TestCase
 {
     /**
+     * Json instance.
+     *
+     * @since 1.1.6
+     *
+     * @var object
+     */
+    protected $Json;
+
+    /**
+     * Set up.
+     *
+     * @since 1.1.6
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->Json = new Json;
+    }
+
+    /**
+     * Check if it is an instance of Json.
+     *
+     * @since 1.1.6
+     */
+    public function testIsInstanceOfJson()
+    {
+        $actual = $this->Json;
+        $this->assertInstanceOf('Josantonius\Json\Json', $actual);
+    }
+
+    /**
      * Creating JSON file from array.
      *
      * @since 1.1.3
-     *
-     * @return void
      */
     public function testArrayToFile()
     {
         $array = [
-            'name'  => 'Josantonius',
+            'name' => 'Josantonius',
             'email' => 'info@josantonius.com',
-            'url'   => 'https://github.com/josantonius/PHP-Json',
+            'url' => 'https://github.com/josantonius/PHP-Json',
         ];
 
-        $file   = __DIR__ . '/filename.jsond';
-        $result = Json::arrayToFile($array, $file);
+        $file = __DIR__ . '/filename.jsond';
+        $result = $this->Json->arrayToFile($array, $file);
 
         $this->assertFileIsReadable($file);
 
@@ -48,30 +77,26 @@ class JsonTest extends TestCase
      * Exception to creating JSON file from array.
      *
      * @since 1.1.3
-     *
-     * @return void
      */
     public function testArrayToFileCreateFileException()
     {
         $this->expectException(JsonException::class);
 
-        Json::arrayToFile([], '..');
+        $this->Json->arrayToFile([], '..');
     }
 
     /**
      * Get to array the JSON file content.
      *
      * @since 1.1.3
-     *
-     * @return void
      */
     public function testFileToArray()
     {
         $file = __DIR__ . '/filename.jsond';
 
-        $this->assertArrayHasKey('name', Json::fileToArray($file));
-        $this->assertArrayHasKey('email', Json::fileToArray($file));
-        $this->assertArrayHasKey('url', Json::fileToArray($file));
+        $this->assertArrayHasKey('name', $this->Json->fileToArray($file));
+        $this->assertArrayHasKey('email', $this->Json->fileToArray($file));
+        $this->assertArrayHasKey('url', $this->Json->fileToArray($file));
 
         unlink($file);
     }
@@ -80,43 +105,37 @@ class JsonTest extends TestCase
      * Error when file doesn't exist and cannot create file.
      *
      * @since 1.1.3
-     *
-     * @return void
      */
     public function testFileToArrayCreateFileException()
     {
         $this->expectException(JsonException::class);
 
-        Json::fileToArray(__DIR__ . '');
+        $this->Json->fileToArray(__DIR__ . '');
     }
 
     /**
      * Get external JSON file and save as array.
      *
      * @since 1.1.3
-     *
-     * @return void
      */
     public function testExternalFileToArray()
     {
         $file = 'https://raw.githubusercontent.com/Josantonius/PHP-Json/master/composer.json';
 
-        $this->assertArrayHasKey('name', Json::fileToArray($file));
-        $this->assertArrayHasKey('version', Json::fileToArray($file));
-        $this->assertArrayHasKey('type', Json::fileToArray($file));
+        $this->assertArrayHasKey('name', $this->Json->fileToArray($file));
+        $this->assertArrayHasKey('version', $this->Json->fileToArray($file));
+        $this->assertArrayHasKey('type', $this->Json->fileToArray($file));
     }
 
     /**
      * Get external JSON file and save as array.
      *
      * @since 1.1.3
-     *
-     * @return void
      */
     public function testExternalFileNonExistentToArray()
     {
         $file = 'https://raw.githubusercontent.com/composer.json';
 
-        $this->assertFalse(Json::fileToArray($file));
+        $this->assertFalse($this->Json->fileToArray($file));
     }
 }

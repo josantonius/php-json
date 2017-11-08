@@ -8,7 +8,6 @@
  * @link      https://github.com/Josantonius/PHP-Json
  * @since     1.0.0
  */
-
 namespace Josantonius\Json\Exception;
 
 /**
@@ -29,12 +28,10 @@ class JsonException extends \Exception
      *
      * @param string $msg    → message error (Optional)
      * @param int    $status → HTTP response status code (Optional)
-     *
-     * @return void
      */
     public function __construct($msg = '', $status = 0)
     {
-        $this->message    = $msg;
+        $this->message = $msg;
         $this->statusCode = $status;
     }
 }
