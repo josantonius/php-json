@@ -123,7 +123,6 @@ class JsonTest extends TestCase
         $file = 'https://raw.githubusercontent.com/Josantonius/PHP-Json/master/composer.json';
 
         $this->assertArrayHasKey('name', $this->Json->fileToArray($file));
-        $this->assertArrayHasKey('version', $this->Json->fileToArray($file));
         $this->assertArrayHasKey('type', $this->Json->fileToArray($file));
     }
 
