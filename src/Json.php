@@ -114,7 +114,7 @@ class Json
      */
     private static function jsonLastErrorCollections()
     {
-        return [
+        $collections = [
             JSON_ERROR_NONE => null,
             JSON_ERROR_DEPTH => [
                 'message' => 'Maximum stack depth exceeded',
@@ -148,19 +148,25 @@ class Json
                 'message' => 'Type value given cannot be encoded',
                 'error-code' => 8,
             ],
-            JSON_ERROR_INVALID_PROPERTY_NAME => [
-                'message' => 'Name value given cannot be encoded',
-                'error-code' => 9,
-            ],
-            JSON_ERROR_UTF16 => [
-                'message' => 'Malformed UTF-16 characters',
-                'error-code' => 10,
-            ],
             'default' => [
                 'message' => 'Unknown error',
                 'error-code' => 999,
             ],
         ];
+
+        if (version_compare(PHP_VERSION, '7.0.0', '>='))
+        {
+            $collections[JSON_ERROR_INVALID_PROPERTY_NAME] = [
+                'message' => 'Name value given cannot be encoded',
+                'error-code' => 9,
+            ];
+            $collections[JSON_ERROR_UTF16] = [
+                'message' => 'Malformed UTF-16 characters',
+                'error-code' => 10,
+            ];
+        }
+
+        return $collections;
     }
 
     /**
