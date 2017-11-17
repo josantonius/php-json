@@ -175,6 +175,6 @@ class Json
         $collections = self::jsonLastErrorCollections();
         $jsonLastError = json_last_error();
 
-        return array_key_exists($jsonLastError, $collections) ? $collections[$jsonLastError] : $collections['default'];
+        return isset($jsonLastError) ? $collections[$jsonLastError] : $collections['default'];
     }
 }
