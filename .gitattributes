@@ -9,3 +9,4 @@ phpmd.xml export-ignore
 .editorconfig export-ignore
 .gitattributes export-ignore
 .gitignore export-ignore
+.php_cs.dist export-ignore

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.1.7 - 2018-01-04
+
+* JSON last error handling was implemented in a new class and replace collections with switch case: `JsonLastError`.
+
+* Tests were implemented for `JsonLastError` class.
+
 ## 1.1.6 - 2017-11-08
 
 * Implemented `PHP Mess Detector` to detect inconsistencies in code styles.

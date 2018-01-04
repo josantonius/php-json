@@ -79,6 +79,22 @@ Json::fileToArray($file);
 
 **# Return** (array|false)
 
+### - Check for errors:
+
+```php
+JsonLastError::check();
+```
+
+**# Return** (array|null) → Null if there are no errors or array with state  code and error message.
+
+### - Get collection of JSON errors:
+
+```php
+JsonLastError::getCollection();
+```
+
+**# Return** (array) → Collection of JSON errors.
+
 ## Quick Start
 
 To use this library with **Composer**:
@@ -125,6 +141,22 @@ $pathfile = __DIR__ . '/filename.json';
 
 $array = Json::fileToArray($pathfile);
 
+```
+
+### - Check for errors:
+
+```php
+$lastError = JsonLastError::check();
+
+if (!is_null($lastError)) {
+    var_dump($lastError);
+}
+```
+
+### - Get collection of JSON errors:
+
+```php
+$jsonLastErrorCollection = JsonLastError::getCollection();
 ```
 
 ## Tests 
@@ -189,7 +221,7 @@ This project is licensed under **MIT license**. See the [LICENSE](LICENSE) file 
 
 ## Copyright
 
-2016 - 2017 Josantonius, [josantonius.com](https://josantonius.com/)
+2016 - 2018 Josantonius, [josantonius.com](https://josantonius.com/)
 
 If you find it useful, let me know :wink:
 
