@@ -45,9 +45,10 @@ También puedes **clonar el repositorio** completo con Git:
 
 O **instalarlo manualmente**:
 
-Descargar [Json.php](https://raw.githubusercontent.com/Josantonius/PHP-Json/master/src/Json.php) y [JsonException.php](https://raw.githubusercontent.com/Josantonius/PHP-Json/master/src/Exception/JsonException.php):
+Descargar [Json.php](https://raw.githubusercontent.com/Josantonius/PHP-Json/master/src/Json.php), [JsonLastError.php](https://raw.githubusercontent.com/Josantonius/PHP-Json/master/src/JsonLastError.php) y [JsonException.php](https://raw.githubusercontent.com/Josantonius/PHP-Json/master/src/Exception/JsonException.php):
 
     $ wget https://raw.githubusercontent.com/Josantonius/PHP-Json/master/src/Json.php
+    $ wget https://raw.githubusercontent.com/Josantonius/PHP-Json/master/src/JsonLastError.php
     $ wget https://raw.githubusercontent.com/Josantonius/PHP-Json/master/src/Exception/JsonException.php
 
 ## Métodos disponibles
@@ -109,6 +110,7 @@ Si la instalaste **manualmente**, utiliza:
 
 ```php
 require_once __DIR__ . '/Json.php';
+require_once __DIR__ . '/JsonLastError.php';
 require_once __DIR__ . '/JsonException.php';
 
 use Josantonius\Json\Json;
