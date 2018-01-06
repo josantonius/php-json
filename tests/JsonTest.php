@@ -15,8 +15,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Tests class for Json library.
- *
- * @since 1.1.3
  */
 class JsonTest extends TestCase
 {

@@ -193,10 +193,10 @@ Esta biblioteca utiliza [control de excepciones](src/Exception) que puedes perso
 
 ## ☑ Tareas pendientes
 
-- [ ] Añadir nueva funcionalidad
-- [ ] Mejorar pruebas
-- [ ] Mejorar documentación
-- [ ] Refactorizar código
+- [ ] Añadir nueva funcionalidad.
+- [ ] Mejorar pruebas.
+- [ ] Mejorar documentación.
+- [ ] Refactorizar código para las reglas de estilo de código deshabilitadas. Ver [phpmd.xml](phpmd.xml) y [.php_cs.dist](.php_cs.dist).
 
 ## Contribuir
 
@@ -212,6 +212,12 @@ Si deseas colaborar, puedes echar un vistazo a la lista de
 * Ejecuta las [pruebas](#tests).
 * Crea una nueva rama (**branch**), **commit**, **push** y envíame un
   [pull request](https://help.github.com/articles/using-pull-requests).
+
+**¡Gracias a quienes ya habéis contribuido a este proyecto!**
+
+[<img alt="peter279k" src="https://avatars2.githubusercontent.com/u/9021747?v=4&s=117" height="117" width="117">](https://github.com/peter279k) |
+:---:|
+[peter279k](https://github.com/peter279k)|
 
 ## Repositorio
 
