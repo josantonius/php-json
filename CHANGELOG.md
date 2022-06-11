@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [1.1.9](https://github.com/josantonius/php-json/releases/tag/1.1.9) (2022-06-11)
+
+* Fix sending code coverage report to Codecov.io.
+
 ## [1.1.8](https://github.com/josantonius/php-json/releases/tag/1.1.8) (2022-06-11)
 
 * Added support for `PHP 7.3` and `7.4`.
