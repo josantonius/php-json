@@ -1,10 +1,16 @@
-# PHP Json library
+# PHP JSON library
 
-[![Latest Stable Version](https://poser.pugx.org/josantonius/Json/v/stable)](https://packagist.org/packages/josantonius/Json) [![Latest Unstable Version](https://poser.pugx.org/josantonius/Json/v/unstable)](https://packagist.org/packages/josantonius/Json) [![License](https://poser.pugx.org/josantonius/Json/license)](LICENSE) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ff3e82fba0d44889bc5ae211cffddb72)](https://www.codacy.com/app/Josantonius/PHP-Json?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Josantonius/PHP-Json&amp;utm_campaign=Badge_Grade) [![Total Downloads](https://poser.pugx.org/josantonius/Json/downloads)](https://packagist.org/packages/josantonius/Json) [![Travis](https://travis-ci.org/Josantonius/PHP-Json.svg)](https://travis-ci.org/Josantonius/PHP-Json) [![PSR2](https://img.shields.io/badge/PSR-2-1abc9c.svg)](http://www.php-fig.org/psr/psr-2/) [![PSR4](https://img.shields.io/badge/PSR-4-9b59b6.svg)](http://www.php-fig.org/psr/psr-4/) [![CodeCov](https://codecov.io/gh/Josantonius/PHP-Json/branch/master/graph/badge.svg)](https://codecov.io/gh/Josantonius/PHP-Json)
+[![Latest Stable Version](https://poser.pugx.org/josantonius/Json/v/stable)](https://packagist.org/packages/josantonius/json)
+[![License](https://poser.pugx.org/josantonius/json/license)](LICENSE)
+[![Total Downloads](https://poser.pugx.org/josantonius/json/downloads)](https://packagist.org/packages/josantonius/json)
+[![CI](https://github.com/josantonius/php-json/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/josantonius/php-json/actions/workflows/ci.yml)
+[![PSR2](https://img.shields.io/badge/PSR-2-1abc9c.svg)](http://www.php-fig.org/psr/psr-2/)
+[![PSR4](https://img.shields.io/badge/PSR-4-9b59b6.svg)](http://www.php-fig.org/psr/psr-4/)
+[![CodeCov](https://codecov.io/gh/josantonius/php-json/branch/master/graph/badge.svg)](https://codecov.io/gh/josantonius/php-json)
 
-[Versión en español](README-ES.md)
+**Translations**: [Español](.github/lang/es-ES/README.md)
 
-PHP simple library for managing Json files.
+PHP simple library for managing JSON files.
 
 ---
 
@@ -16,46 +22,64 @@ PHP simple library for managing Json files.
 - [Tests](#tests)
 - [Exception Handler](#exception-handler)
 - [TODO](#-todo)
-- [Contribute](#contribute)
-- [Repository](#repository)
+- [Changelog](#changelog)
+- [Contribution](#contribution)
+- [Sponsor](#Sponsor)
 - [License](#license)
-- [Copyright](#copyright)
 
 ---
 
 ## Requirements
 
-This library is supported by **PHP versions 5.6** or higher and is compatible with **HHVM versions 3.0** or higher.
+This library is compatible with the PHP versions:
+**5.6** | **7.0** | **7.1** | **7.2** | **7.3** | **7.4**.
 
 ## Installation
 
 The preferred way to install this extension is through [Composer](http://getcomposer.org/download/).
 
-To install **PHP Json library**, simply:
+To install **PHP JSON library**, simply:
 
-    $ composer require Josantonius/Json
+```console
+composer require josantonius/json
+```
 
-The previous command will only install the necessary files, if you prefer to **download the entire source code** you can use:
+The previous command will only install the necessary files,
+if you prefer to **download the entire source code** you can use:
 
-    $ composer require Josantonius/Json --prefer-source
+```console
+composer require josantonius/json --prefer-source
+```
 
 You can also **clone the complete repository** with Git:
 
-  $ git clone https://github.com/Josantonius/PHP-Json.git
+```console
+git clone https://github.com/josantonius/php-json.git
+```
 
 Or **install it manually**:
 
-Download [Json.php](https://raw.githubusercontent.com/Josantonius/PHP-Json/master/src/Json.php), [JsonLastError.php](https://raw.githubusercontent.com/Josantonius/PHP-Json/master/src/JsonLastError.php) and [JsonException.php](https://raw.githubusercontent.com/Josantonius/PHP-Json/master/src/Exception/JsonException.php):
+Download [Json.php](https://raw.githubusercontent.com/josantonius/php-json/master/src/Json.php),
+[JsonLastError.php](https://raw.githubusercontent.com/josantonius/php-json/master/src/JsonLastError.php) and
+[JsonException.php](https://raw.githubusercontent.com/josantonius/php-json/master/src/Exception/JsonException.php):
 
-    $ wget https://raw.githubusercontent.com/Josantonius/PHP-Json/master/src/Json.php
-    $ wget https://raw.githubusercontent.com/Josantonius/PHP-Json/master/src/JsonLastError.php
-    $ wget https://raw.githubusercontent.com/Josantonius/PHP-Json/master/src/Exception/JsonException.php
+```console
+wget https://raw.githubusercontent.com/josantonius/php-json/master/src/Json.php
+```
+
+```console
+wget https://raw.githubusercontent.com/josantonius/php-json/master/src/JsonLastError.php
+```
+
+```console
+wget https://raw.githubusercontent.com/josantonius/php-json/master/src/Exception/JsonException.php
+```
 
 ## Available Methods
 
 Available methods in this library:
 
-### - Creating JSON file from array:
+### Create JSON file from array
 
 ```php
 Json::arrayToFile($array, $file);
@@ -68,7 +92,7 @@ Json::arrayToFile($array, $file);
 
 **# Return** (boolean)
 
-### - Save to array the JSON file content:
+### Save to array the JSON file content
 
 ```php
 Json::fileToArray($file);
@@ -80,7 +104,7 @@ Json::fileToArray($file);
 
 **# Return** (array|false)
 
-### - Check for errors:
+### Check for errors
 
 ```php
 JsonLastError::check();
@@ -88,7 +112,7 @@ JsonLastError::check();
 
 **# Return** (array|null) → Null if there are no errors or array with state  code and error message.
 
-### - Get collection of JSON errors:
+### Get collection of JSON errors
 
 ```php
 JsonLastError::getCollection();
@@ -103,7 +127,7 @@ To use this library with **Composer**:
 ```php
 require __DIR__ . '/vendor/autoload.php';
 
-use Josantonius\Json\Json;
+use josantonius\Json\Json;
 ```
 
 Or If you installed it **manually**, use it:
@@ -113,39 +137,36 @@ require_once __DIR__ . '/Json.php';
 require_once __DIR__ . '/JsonLastError.php';
 require_once __DIR__ . '/JsonException.php';
 
-use Josantonius\Json\Json;
+use josantonius\Json\Json;
 ```
 
 ## Usage
 
 Example of use for this library:
 
-### - Creating JSON file from array:
+### Create a JSON file from an array
 
 ```php
-
 $array = [
-	'name'  => 'Josantonius',
-    'email' => 'info@josantonius.com',
-    'url'   => 'https://github.com/josantonius/PHP-Json'
+ 'name'  => 'josantonius',
+    'email' => 'info@josantonius.dev',
+    'url'   => 'https://github.com/josantonius/php-json'
 ];
 
-$pathfile = __DIR__ . '/filename.json';
+$filepath = __DIR__ . '/filename.json';
 
-Json::arrayToFile($array, $pathfile);
-
+Json::arrayToFile($array, $filepath);
 ```
 
-### - Save to array the JSON file content:
+### Save the contents of the JSON file in an array
 
 ```php
-$pathfile = __DIR__ . '/filename.json';
+$filepath = __DIR__ . '/filename.json';
 
-$array = Json::fileToArray($pathfile);
-
+$array = Json::fileToArray($filepath);
 ```
 
-### - Check for errors:
+### Checks for errors
 
 ```php
 $lastError = JsonLastError::check();
@@ -155,37 +176,53 @@ if (!is_null($lastError)) {
 }
 ```
 
-### - Get collection of JSON errors:
+### Get a JSON error collection
 
 ```php
 $jsonLastErrorCollection = JsonLastError::getCollection();
 ```
 
-## Tests 
+## Tests
 
-To run [tests](tests) you just need [composer](http://getcomposer.org/download/) and to execute the following:
+To run [tests](tests) you just need [composer](http://getcomposer.org/download/)
+and to execute the following:
 
-    $ git clone https://github.com/Josantonius/PHP-Json.git
-    
-    $ cd PHP-Json
+```console
+git clone https://github.com/josantonius/php-json.git
+```
 
-    $ composer install
+```console
+cd php-json
+```
+
+```console
+composer install
+```
 
 Run unit tests with [PHPUnit](https://phpunit.de/):
 
-    $ composer phpunit
+```console
+composer phpunit
+```
 
-Run [PSR2](http://www.php-fig.org/psr/psr-2/) code standard tests with [PHPCS](https://github.com/squizlabs/PHP_CodeSniffer):
+Run [PSR2](http://www.php-fig.org/psr/psr-2/) code standard tests with
+[PHPCS](https://github.com/squizlabs/PHP_CodeSniffer):
 
-    $ composer phpcs
+```console
+composer phpcs
+```
 
 Run [PHP Mess Detector](https://phpmd.org/) tests to detect inconsistencies in code style:
 
-    $ composer phpmd
+```console
+composer phpmd
+```
 
 Run all previous tests:
 
-    $ composer tests
+```console
+composer tests
+```
 
 ## Exception Handler
 
@@ -196,41 +233,28 @@ This library uses [exception handler](src/Exception) that you can customize.
 - [ ] Add new feature.
 - [ ] Improve tests.
 - [ ] Improve documentation.
-- [ ] Refactor code for disabled code style rules. See [phpmd.xml](phpmd.xml) and [.php_cs.dist](.php_cs.dist).
+- [ ] Improve English translation in the README file.
+- [ ] Refactor code for disabled code style rules. See [phpmd.xml](phpmd.xml) and [phpcs.xml](phpcs.xml).
 
-## Contribute
+## Changelog
 
-If you would like to help, please take a look at the list of
-[issues](https://github.com/Josantonius/PHP-Json/issues) or the [To Do](#-todo) checklist.
+Detailed changes for each release are documented in the
+[release notes](https://github.com/josantonius/php-json/releases).
 
-**Pull requests**
+## Contribution
 
-* [Fork and clone](https://help.github.com/articles/fork-a-repo).
-* Run the command `composer install` to install the dependencies.
-  This will also install the [dev dependencies](https://getcomposer.org/doc/03-cli.md#install).
-* Run the command `composer fix` to excute code standard fixers.
-* Run the [tests](#tests).
-* Create a **branch**, **commit**, **push** and send me a
-  [pull request](https://help.github.com/articles/using-pull-requests).
+Please make sure to read the [Contributing Guide](.github/CONTRIBUTING.md), before making a pull
+request, start a discussion or report a issue.
 
-**Thank you to all the people who already contributed to this project!**
+Thanks to all [contributors](https://github.com/josantonius/php-json/graphs/contributors)! :heart:
 
-[<img alt="peter279k" src="https://avatars2.githubusercontent.com/u/9021747?v=4&s=117" height="117" width="117">](https://github.com/peter279k) |
-:---:|
-[peter279k](https://github.com/peter279k)|
+## Sponsor
 
-## Repository
-
-The file structure from this repository was created with [PHP-Skeleton](https://github.com/Josantonius/PHP-Skeleton).
+If this project help you reduce time to develop,
+[you can become my sponsor!](https://github.com/josantonius#sponsor) :blush:
 
 ## License
 
-This project is licensed under **MIT license**. See the [LICENSE](LICENSE) file for more info.
+This repository is licensed under the [MIT License](LICENSE).
 
-## Copyright
-
-2016 - 2018 Josantonius, [josantonius.com](https://josantonius.com/)
-
-If you find it useful, let me know :wink:
-
-You can contact me on [Twitter](https://twitter.com/Josantonius) or through my [email](mailto:hello@josantonius.com).
+Copyright © 2016-present, [Josantonius](https://github.com/josantonius#contact)
