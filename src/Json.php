@@ -1,13 +1,15 @@
 <?php
+
 /**
- * PHP simple library for managing Json files.
+ * PHP simple library for managing JSON files.
  *
- * @author    Josantonius <hello@josantonius.com>
- * @copyright 2016 - 2018 (c) Josantonius - PHP-Json
+ * @author    Josantonius <hello@josantonius.dev>
+ * @copyright 2016 (c) Josantonius
  * @license   https://opensource.org/licenses/MIT - The MIT License (MIT)
- * @link      https://github.com/Josantonius/PHP-Json
+ * @link      https://github.com/josantonius/php-json
  * @since     1.0.0
  */
+
 namespace Josantonius\Json;
 
 use Josantonius\Json\Exception\JsonException;
@@ -47,12 +49,12 @@ class Json
      */
     public static function fileToArray($file)
     {
-        if (! is_file($file) && ! filter_var($file, FILTER_VALIDATE_URL)) {
+        if (!is_file($file) && !filter_var($file, FILTER_VALIDATE_URL)) {
             self::arrayToFile([], $file);
         }
 
-        $json = @file_get_contents($file);
-        $array = json_decode($json, true);
+        $json      = @file_get_contents($file);
+        $array     = json_decode($json, true);
         $lastError = JsonLastError::check();
 
         return $array === null || !is_null($lastError) ? false : $array;
@@ -70,10 +72,10 @@ class Json
     private static function createDirectory($file)
     {
         $basename = is_string($file) ? basename($file) : '';
-        $path = str_replace($basename, '', $file);
+        $path     = str_replace($basename, '', $file);
 
-        if (! empty($path) && ! is_dir($path)) {
-            if (! mkdir($path, 0755, true)) {
+        if (!empty($path) && !is_dir($path)) {
+            if (!mkdir($path, 0755, true)) {
                 $message = 'Could not create directory in';
                 throw new JsonException($message . ' ' . $path);
             }
@@ -86,7 +88,7 @@ class Json
      * @since 1.1.3
      *
      * @param string $file → path to the file
-     * @param string $json → json string
+     * @param string $json → JSON string
      *
      * @throws JsonException → couldn't create file
      */

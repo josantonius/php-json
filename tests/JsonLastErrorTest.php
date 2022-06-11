@@ -1,11 +1,12 @@
 <?php
+
 /**
- * PHP simple library for managing Json files.
+ * PHP simple library for managing JSON files.
  *
- * @author    Josantonius <hello@josantonius.com>
- * @copyright 2016 - 2018 (c) Josantonius - PHP-Json
+ * @author    Josantonius <hello@josantonius.dev>
+ * @copyright 2016 (c) Josantonius
  * @license   https://opensource.org/licenses/MIT - The MIT License (MIT)
- * @link      https://github.com/Josantonius/PHP-Json
+ * @link      https://github.com/josantonius/php-json
  * @since     1.1.7
  */
 namespace Josantonius\Json;
@@ -18,7 +19,7 @@ use PHPUnit\Framework\TestCase;
 class JsonLastErrorTest extends TestCase
 {
     /**
-     * Json instance.
+     * JSON instance.
      *
      * @var object
      */
@@ -35,7 +36,7 @@ class JsonLastErrorTest extends TestCase
     }
 
     /**
-     * Check if it is an instance of Json.
+     * Check if it is an instance of JSON.
      */
     public function testIsInstanceOfJson()
     {
