@@ -1,6 +1,37 @@
 # CHANGELOG
 
-## 1.1.7 - 2018-01-04
+## [1.1.8](https://github.com/josantonius/php-json/releases/tag/1.1.8) (2022-06-11)
+
+* Added support for `PHP 7.3` and `7.4`.
+
+* Improved documentation; `README.md`, `CODE_OF_CONDUCT.md`, `CONTRIBUTING.md` and `CHANGELOG.md`.
+
+* Removed `Codacy`.
+
+* Removed `PHP Coding Standards Fixer`.
+
+* The `master` branch was renamed to `main`.
+
+* The `develop` branch was added to use a workflow based on `Git Flow`.
+
+* `Travis` is discontinued for continuous integration. `GitHub Actions` will be used from now on.
+
+* Added `.github/CODE_OF_CONDUCT.md` file.
+* Added `.github/CONTRIBUTING.md` file.
+* Added `.github/FUNDING.yml` file.
+* Added `.github/workflows/ci.yml` file.
+* Added `.github/lang/es-ES/CODE_OF_CONDUCT.md` file.
+* Added `.github/lang/es-ES/CONTRIBUTING.md` file.
+* Added `.github/lang/es-ES/LICENSE` file.
+* Added `.github/lang/es-ES/README` file.
+
+* Deleted `.travis.yml` file.
+* Deleted `.editorconfig` file.
+* Deleted `CONDUCT.MD` file.
+* Deleted `README-ES.MD` file.
+* Deleted `.php_cs.dist` file.
+
+## [1.1.7](https://github.com/josantonius/php-json/releases/tag/1.1.7) (2018-01-04)
 
 * The tests were fixed.
 
@@ -10,7 +41,7 @@
 
 * Tests were implemented for `JsonLastError` class.
 
-## 1.1.6 - 2017-11-08
+## [1.1.6](https://github.com/josantonius/php-json/releases/tag/1.1.6) (2017-11-08)
 
 * Implemented `PHP Mess Detector` to detect inconsistencies in code styles.
 
@@ -18,7 +49,7 @@
 
 * Implemented `PHP Coding Standards Fixer` to organize PHP code automatically according to PSR standards.
 
-## 1.1.5 - 2017-11-01
+## [1.1.5](https://github.com/josantonius/php-json/releases/tag/1.1.5) (2017-11-01)
 
 * Implemented `PSR-4 autoloader standard` from all library files.
 
@@ -30,30 +61,29 @@
 
 * Implemented `Codecov` to coverage reports.
 
-* Added `Json/phpcs.ruleset.xml` file.
+* Added `phpcs.ruleset.xml` file.
 
-* Deleted `Json/src/bootstrap.php` file.
+* Deleted `src/bootstrap.php` file.
 
-* Deleted `Json/tests/bootstrap.php` file.
+* Deleted `tests/bootstrap.php` file.
 
-* Deleted `Json/vendor` folder.
+* Deleted `vendor` folder.
 
 * Changed `Josantonius\Json\Test\JsonTest` class to  `Josantonius\Json\JsonTest` class.
 
-
-## 1.1.4 - 2017-09-10
+## [1.1.4](https://github.com/josantonius/php-json/releases/tag/1.1.4) (2017-09-10)
 
 * Unit tests supported by `PHPUnit` were added.
 
 * The repository was synchronized with Travis CI to implement continuous integration.
- 
-* Added `Json/src/bootstrap.php` file
 
-* Added `Json/tests/bootstrap.php` file.
+* Added `src/bootstrap.php` file
 
-* Added `Json/phpunit.xml.dist` file.
-* Added `Json/_config.yml` file.
-* Added `Json/.travis.yml` file.
+* Added `tests/bootstrap.php` file.
+
+* Added `phpunit.xml.dist` file.
+* Added `_config.yml` file.
+* Added `.travis.yml` file.
 
 * Deleted `Josantonius\Json\Tests\JsonTest` class.
 * Deleted `Josantonius\Json\Tests\JsonTest::testArrayToFile()` method.
@@ -69,7 +99,7 @@
 * Added `Josantonius\Json\Test\JsonTest::testExternalFileToArray()` method.
 * Added `Josantonius\Json\Test\JsonTest::testExternalFileNonExistentToArray()` method.
 
-## 1.1.3 - 2017-08-20
+## [1.1.3](https://github.com/josantonius/php-json/releases/tag/1.1.3) (2017-08-20)
 
 * Added `Josantonius\Json\Json::_jsonLastError()` method.
 * Added `Josantonius\Json\Json::_createDirectory()` method.
@@ -83,38 +113,32 @@
 
 * New errors available from PHP 7.0 to check for errors from `json_last_error()` were added.
 
-## 1.1.2 - 2017-05-31
+## [1.1.2](https://github.com/josantonius/php-json/releases/tag/1.1.2) (2017-05-31)
 
 * The file exception not found in the `fileToArray()` method was deleted. Now if it does not exist the file will create it with an empty array.
 
 * `JSON_PRETTY_PRINT` was added at time to create the json file.
 
-## 1.1.1 - 2017-03-18
+## [1.1.1](https://github.com/josantonius/php-json/releases/tag/1.1.1) (2017-03-18)
 
 * Some files were excluded from download and comments and readme files were updated.
 
-## 1.1.0 - 2017-01-30
+## [1.1.0](https://github.com/josantonius/php-json/releases/tag/1.1.0) (2017-01-30)
 
 * Compatible with PHP 5.6 or higher.
 
-## 1.0.0 - 2017-01-30
+## [1.0.0](https://github.com/josantonius/php-json/releases/tag/1.0.0) (2016-12-14)
 
 * Compatible only with PHP 7.0 or higher. In the next versions, the library will be modified to make it compatible with PHP 5.6 or higher.
-
-## 1.0.0 - 2016-12-14
 
 * Added `Josantonius\Json\Json` class.
 * Added `Josantonius\Json\Json::arrayToFile()` method.
 * Added `Josantonius\Json\Json::fileToArray()` method.
 * Added `Josantonius\Json\Json::jsonLastError()` method.
 
-## 1.0.0 - 2016-12-14
-
 * Added `Josantonius\Json\Exception\JsonException` class.
 * Added `Josantonius\Json\Exception\Exceptions` abstract class.
 * Added `Josantonius\Json\Exception\JsonException->__construct()` method.
-
-## 1.0.0 - 2016-12-14
 
 * Added `Josantonius\Json\Tests\JsonTest` class.
 * Added `Josantonius\Json\Tests\JsonTest::testArrayToFile()` method.
