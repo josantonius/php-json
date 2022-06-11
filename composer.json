@@ -1,44 +1,37 @@
 {
-    "name":        "josantonius/json",
-    "type":        "library",
+    "name": "josantonius/json",
     "description": "PHP simple library for managing Json files.",
+    "license": "MIT",
+    "type": "library",
     "keywords": [
-        "JSON", 
-        "HHVM", 
-        "File to array", 
-        "Array to file", 
-        "JavaScript Object Notation", 
-        "JavaScript", 
-        "Data exchange",
+        "JSON",
+        "File to array",
+        "Array to file",
+        "JavaScript",
         "PHP"
     ],
-    "license": "MIT",
     "authors": [
         {
-            "name":     "Josantonius",
-            "email":    "hello@josantonius.com",
-            "homepage": "https://josantonius.com",
-            "role":     "Developer"
+            "name": "Josantonius",
+            "email": "hello@josantonius.com",
+            "homepage": "https://josantonius.dev",
+            "role": "Developer"
         }
     ],
     "support": {
         "issues": "https://github.com/josantonius/php-asset/issues",
-        "forum":  "http://stackoverflow.com/tags/josantonius/php-asset",
+        "forum": "http://stackoverflow.com/tags/josantonius/php-asset",
         "source": "https://github.com/josantonius/php-asset"
     },
-    "config": {
-        "preferred-install": "dist"
-    },
-    "minimum-stability": "stable",
     "require": {
         "php": "^5.6 || ^7.0"
     },
     "require-dev": {
+        "phpmd/phpmd": "^2.6",
         "phpunit/phpunit": "^5.7 || ^6.0",
-        "squizlabs/php_codesniffer": "^3.0",
-        "friendsofphp/php-cs-fixer": "^2.3 || ^2.8",
-        "phpmd/phpmd": "^2.6"
+        "squizlabs/php_codesniffer": "^3.6.2"
     },
+    "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
             "Josantonius\\Json\\": "src/"
@@ -49,19 +42,22 @@
             "Josantonius\\Json\\": "tests/"
         }
     },
+    "config": {
+        "preferred-install": "dist"
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "1.0-dev"
         }
     },
     "scripts": {
-        "phpunit": "vendor/bin/phpunit --colors=always;",
-        "phpcs": "vendor/bin/phpcs --standard=phpcs.xml $(find . -name '*.php');",
-        "phpmd": "vendor/bin/phpmd src,tests text ./phpmd.xml",
+        "coverage": "vendor/bin/phpunit --coverage-clover=coverage.xml",
         "fix": [
-            "vendor/bin/php-cs-fixer fix -v",
             "vendor/bin/phpcbf src tests"
         ],
+        "phpcs": "vendor/bin/phpcs --standard=phpcs.xml $(find . -name '*.php');",
+        "phpmd": "vendor/bin/phpmd src,tests text ./phpmd.xml",
+        "phpunit": "vendor/bin/phpunit --colors=always;",
         "tests": [
             "clear",
             "@phpmd",

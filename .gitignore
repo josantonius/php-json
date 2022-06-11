@@ -1,12 +1,11 @@
-.git*/
 vendor/
-docs/*.pyc
-docs/_build
-build/artifacts/
+.vscode/
 composer.phar
 composer.lock
 composer-test.lock
 phpcbf-fixed.diff
-.idea
-.DS_STORE
 .php_cs.cache
+php-json.code-workspace
+.repository.md
+.phpunit.result.cache
+coverage.xml
