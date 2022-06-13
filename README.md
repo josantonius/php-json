@@ -6,7 +6,7 @@
 [![CI](https://github.com/josantonius/php-json/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/josantonius/php-json/actions/workflows/ci.yml)
 [![PSR2](https://img.shields.io/badge/PSR-2-1abc9c.svg)](http://www.php-fig.org/psr/psr-2/)
 [![PSR4](https://img.shields.io/badge/PSR-4-9b59b6.svg)](http://www.php-fig.org/psr/psr-4/)
-[![CodeCov](https://codecov.io/gh/josantonius/php-json/branch/master/graph/badge.svg)](https://codecov.io/gh/josantonius/php-json)
+[![CodeCov](https://codecov.io/gh/josantonius/php-json/branch/main/graph/badge.svg)](https://codecov.io/gh/josantonius/php-json)
 
 **Translations**: [Español](.github/lang/es-ES/README.md)
 
@@ -31,8 +31,10 @@ PHP simple library for managing JSON files.
 
 ## Requirements
 
-This library is compatible with the PHP versions:
-**5.6** | **7.0** | **7.1** | **7.2** | **7.3** | **7.4**.
+This library is compatible from **PHP 8.0** version to **PHP 8.1** version.
+
+For older versions of PHP (from **5.6** to **7.4**) you can use
+[version 1.1.9](https://github.com/josantonius/php-json/tree/1.1.9) of this library.
 
 ## Installation
 
@@ -59,20 +61,20 @@ git clone https://github.com/josantonius/php-json.git
 
 Or **install it manually**:
 
-Download [Json.php](https://raw.githubusercontent.com/josantonius/php-json/master/src/Json.php),
-[JsonLastError.php](https://raw.githubusercontent.com/josantonius/php-json/master/src/JsonLastError.php) and
-[JsonException.php](https://raw.githubusercontent.com/josantonius/php-json/master/src/Exception/JsonException.php):
+Download [Json.php](https://raw.githubusercontent.com/josantonius/php-json/main/src/Json.php),
+[JsonLastError.php](https://raw.githubusercontent.com/josantonius/php-json/main/src/JsonLastError.php) and
+[JsonException.php](https://raw.githubusercontent.com/josantonius/php-json/main/src/Exception/JsonException.php):
 
 ```console
-wget https://raw.githubusercontent.com/josantonius/php-json/master/src/Json.php
+wget https://raw.githubusercontent.com/josantonius/php-json/main/src/Json.php
 ```
 
 ```console
-wget https://raw.githubusercontent.com/josantonius/php-json/master/src/JsonLastError.php
+wget https://raw.githubusercontent.com/josantonius/php-json/main/src/JsonLastError.php
 ```
 
 ```console
-wget https://raw.githubusercontent.com/josantonius/php-json/master/src/Exception/JsonException.php
+wget https://raw.githubusercontent.com/josantonius/php-json/main/src/Exception/JsonException.php
 ```
 
 ## Available Methods

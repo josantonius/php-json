@@ -28,7 +28,7 @@ class JsonLastErrorTest extends TestCase
     /**
      * Set up.
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -50,7 +50,7 @@ class JsonLastErrorTest extends TestCase
     {
         $jsonLastError = $this->jsonLastError;
 
-        $this->assertInternalType('array', $jsonLastError::getCollection());
+        $this->assertIsArray($jsonLastError::getCollection());
     }
 
     /**
