@@ -33,6 +33,9 @@ PHP simple library for managing JSON files.
 
 This library is compatible from **PHP 8.0** version to **PHP 8.1** version.
 
+For older versions of PHP (from **5.6** to **7.4**) you can use
+[version 1.1.9](https://github.com/josantonius/php-json/tree/1.1.9) of this library.
+
 ## Installation
 
 The preferred way to install this extension is through [Composer](http://getcomposer.org/download/).
