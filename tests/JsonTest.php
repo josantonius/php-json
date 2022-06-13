@@ -33,7 +33,7 @@ class JsonTest extends TestCase
      *
      * @since 1.1.6
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
