@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [1.2.0](https://github.com/josantonius/php-json/releases/tag/1.2.0) (2022-06-13)
+
+* Support for PHP version **8.0** and higher.
+
+* Support for earlier versions of PHP **8.0** is discontinued.
+
+* For older versions of PHP (from **5.6** to **7.4**)
+[version 1.1.9](https://github.com/josantonius/php-json/tree/1.1.9) of this library can be used.
+
 ## [1.1.9](https://github.com/josantonius/php-json/releases/tag/1.1.9) (2022-06-11)
 
 * Fix sending code coverage report to Codecov.io.
