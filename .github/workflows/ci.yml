@@ -16,12 +16,12 @@ jobs:
     name: 'Coding style'
     steps:
       - name: 'Checkout'
-        uses: 'actions/checkout@v2'
+        uses: 'actions/checkout@v3'
 
       - name: 'Setup PHP'
         uses: 'shivammathur/setup-php@v2'
         with:
-          php-version: '7.4'
+          php-version: '8.1'
           coverage: 'none'
           tools: 'composer:v2, composer-normalize'
 
@@ -45,22 +45,18 @@ jobs:
       matrix:
         system: ['ubuntu-latest']
         php:
-          - '5.6'
-          - '7.0'
-          - '7.1'
-          - '7.2'
-          - '7.3'
-          - '7.4'
+          - '8.0'
+          - '8.1'
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: 'Setup PHP'
         uses: 'shivammathur/setup-php@v2'
         with:
           php-version: '${{ matrix.php }}'
           coverage: 'none'
-          tools: 'composer:v2'
+          tools: 'composer:v6'
 
       - name: 'Install dependencies'
         run: |
@@ -75,13 +71,13 @@ jobs:
     name: 'Code Coverage'
     steps:
       - name: 'Checkout'
-        uses: 'actions/checkout@v2'
+        uses: 'actions/checkout@v3'
 
       - name: 'Setup PHP'
         uses: 'shivammathur/setup-php@v2'
         with:
-          php-version: '7.4'
-          tools: 'composer:v2'
+          php-version: '8.1'
+          tools: 'composer:v6'
 
       - name: 'Install dependencies'
         run: |
