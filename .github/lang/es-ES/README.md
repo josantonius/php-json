@@ -20,7 +20,6 @@ Biblioteca PHP para la gestión de archivos JSON.
 - [Cómo empezar](#cómo-empezar)
 - [Uso](#uso)
 - [Tests](#tests)
-- [Manejo de excepciones](#manejo-de-excepciones)
 - [Tareas pendientes](#☑-tareas-pendientes)
 - [Registro de cambios](#registro-de-cambios)
 - [Contribuir](#contribuir)
@@ -33,8 +32,13 @@ Biblioteca PHP para la gestión de archivos JSON.
 
 Esta biblioteca es compatible desde la versión **8.0** de PHP hasta la versión **8.1** de PHP.
 
-Para versiones anteriores de PHP (desde la **5.6** hasta la **7.4**) puedes utilizar la
+Para seguir utilizando la versión con métodos estáticos sin las nuevas características:
+
+- Para versiones anteriores de PHP (desde la **5.6** hasta la **7.4**), puedes utilizar la
 [versión 1.1.9](https://github.com/josantonius/php-json/tree/1.1.9) de esta biblioteca.
+
+- Para las versiones **8.0** y **8.1** de PHP, puedes utilizar la
+[version 1.2.0](https://github.com/josantonius/php-json/tree/1.2.0) de esta biblioteca.
 
 ## Instalación
 
@@ -59,68 +63,49 @@ También puedes **clonar el repositorio** completo con Git:
 git clone https://github.com/josantonius/php-json.git
 ```
 
-O **instalarlo manualmente**:
-
-Descargar [Json.php](https://raw.githubusercontent.com/josantonius/php-json/main/src/Json.php),
-[JsonLastError.php](https://raw.githubusercontent.com/josantonius/php-json/main/src/JsonLastError.php) y
-[JsonException.php](https://raw.githubusercontent.com/josantonius/php-json/main/src/Exception/JsonException.php):
-
-```console
-wget https://raw.githubusercontent.com/josantonius/php-json/main/src/Json.php
-```
-
-```console
-wget https://raw.githubusercontent.com/josantonius/php-json/main/src/JsonLastError.php
-```
-
-```console
-wget https://raw.githubusercontent.com/josantonius/php-json/main/src/Exception/JsonException.php
-```
-
 ## Métodos disponibles
 
 Métodos disponibles en esta biblioteca:
 
-### Crear archivo JSON desde array
+### Obtener el contenido del archivo JSON
 
 ```php
-Json::arrayToFile($array, $file);
+$json->get();
 ```
 
-| Atributo | Descripción | Tipo | Requerido | Predeterminado
-| --- | --- | --- | --- | --- |
-| $array | Array a guardar en archivo JSON. | array | Sí | |
-| $file | Ruta hacia el archivo. | string | Sí | |
+**@throws** _CreateDirectoryException_ | _CreateFileException_ | _JsonErrorException_
 
-**# Return** (boolean)
+**@Return** `array` - _Contenido del archivo_
 
-### Guardar en array el contenido de archivo JSON
+### Establecer el contenido del archivo JSON
 
 ```php
-Json::fileToArray($file);
+$json->set(array|object $content);
 ```
 
-| Atributo | Descripción | Tipo | Requerido | Predeterminado
-| --- | --- | --- | --- | --- |
-| $file | Ruta o URL externa al archivo JSON. | string | Sí | |
+**@throws** _CreateFileException_ | _JsonErrorException_ | _UnavailableMethodException_
 
-**# Return** (array|false)
+**@Return** `void`
 
-### Comprobar si hay errores
+### Fusionar en el archivo JSON
 
 ```php
-JsonLastError::check();
+$json->merge(array|object $content);
 ```
 
-**# Return** (array|null) → Null si no hay errores o array con código de estado y mensaje de error.
+**@throws** _CreateFileException_ | _GetFileException_ | _JsonErrorException_ | _UnavailableMethodException_
 
-### Obtener colección de errores JSON
+**@Return** `array` - _Array resultante_
+
+### Incluir en el archivo JSON
 
 ```php
-JsonLastError::getCollection();
+$json->push(array|object $content);
 ```
 
-**# Return** (array) → Recopilación de posibles errores.
+**@throws** _CreateFileException_ | _GetFileException_ | _JsonErrorException_ | _UnavailableMethodException_
+
+**@Return** `array` - _Array resultante_
 
 ## Cómo empezar
 
@@ -132,56 +117,94 @@ require __DIR__ . '/vendor/autoload.php';
 use josantonius\Json\Json;
 ```
 
-Si la instalaste **manualmente**, utiliza:
+```php
+$json = new Json('path/to/file.json');
+
+# Si el archivo no existe, se creará.
+```
+
+O
 
 ```php
-require_once __DIR__ . '/Json.php';
-require_once __DIR__ . '/JsonLastError.php';
-require_once __DIR__ . '/JsonException.php';
+$json = new Json('https://site.com/file.json');
 
-use josantonius\Json\Json;
+# Cuando el archivo JSON se obtiene desde una URL, sólo estará disponible el método "get".
 ```
 
 ## Uso
 
 Ejemplo de uso para esta biblioteca:
 
-### Crear un archivo JSON desde un array
+### Obtener el contenido del archivo
 
-```php
-$array = [
- 'name'  => 'josantonius',
-    'email' => 'info@josantonius.com',
-    'url'   => 'https://github.com/josantonius/php-json'
-];
-
-$pathfile = __DIR__ . '/filename.json';
-
-Json::arrayToFile($array, $pathfile);
-```
-
-### Guardar en un array el contenido de un archivo JSON
-
-```php
-$pathfile = __DIR__ . '/filename.json';
-
-$array = Json::fileToArray($pathfile);
-```
-
-### Comprobar si hubo errores
-
-```php
-$lastError = JsonLastError::check();
-
-if (!is_null($lastError)) {
-    var_dump($lastError);
+```json
+{
+    "foo": "bar"
 }
 ```
 
-### Obtener colección con errores JSON
+```php
+$json->get();
+```
 
 ```php
-$jsonLastErrorCollection = JsonLastError::getCollection();
+['foo' => 'bar']
+```
+
+### Establecer el contenido del archivo
+
+```php
+$json->set(['foo' => 'bar']);
+```
+
+```json
+{
+    "foo": "bar"
+}
+```
+
+### Fusionar en el archivo
+
+```json
+{
+    "foo": "bar"
+}
+```
+
+```php
+$json->merge(['bar' => 'foo']);
+```
+
+```json
+{
+    "foo": "bar",
+    "bar": "foo"
+}
+```
+
+### Incluir en el archivo
+
+```json
+[
+    {
+        "name": "foo"
+    }
+]
+```
+
+```php
+$json->push(['name'  => 'bar']);
+```
+
+```json
+[
+    {
+        "name": "foo"
+    },
+    {
+        "name": "bar"
+    }
+]
 ```
 
 ## Tests
@@ -227,10 +250,6 @@ Ejecutar todas las pruebas anteriores:
 composer tests
 ```
 
-## Manejo de excepciones
-
-Esta biblioteca utiliza [control de excepciones](src/Exception) que puedes personalizar a tu gusto.
-
 ## ☑ Tareas pendientes
 
 - [ ] Añadir nueva funcionalidad.
@@ -254,8 +273,8 @@ _pull request_, comenzar una discusión o reportar un _issue_.
 
 ## Patrocinar
 
-Si este proyecto te ayuda a reducir el tiempo de desarrollo,
-[¡puedes patrocinarme!](https://github.com/josantonius/lang/es-ES/README.md#patrocinar) :blush:
+Si este proyecto te ayuda a reducir el tiempo de desarrollo y quieres agradecérmelo,
+[¡podrías patrocinarme!](https://github.com/josantonius/lang/es-ES/README.md#patrocinar) :blush:
 
 ## Licencia
 

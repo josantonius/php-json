@@ -29,7 +29,7 @@
     "require-dev": {
         "phpmd/phpmd": "^2.6",
         "phpunit/phpunit": "^9.0",
-        "squizlabs/php_codesniffer": "^3.6.2"
+        "squizlabs/php_codesniffer": "^3.7"
     },
     "minimum-stability": "stable",
     "autoload": {
@@ -39,7 +39,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Josantonius\\Json\\": "tests/"
+            "Josantonius\\Json\\Tests\\": "tests/"
         }
     },
     "config": {
@@ -55,6 +55,7 @@
         "fix": [
             "vendor/bin/phpcbf src tests"
         ],
+        "htmlCoverage": "vendor/bin/phpunit --coverage-html coverage",
         "phpcs": "vendor/bin/phpcs --standard=phpcs.xml $(find . -name '*.php');",
         "phpmd": "vendor/bin/phpmd src,tests text ./phpmd.xml",
         "phpunit": "vendor/bin/phpunit --colors=always;",

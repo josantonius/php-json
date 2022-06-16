@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * PHP simple library for managing JSON files.
  *
@@ -7,28 +9,21 @@
  * @copyright 2016 (c) Josantonius
  * @license   https://opensource.org/licenses/MIT - The MIT License (MIT)
  * @link      https://github.com/josantonius/php-json
- * @since     1.0.0
+ * @since     2.0.0
  */
 namespace Josantonius\Json\Exception;
 
 /**
- * Exception class for JSON library.
- *
  * You can use an exception and error handler with this library.
  *
  * @link https://github.com/josantonius/php-errorhandler
  */
-class JsonException extends \Exception
+class JsonErrorException extends \Exception
 {
-    /**
-     * Exception handler.
-     *
-     * @param string $msg    → message error (Optional)
-     * @param int    $status → HTTP response status code (Optional)
-     */
-    public function __construct($msg = '', $status = 0)
+    public function __construct(\Throwable $th = null)
     {
-        $this->message    = $msg;
-        $this->statusCode = $status;
+        $message = 'JSON error: ' . json_last_error_msg();
+
+        parent::__construct($th ? $th->getMessage() : $message, 0, $th);
     }
 }

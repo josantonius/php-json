@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * PHP simple library for managing JSON files.
  *
@@ -9,130 +11,325 @@
  * @link      https://github.com/josantonius/php-json
  * @since     1.1.3
  */
-namespace Josantonius\Json;
+namespace Josantonius\Json\Tests;
 
-use Josantonius\Json\Exception\JsonException;
+use Josantonius\Json\Exception\CreateDirectoryException;
+use Josantonius\Json\Exception\CreateFileException;
+use Josantonius\Json\Exception\GetFileException;
+use Josantonius\Json\Exception\JsonErrorException;
+use Josantonius\Json\Exception\UnavailableMethodException;
+use Josantonius\Json\Json;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Tests class for JSON library.
- */
 class JsonTest extends TestCase
 {
     /**
-     * JSON instance.
-     *
-     * @since 1.1.6
-     *
-     * @var object
+     * @since 2.0.0
      */
-    protected $json;
+    private string $filepath =  __DIR__ . '/filename.json';
 
     /**
-     * Set up.
-     *
+     * @since 2.0.0
+     */
+    private string $url = 'https://raw.githubusercontent.com/josantonius/php-json/main/composer.json';
+
+    /**
      * @since 1.1.6
      */
     public function setUp(): void
     {
-        parent::setUp();
-
-        $this->json = new Json;
+        parent::setup();
     }
 
     /**
-     * Check if it is an instance of JSON.
-     *
-     * @since 1.1.6
+     * @since 2.0.0
      */
-    public function testGetCollection()
+    public function tearDown(): void
     {
-        $this->assertInstanceOf('Josantonius\Json\Json', $this->json);
+        if (file_exists($this->filepath)) {
+            unlink($this->filepath);
+        }
     }
 
     /**
-     * Creating JSON file from array.
+     * @test
+     * @since 2.0.0
      */
-    public function testArrayToFile()
+    public function itShouldReturnValidInstance(): void
     {
-        $json = $this->json;
-
-        $array = [
-            'name'  => 'Josantonius',
-            'email' => 'hello@josantonius.dev',
-            'url'   => 'https://github.com/josantonius/php-json',
-        ];
-
-        $file   = __DIR__.'/filename.json';
-        $result = $json::arrayToFile($array, $file);
-
-        $this->assertFileIsReadable($file);
-
-        $this->assertTrue($result);
+        $this->assertInstanceOf(Json::class, new Json($this->filepath));
     }
 
     /**
-     * Exception to creating JSON file from array.
+     * @test
+     * @since 2.0.0
      */
-    public function testArrayToFileCreateFileException()
+    public function constructorShouldCreateTheFileIfNotExist(): void
     {
-        $json = $this->json;
+        $this->assertFalse(file_exists($this->filepath));
+        
+        new Json($this->filepath);
+        
+        $this->assertTrue(file_exists($this->filepath));
 
-        $this->expectException(JsonException::class);
-
-        $json::arrayToFile([], '..');
+        $this->assertEquals('[]', file_get_contents($this->filepath));
     }
 
     /**
-     * Get to array the JSON file content.
+     * @test
+     * @since 2.0.0
      */
-    public function testFileToArray()
+    public function constructorShouldThrowExceptionIfPathIsWrong(): void
     {
-        $json = $this->json;
+        $this->expectException(CreateDirectoryException::class);
 
-        $file = __DIR__.'/filename.json';
-
-        $this->assertArrayHasKey('name', $json::fileToArray($file));
-        $this->assertArrayHasKey('email', $json::fileToArray($file));
-        $this->assertArrayHasKey('url', $json::fileToArray($file));
-
-        unlink($file);
+        new Json('/foo:/filename.json');
     }
 
     /**
-     * Error when file doesn't exist and cannot create file.
+     * @test
+     * @since 2.0.0
      */
-    public function testFileToArrayCreateFileException()
+    public function constructorShouldThrowExceptionIfFilenameIsWrong(): void
     {
-        $json = $this->json;
-
-        $this->expectException(JsonException::class);
-
-        $json::fileToArray(__DIR__.'');
+        $this->expectException(CreateFileException::class);
+    
+        new Json('/file:name.json');
     }
 
     /**
-     * Get external JSON file and save as array.
+     * @test
+     * @since 2.0.0
      */
-    public function testExternalFileToArray()
+    public function itShouldGetFileContents(): void
     {
-        $json = $this->json;
+        $jsonFile = new Json($this->filepath);
 
-        $file = 'https://raw.githubusercontent.com/josantonius/php-json/master/composer.json';
-
-        $this->assertArrayHasKey('name', $json::fileToArray($file));
-        $this->assertArrayHasKey('type', $json::fileToArray($file));
+        $this->assertEquals([], $jsonFile->get());
     }
 
     /**
-     * Get external JSON file and save as array.
+     * @test
+     * @since 2.0.0
      */
-    public function testExternalFileNonExistentToArray()
+    public function itShouldGetRemoteFileContents(): void
     {
-        $json = $this->json;
+        $jsonFile = new Json($this->url);
 
-        $file = 'https://raw.githubusercontent.com/composer.json';
+        $this->assertArrayHasKey('name', $jsonFile->get());
+    }
 
-        $this->assertFalse($json::fileToArray($file));
+    /**
+     * @test
+     * @since 2.0.0
+     */
+    public function itShouldSetArrayOnJsonFile(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        $array = ['foo' => 'bar'];
+
+        $jsonFile->set($array);
+
+        $this->assertEquals($array, json_decode(file_get_contents($this->filepath), true));
+    }
+
+    /**
+     * @test
+     * @since 2.0.0
+     */
+    public function itShouldSetObjectOnJsonFile(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        $object = (object) ['foo' => 'bar'];
+
+        $jsonFile->set($object);
+
+        $this->assertEquals($object, json_decode(file_get_contents($this->filepath)));
+    }
+
+    /**
+     * @test
+     * @since 2.0.0
+     */
+    public function itShouldThrowExceptionIfSetMethodIsUsedWithRemoteFile(): void
+    {
+        $jsonFile = new Json($this->url);
+
+        $this->expectException(UnavailableMethodException::class);
+
+        $jsonFile->set(['foo' => 'bar']);
+    }
+
+    /**
+     * @test
+     * @since 2.0.0
+     */
+    public function itShouldMergeArrayOnJsonFile(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        $jsonFile->set(['foo' => 'bar']);
+
+        $jsonFile->merge(['bar' => 'foo']);
+
+        $this->assertEquals([
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ], json_decode(file_get_contents($this->filepath), true));
+    }
+
+    /**
+     * @test
+     * @since 2.0.0
+     */
+    public function itShouldMergeObjectOnJsonFile(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        $jsonFile->set(['foo' => 'bar']);
+
+        $object = (object) ['bar' => 'foo'];
+
+        $jsonFile->merge($object);
+
+        $this->assertEquals([
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ], json_decode(file_get_contents($this->filepath), true));
+    }
+
+    /**
+     * @test
+     * @since 2.0.0
+     */
+    public function itShouldThrowExceptionIfMergeMethodIsUsedWithRemoteFile(): void
+    {
+        $jsonFile = new Json($this->url);
+
+        $this->expectException(UnavailableMethodException::class);
+
+        $jsonFile->merge(['bar' => 'foo']);
+    }
+
+    /**
+     * @test
+     * @since 2.0.0
+     */
+    public function itShouldPushArrayOnJsonFile(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        $jsonFile->set([['foo' => 'bar']]);
+
+        $jsonFile->push(['bar' => 'foo']);
+
+        $this->assertEquals(
+            [['foo' => 'bar'], ['bar' => 'foo']],
+            json_decode(file_get_contents($this->filepath), true)
+        );
+    }
+
+    /**
+     * @test
+     * @since 2.0.0
+     */
+    public function itShouldPushObjectOnJsonFile(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        $jsonFile->set([['foo' => 'bar']]);
+
+        $jsonFile->push((object) ['bar' => 'foo']);
+
+        $this->assertEquals(
+            [['foo' => 'bar'], ['bar' => 'foo']],
+            json_decode(file_get_contents($this->filepath), true)
+        );
+    }
+
+    /**
+     * @test
+     * @since 2.0.0
+     */
+    public function itShouldThrowExceptionIfPushMethodIsUsedWithRemoteFile(): void
+    {
+        $jsonFile = new Json($this->url);
+
+        $this->expectException(UnavailableMethodException::class);
+
+        $jsonFile->push(['bar' => 'foo']);
+    }
+
+    /**
+     * @test
+     * @since 2.0.0
+     */
+    public function itShouldThrowExceptionIfFileCannotBeObtained(): void
+    {
+        $jsonFile = new Json($this->filepath);
+        
+        unlink($this->filepath);
+
+        $this->expectException(GetFileException::class);
+
+        $jsonFile->push((object) ['bar' => 'foo']);
+    }
+
+
+    /**
+     * @test
+     * @since 2.0.0
+     */
+    public function itShouldThrowExceptionIfRemoteFileCannotBeObtained(): void
+    {
+        $jsonFile = new Json($this->url . 'wrong');
+
+        $this->expectException(GetFileException::class);
+
+        $jsonFile->push((object) ['bar' => 'foo']);
+    }
+
+    /**
+     * @test
+     * @since 2.0.0
+     */
+    public function itShouldThrowExceptionWhenThereAreJsonErrorsInTheFile(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        file_put_contents($this->filepath, '{');
+
+        $this->expectException(JsonErrorException::class);
+
+        $jsonFile->get();
+    }
+
+    /**
+     * @test
+     * @since 2.0.0
+     */
+    public function arrayToFileStaticMethodShouldBehaveLikeTheSetMethod()
+    {
+        $json = new Json($this->filepath);
+
+        $json->arrayToFile(['foo' => 'bar'], $this->filepath);
+        
+        $this->assertEquals(['foo' => 'bar'], json_decode(
+            file_get_contents($this->filepath),
+            true
+        ));
+    }
+
+    /**
+     * @test
+     * @since 2.0.0
+     */
+    public function fileToArrayStaticMethodShouldBehaveLikeTheGetMethod()
+    {
+        $json = new Json($this->filepath);
+
+        $this->assertEquals($json->fileToArray($this->filepath), $json->get());
     }
 }

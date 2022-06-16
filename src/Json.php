@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * PHP simple library for managing JSON files.
  *
@@ -12,91 +14,241 @@
 
 namespace Josantonius\Json;
 
-use Josantonius\Json\Exception\JsonException;
+use Josantonius\Json\Exception\CreateDirectoryException;
+use Josantonius\Json\Exception\CreateFileException;
+use Josantonius\Json\Exception\GetFileException;
+use Josantonius\Json\Exception\JsonErrorException;
+use Josantonius\Json\Exception\UnavailableMethodException;
 
-/**
- * Json handler.
- */
 class Json
 {
     /**
-     * Creating JSON file from array.
+     * If the file path is a URL.
      *
-     * @param array  $array → array to be converted to JSON
-     * @param string $file  → path to the file
-     *
-     * @return boolean → true if the file is created without errors
+     * @since 2.0.0
      */
-    public static function arrayToFile($array, $file)
-    {
-        self::createDirectory($file);
-
-        $lastError = JsonLastError::check();
-
-        $json = json_encode($lastError ? $lastError : $array, JSON_PRETTY_PRINT);
-
-        self::saveFile($file, $json);
-
-        return is_null($lastError);
-    }
+    private bool $isUrl;
 
     /**
-     * Save to array the JSON file content.
+     * @since 2.0.0
      *
-     * @param string $file → path or external url to JSON file
-     *
-     * @return array|false
+     * @throws CreateDirectoryException
+     * @throws CreateFileException
+     * @throws JsonErrorException
      */
-    public static function fileToArray($file)
+    public function __construct(private string $filepath)
     {
-        if (!is_file($file) && !filter_var($file, FILTER_VALIDATE_URL)) {
-            self::arrayToFile([], $file);
-        }
+        $this->isUrl = filter_var($filepath, FILTER_VALIDATE_URL) !== false;
 
-        $json      = @file_get_contents($file);
-        $array     = json_decode($json, true);
-        $lastError = JsonLastError::check();
-
-        return $array === null || !is_null($lastError) ? false : $array;
-    }
-
-    /**
-     * Create directory recursively if it doesn't exist.
-     *
-     * @since 1.1.3
-     *
-     * @param string $file → path to the directory
-     *
-     * @throws JsonException → couldn't create directory
-     */
-    private static function createDirectory($file)
-    {
-        $basename = is_string($file) ? basename($file) : '';
-        $path     = str_replace($basename, '', $file);
-
-        if (!empty($path) && !is_dir($path)) {
-            if (!mkdir($path, 0755, true)) {
-                $message = 'Could not create directory in';
-                throw new JsonException($message . ' ' . $path);
-            }
+        if (!$this->isUrl) {
+            $this->createFileIfNotExists($filepath);
         }
     }
 
     /**
-     * Save file.
+     * Get the content of the JSON file or a remote JSON file.
      *
-     * @since 1.1.3
+     * @since 2.0.0
      *
-     * @param string $file → path to the file
-     * @param string $json → JSON string
-     *
-     * @throws JsonException → couldn't create file
+     * @throws GetFileException
+     * @throws JsonErrorException
      */
-    private static function saveFile($file, $json)
+    public function get(): array
     {
-        if (@file_put_contents($file, $json) === false) {
-            $message = 'Could not create file in';
-            throw new JsonException($message . ' ' . $file);
+        return $this->getFileContents();
+    }
+
+    /**
+     * Set the content of the JSON file.
+     *
+     * @since 2.0.0
+     *
+     * @throws CreateFileException
+     * @throws JsonErrorException
+     * @throws UnavailableMethodException
+     */
+    public function set(array|object $content): void
+    {
+        $this->isUrl ? $this->throwUnavailableMethodException() : $this->saveToJsonFile($content);
+    }
+
+    /**
+     * Merge into JSON file.
+     *
+     * @since 2.0.0
+     *
+     * @throws CreateFileException
+     * @throws GetFileException
+     * @throws JsonErrorException
+     * @throws UnavailableMethodException
+     */
+    public function merge(array|object $content): array
+    {
+        $content = array_merge($this->getFileContents(), (array) $content);
+
+        $this->isUrl ? $this->throwUnavailableMethodException() : $this->saveToJsonFile($content);
+
+        return $content;
+    }
+
+    /**
+     * Push on the JSON file.
+     *
+     * @since 2.0.0
+     *
+     * @throws CreateFileException
+     * @throws GetFileException
+     * @throws JsonErrorException
+     * @throws UnavailableMethodException
+     */
+    public function push(array|object $content): array
+    {
+        $data = $this->getFileContents();
+
+        array_push($data, $content);
+
+        $this->isUrl ? $this->throwUnavailableMethodException() : $this->saveToJsonFile($data);
+
+        return $data;
+    }
+
+    /**
+     * Create JSON file from array.
+     *
+     * @deprecated
+     *
+     * @throws CreateFileException
+     * @throws JsonErrorException
+     * @throws UnavailableMethodException
+     */
+    public static function arrayToFile(array|object $array, string $file): bool
+    {
+        $message = 'The "arrayToFile" method is deprecated and will be removed. Use "set" instead.';
+        $url     = 'More information at: https://github.com/josantonius/php-json.';
+        trigger_error($message . ' ' . $url, E_USER_DEPRECATED);
+
+        (new Json($file))->set($array);
+
+        return true;
+    }
+
+    /**
+     * Get the content of the JSON file or a remote JSON file.
+     *
+     * @deprecated
+     *
+     * @throws GetFileException
+     * @throws JsonErrorException
+     */
+    public static function fileToArray($file): array
+    {
+        $message = 'The "fileToArray" method is deprecated and will be removed. Use "get" instead.';
+        $url     = 'More information at: https://github.com/josantonius/php-json.';
+        trigger_error($message . ' ' . $url, E_USER_DEPRECATED);
+
+        return (new Json($file))->get();
+    }
+
+    /**
+     * Create file if not exists.
+     *
+     * @since 2.0.0
+     *
+     * @throws CreateDirectoryException
+     * @throws CreateFileException
+     * @throws JsonErrorException
+     */
+    private function createFileIfNotExists(): void
+    {
+        if (!file_exists($this->filepath)) {
+            $this->createDirIfNotExists();
+            $this->saveToJsonFile([]);
         }
+    }
+
+    /**
+     * Create directory if not exists.
+     *
+     * @since 2.0.0
+     *
+     * @throws CreateDirectoryException
+     */
+    private function createDirIfNotExists(): void
+    {
+        $path = dirname($this->filepath) . DIRECTORY_SEPARATOR;
+
+        if (!is_dir($path) && !@mkdir($path, 0777, true)) {
+            throw new CreateDirectoryException($path);
+        }
+    }
+
+    /**
+     * Get the content of the JSON file or a remote JSON file.
+     *
+     * @since 2.0.0
+     *
+     * @throws GetFileException
+     * @throws JsonErrorException
+     */
+    private function getFileContents(): array
+    {
+        $json = @file_get_contents($this->filepath);
+
+        if ($json === false) {
+            throw new GetFileException($this->filepath);
+        }
+
+        $array = json_decode($json, true);
+
+        $this->checkJsonLastError();
+
+        return $array;
+    }
+
+    /**
+     * Save content in JSON file.
+     *
+     * @since 2.0.0
+     *
+     * @throws CreateFileException
+     * @throws JsonErrorException
+     */
+    private function saveToJsonFile(array|object $array): void
+    {
+        $json = json_encode($array, JSON_PRETTY_PRINT);
+
+        $this->checkJsonLastError();
+
+        if (@file_put_contents($this->filepath, $json) === false) {
+            throw new CreateFileException($this->filepath);
+        }
+    }
+
+    /**
+     * Check for JSON errors.
+     *
+     * @since 2.0.0
+     *
+     * @throws JsonErrorException
+     */
+    private function checkJsonLastError(): void
+    {
+        if (json_last_error()) {
+            throw new JsonErrorException();
+        }
+    }
+
+    /**
+     * Throw exception if the method is not available for remote JSON files.
+     *
+     * @since 2.0.0
+     *
+     * @throws UnavailableMethodException
+     */
+    private function throwUnavailableMethodException(): void
+    {
+        $method = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2)[1]['function'];
+        
+        throw new UnavailableMethodException($method);
     }
 }

@@ -1,4 +1,5 @@
 vendor/
+coverage/
 .vscode/
 composer.phar
 composer.lock

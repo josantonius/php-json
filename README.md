@@ -20,7 +20,6 @@ PHP simple library for managing JSON files.
 - [Quick Start](#quick-start)
 - [Usage](#usage)
 - [Tests](#tests)
-- [Exception Handler](#exception-handler)
 - [TODO](#-todo)
 - [Changelog](#changelog)
 - [Contribution](#contribution)
@@ -33,8 +32,13 @@ PHP simple library for managing JSON files.
 
 This library is compatible from **PHP 8.0** version to **PHP 8.1** version.
 
-For older versions of PHP (from **5.6** to **7.4**) you can use
-[version 1.1.9](https://github.com/josantonius/php-json/tree/1.1.9) of this library.
+To continue using the version with static methods without the new features:
+
+- For older versions of PHP (from **5.6** to **7.4**),
+[version 1.1.9](https://github.com/josantonius/php-json/tree/1.1.9) of this library can be used.
+
+- For PHP versions **8.0** and **8.1**,
+[version 1.2.0](https://github.com/josantonius/php-json/tree/1.2.0) of this library can be used.
 
 ## Installation
 
@@ -59,68 +63,49 @@ You can also **clone the complete repository** with Git:
 git clone https://github.com/josantonius/php-json.git
 ```
 
-Or **install it manually**:
-
-Download [Json.php](https://raw.githubusercontent.com/josantonius/php-json/main/src/Json.php),
-[JsonLastError.php](https://raw.githubusercontent.com/josantonius/php-json/main/src/JsonLastError.php) and
-[JsonException.php](https://raw.githubusercontent.com/josantonius/php-json/main/src/Exception/JsonException.php):
-
-```console
-wget https://raw.githubusercontent.com/josantonius/php-json/main/src/Json.php
-```
-
-```console
-wget https://raw.githubusercontent.com/josantonius/php-json/main/src/JsonLastError.php
-```
-
-```console
-wget https://raw.githubusercontent.com/josantonius/php-json/main/src/Exception/JsonException.php
-```
-
 ## Available Methods
 
 Available methods in this library:
 
-### Create JSON file from array
+### Get JSON file contents
 
 ```php
-Json::arrayToFile($array, $file);
+$json->get();
 ```
 
-| Attribute | Description | Type | Required | Default
-| --- | --- | --- | --- | --- |
-| $array | Array to be converted to JSON. | array | Yes | |
-| $file | Path to the file. | string | Yes | |
+**@throws** _CreateDirectoryException_ | _CreateFileException_ | _JsonErrorException_
 
-**# Return** (boolean)
+**@Return** `array` - _File contents_
 
-### Save to array the JSON file content
+### Set the content of the JSON file
 
 ```php
-Json::fileToArray($file);
+$json->set(array|object $content);
 ```
 
-| Attribute | Description | Type | Required | Default
-| --- | --- | --- | --- | --- |
-| $file | Path or external url to JSON file. | string | Yes | |
+**@throws** _CreateFileException_ | _JsonErrorException_ | _UnavailableMethodException_
 
-**# Return** (array|false)
+**@Return** `void`
 
-### Check for errors
+### Merge into JSON file
 
 ```php
-JsonLastError::check();
+$json->merge(array|object $content);
 ```
 
-**# Return** (array|null) → Null if there are no errors or array with state  code and error message.
+**@throws** _CreateFileException_ | _GetFileException_ | _JsonErrorException_ | _UnavailableMethodException_
 
-### Get collection of JSON errors
+**@Return** `array` - _Resulting array_
+
+### Push on the JSON file
 
 ```php
-JsonLastError::getCollection();
+$json->push(array|object $content);
 ```
 
-**# Return** (array) → Collection of JSON errors.
+**@throws** _CreateFileException_ | _GetFileException_ | _JsonErrorException_ | _UnavailableMethodException_
+
+**@Return** `array` - _Resulting array_
 
 ## Quick Start
 
@@ -132,56 +117,94 @@ require __DIR__ . '/vendor/autoload.php';
 use josantonius\Json\Json;
 ```
 
-Or If you installed it **manually**, use it:
+```php
+$json = new Json('path/to/file.json');
+
+# If the file does not exist it will be created.
+```
+
+OR
 
 ```php
-require_once __DIR__ . '/Json.php';
-require_once __DIR__ . '/JsonLastError.php';
-require_once __DIR__ . '/JsonException.php';
+$json = new Json('https://site.com/file.json');
 
-use josantonius\Json\Json;
+# When the JSON file is obtained from a URL, only the "get" method is available.
 ```
 
 ## Usage
 
 Example of use for this library:
 
-### Create a JSON file from an array
+### Get the JSON file contents
 
-```php
-$array = [
- 'name'  => 'josantonius',
-    'email' => 'info@josantonius.dev',
-    'url'   => 'https://github.com/josantonius/php-json'
-];
-
-$filepath = __DIR__ . '/filename.json';
-
-Json::arrayToFile($array, $filepath);
-```
-
-### Save the contents of the JSON file in an array
-
-```php
-$filepath = __DIR__ . '/filename.json';
-
-$array = Json::fileToArray($filepath);
-```
-
-### Checks for errors
-
-```php
-$lastError = JsonLastError::check();
-
-if (!is_null($lastError)) {
-    var_dump($lastError);
+```json
+{
+    "foo": "bar"
 }
 ```
 
-### Get a JSON error collection
+```php
+$json->get();
+```
 
 ```php
-$jsonLastErrorCollection = JsonLastError::getCollection();
+['foo' => 'bar']
+```
+
+### Set the JSON file contents
+
+```php
+$json->set(['foo' => 'bar']);
+```
+
+```json
+{
+    "foo": "bar"
+}
+```
+
+### Merge data into JSON file
+
+```json
+{
+    "foo": "bar"
+}
+```
+
+```php
+$json->merge(['bar' => 'foo']);
+```
+
+```json
+{
+    "foo": "bar",
+    "bar": "foo"
+}
+```
+
+### Push data on the JSON file
+
+```json
+[
+    {
+        "name": "foo"
+    }
+]
+```
+
+```php
+$json->push(['name'  => 'bar']);
+```
+
+```json
+[
+    {
+        "name": "foo"
+    },
+    {
+        "name": "bar"
+    }
+]
 ```
 
 ## Tests
@@ -226,10 +249,6 @@ Run all previous tests:
 composer tests
 ```
 
-## Exception Handler
-
-This library uses [exception handler](src/Exception) that you can customize.
-
 ## ☑ TODO
 
 - [ ] Add new feature.
@@ -252,8 +271,8 @@ Thanks to all [contributors](https://github.com/josantonius/php-json/graphs/cont
 
 ## Sponsor
 
-If this project help you reduce time to develop,
-[you can become my sponsor!](https://github.com/josantonius#sponsor) :blush:
+If this project helps you to reduce your development time and you want to thank me,
+[you could sponsor me!](https://github.com/josantonius#sponsor) :blush:
 
 ## License
 
