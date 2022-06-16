@@ -1,5 +1,78 @@
 # CHANGELOG
 
+## [2.0.0](https://github.com/josantonius/php-json/releases/tag/2.0.0) (2022-06-16)
+
+* The library was completely refactored.
+
+* Static methods are no longer used.
+
+* New methods were added to merge and push content in JSON files.
+
+* The JSON error handling class was removed in preference to a single method.
+
+* To continue using the version with static methods without the new features:
+
+  * For older versions of PHP (from **5.6** to **7.4**),
+[version 1.1.9](https://github.com/josantonius/php-json/tree/1.1.9) of this library can be used.
+
+  * For PHP versions **8.0** and **8.1**,
+[version 1.2.0](https://github.com/josantonius/php-json/tree/1.2.0) of this library can be used.
+
+* Deprecated `Josantonius\Json\Json::arrayToFile` method.
+* Deprecated `Josantonius\Json\Json::fileToArray` method.
+
+* Deleted `Josantonius\Json\Exception\JsonException` class.
+* Deleted `Josantonius\Json\JsonLastError` class.
+* Deleted `Josantonius\Json\Tests\JsonLastErrorTest` class.
+
+* Added `Josantonius\Json\Exception\CreateDirectoryException` class.
+* Added `Josantonius\Json\Exception\CreateFileException` class.
+* Added `Josantonius\Json\Exception\GetFileException` class.
+* Added `Josantonius\Json\Exception\JsonErrorException` class.
+* Added `Josantonius\Json\Exception\UnavailableMethodException` class.
+
+* Deleted `Josantonius\Json\Json::createDirectory` method.
+* Deleted `Josantonius\Json\Json::saveFile` method.
+
+* Added `Josantonius\Json\Json->__construct()` method.
+* Added `Josantonius\Json\Json->get()` method.
+* Added `Josantonius\Json\Json->set()` method.
+* Added `Josantonius\Json\Json->merge()` method.
+* Added `Josantonius\Json\Json->push()` method.
+* Added `Josantonius\Json\Json->createFileIfNotExists()` private method.
+* Added `Josantonius\Json\Json->createDirIfNotExists()` private method.
+* Added `Josantonius\Json\Json->getFileContents()` private method.
+* Added `Josantonius\Json\Json->saveToJsonFile()` private method.
+* Added `Josantonius\Json\Json->checkJsonLastError()` private method.
+
+* Deleted `JsonTest->testGetCollection()` method.
+* Deleted `JsonTest->testArrayToFileCreateFileException()` method.
+* Deleted `JsonTest->testFileToArray()` method.
+* Deleted `JsonTest->testFileToArrayCreateFileException()` method.
+* Deleted `JsonTest->testExternalFileToArray()` method.
+* Deleted `JsonTest->testExternalFileNonExistentToArray()` method.
+
+* Added `JsonTest->itShouldReturnValidInstance()` method.
+* Added `JsonTest->constructorShouldCreateTheFileIfNotExist()` method.
+* Added `JsonTest->constructorShouldThrowExceptionIfPathIsWrong()` method.
+* Added `JsonTest->constructorShouldThrowExceptionIfFilenameIsWrong()` method.
+* Added `JsonTest->itShouldGetFileContents()` method.
+* Added `JsonTest->itShouldGetRemoteFileContents()` method.
+* Added `JsonTest->itShouldSetArrayOnJsonFile()` method.
+* Added `JsonTest->itShouldSetObjectOnJsonFile()` method.
+* Added `JsonTest->itShouldThrowExceptionIfSetMethodIsUsedWithRemoteFile()` method.
+* Added `JsonTest->itShouldMergeArrayOnJsonFile()` method.
+* Added `JsonTest->itShouldMergeObjectOnJsonFile()` method.
+* Added `JsonTest->itShouldThrowExceptionIfMergeMethodIsUsedWithRemoteFile()` method.
+* Added `JsonTest->itShouldPushArrayOnJsonFile()` method.
+* Added `JsonTest->itShouldPushObjectOnJsonFile()` method.
+* Added `JsonTest->itShouldThrowExceptionIfPushMethodIsUsedWithRemoteFile()` method.
+* Added `JsonTest->itShouldThrowExceptionIfFileCannotBeObtained()` method.
+* Added `JsonTest->itShouldThrowExceptionIfRemoteFileCannotBeObtained()` method.
+* Added `JsonTest->itShouldThrowExceptionWhenThereAreJsonErrorsInTheFile()` method.
+* Added `JsonTest->arrayToFileStaticMethodShouldBehaveLikeTheSetMethod()` method.
+* Added `JsonTest->fileToArrayStaticMethodShouldBehaveLikeTheGetMethod()` method.
+
 ## [1.2.0](https://github.com/josantonius/php-json/releases/tag/1.2.0) (2022-06-13)
 
 * Support for PHP version **8.0** and higher.
@@ -128,7 +201,8 @@
 
 ## [1.1.2](https://github.com/josantonius/php-json/releases/tag/1.1.2) (2017-05-31)
 
-* The file exception not found in the `fileToArray()` method was deleted. Now if it does not exist the file will create it with an empty array.
+* The file exception not found in the `fileToArray()` method was deleted.
+Now if it does not exist the file will create it with an empty array.
 
 * `JSON_PRETTY_PRINT` was added at time to create the json file.
 
@@ -142,7 +216,8 @@
 
 ## [1.0.0](https://github.com/josantonius/php-json/releases/tag/1.0.0) (2016-12-14)
 
-* Compatible only with PHP 7.0 or higher. In the next versions, the library will be modified to make it compatible with PHP 5.6 or higher.
+* Compatible only with PHP 7.0 or higher.
+In the next versions, the library will be modified to make it compatible with PHP 5.6 or higher.
 
 * Added `Josantonius\Json\Json` class.
 * Added `Josantonius\Json\Json::arrayToFile()` method.
