@@ -83,7 +83,7 @@ class JsonTest extends TestCase
     {
         $this->expectException(CreateDirectoryException::class);
 
-        new Json(__DIR__ . '/foo|/filename.json');
+        new Json(__DIR__ . '/foo:/filename.json');
     }
 
     /**
@@ -94,7 +94,7 @@ class JsonTest extends TestCase
     {
         $this->expectException(CreateFileException::class);
     
-        new Json(__DIR__ . '/file|name.json');
+        new Json(__DIR__ . '/file:name.json');
     }
 
     /**
