@@ -2,31 +2,31 @@
 
 declare(strict_types=1);
 
-/**
- * PHP simple library for managing JSON files.
+/*
+ * This file is part of https://github.com/josantonius/php-json repository.
  *
- * @author    Josantonius <hello@josantonius.dev>
- * @copyright 2016 (c) Josantonius
- * @license   https://opensource.org/licenses/MIT - The MIT License (MIT)
- * @link      https://github.com/josantonius/php-json
- * @since     2.0.0
+ * (c) Josantonius <hello@josantonius.dev>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
+
 namespace Josantonius\Json\Exception;
 
 /**
  * You can use an exception and error handler with this library.
  *
- * @link https://github.com/josantonius/php-errorhandler
+ * @see https://github.com/josantonius/php-error-handler
  */
 class CreateFileException extends \Exception
 {
-    public function __construct(string $filepath, \Throwable $th = null)
+    public function __construct(string $filepath)
     {
         $lastError =  error_get_last()['message'] ?? '';
 
         $message  = "Could not create file '$filepath'.";
         $message .= $lastError ? " $lastError." : '';
 
-        parent::__construct($th ? $th->getMessage() : $message, 0, $th);
+        parent::__construct($message);
     }
 }
