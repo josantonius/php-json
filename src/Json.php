@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-/**
- * PHP simple library for managing JSON files.
+/*
+ * This file is part of https://github.com/josantonius/php-json repository.
  *
- * @author    Josantonius <hello@josantonius.dev>
- * @copyright 2016 (c) Josantonius
- * @license   https://opensource.org/licenses/MIT - The MIT License (MIT)
- * @link      https://github.com/josantonius/php-json
- * @since     1.0.0
+ * (c) Josantonius <hello@josantonius.dev>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Josantonius\Json;
@@ -20,18 +19,17 @@ use Josantonius\Json\Exception\GetFileException;
 use Josantonius\Json\Exception\JsonErrorException;
 use Josantonius\Json\Exception\UnavailableMethodException;
 
+/**
+ * PHP simple library for managing JSON files.
+ */
 class Json
 {
     /**
      * If the file path is a URL.
-     *
-     * @since 2.0.0
      */
     private bool $isUrl;
 
     /**
-     * @since 2.0.0
-     *
      * @throws CreateDirectoryException
      * @throws CreateFileException
      * @throws JsonErrorException
@@ -48,8 +46,6 @@ class Json
     /**
      * Get the content of the JSON file or a remote JSON file.
      *
-     * @since 2.0.0
-     *
      * @throws GetFileException
      * @throws JsonErrorException
      */
@@ -60,8 +56,6 @@ class Json
 
     /**
      * Set the content of the JSON file.
-     *
-     * @since 2.0.0
      *
      * @throws CreateFileException
      * @throws JsonErrorException
@@ -74,8 +68,6 @@ class Json
 
     /**
      * Merge into JSON file.
-     *
-     * @since 2.0.0
      *
      * @throws CreateFileException
      * @throws GetFileException
@@ -94,8 +86,6 @@ class Json
     /**
      * Push on the JSON file.
      *
-     * @since 2.0.0
-     *
      * @throws CreateFileException
      * @throws GetFileException
      * @throws JsonErrorException
@@ -113,46 +103,7 @@ class Json
     }
 
     /**
-     * Create JSON file from array.
-     *
-     * @deprecated
-     *
-     * @throws CreateFileException
-     * @throws JsonErrorException
-     * @throws UnavailableMethodException
-     */
-    public static function arrayToFile(array|object $array, string $file): bool
-    {
-        $message = 'The "arrayToFile" method is deprecated and will be removed. Use "set" instead.';
-        $url     = 'More information at: https://github.com/josantonius/php-json.';
-        trigger_error($message . ' ' . $url, E_USER_DEPRECATED);
-
-        (new Json($file))->set($array);
-
-        return true;
-    }
-
-    /**
-     * Get the content of the JSON file or a remote JSON file.
-     *
-     * @deprecated
-     *
-     * @throws GetFileException
-     * @throws JsonErrorException
-     */
-    public static function fileToArray($file): array
-    {
-        $message = 'The "fileToArray" method is deprecated and will be removed. Use "get" instead.';
-        $url     = 'More information at: https://github.com/josantonius/php-json.';
-        trigger_error($message . ' ' . $url, E_USER_DEPRECATED);
-
-        return (new Json($file))->get();
-    }
-
-    /**
      * Create file if not exists.
-     *
-     * @since 2.0.0
      *
      * @throws CreateDirectoryException
      * @throws CreateFileException
@@ -169,8 +120,6 @@ class Json
     /**
      * Create directory if not exists.
      *
-     * @since 2.0.0
-     *
      * @throws CreateDirectoryException
      */
     private function createDirIfNotExists(): void
@@ -184,8 +133,6 @@ class Json
 
     /**
      * Get the content of the JSON file or a remote JSON file.
-     *
-     * @since 2.0.0
      *
      * @throws GetFileException
      * @throws JsonErrorException
@@ -208,8 +155,6 @@ class Json
     /**
      * Save content in JSON file.
      *
-     * @since 2.0.0
-     *
      * @throws CreateFileException
      * @throws JsonErrorException
      */
@@ -227,8 +172,6 @@ class Json
     /**
      * Check for JSON errors.
      *
-     * @since 2.0.0
-     *
      * @throws JsonErrorException
      */
     private function checkJsonLastError(): void
@@ -241,14 +184,12 @@ class Json
     /**
      * Throw exception if the method is not available for remote JSON files.
      *
-     * @since 2.0.0
-     *
      * @throws UnavailableMethodException
      */
     private function throwUnavailableMethodException(): void
     {
         $method = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2)[1]['function'];
-        
+
         throw new UnavailableMethodException($method);
     }
 }
