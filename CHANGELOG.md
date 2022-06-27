@@ -1,5 +1,35 @@
 # CHANGELOG
 
+## [2.0.1](https://github.com/josantonius/php-json/releases/tag/2.0.1) (2022-06-28)
+
+* Exceptions were refactored.
+
+* Changes in documentation.
+
+* New code style rules have been added.
+
+* Implemented `PSR12 coding standard` from all library PHP files.
+
+* DELETED:
+  
+  `Josantonius\Json\Json::arrayToFile` method.
+  
+  `Josantonius\Json\Json::fileToArray` method.
+  
+  `Josantonius\Json\Tests\JsonTest` class.
+
+* ADDED:
+  
+  `Josantonius\Json\Tests\ConstructMethodTest` class.
+
+  `Josantonius\Json\Tests\GetMethodTest` class.
+
+  `Josantonius\Json\Tests\MergeMethodTest` class.
+
+  `Josantonius\Json\Tests\PushMethodTest` class.
+
+  `Josantonius\Json\Tests\SetMethodTest` class.
+
 ## [2.0.0](https://github.com/josantonius/php-json/releases/tag/2.0.0) (2022-06-16)
 
 * The library was completely refactored.
