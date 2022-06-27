@@ -172,7 +172,8 @@ cambios desde la rama `main`:
 
 Para garantizar la coherencia en todo el código fuente, ten en cuenta estas reglas mientras trabajas:
 
-- Todas las características o correcciones de errores **deben ser probadas** por una o más especificaciones (pruebas unitarias).
+- Todas las características o correcciones de errores **deben ser probadas** por una o más
+especificaciones (pruebas unitarias).
 
   Puedes utilizar el siguiente comando para comprobar las pruebas:
 
@@ -222,7 +223,8 @@ El _`header`_ es obligatorio y debe ajustarse al formato para el
 El _`body`_ es opcional. Cuando está presente, debe tener al menos 20 caracteres y debe
 ajustarse al formato del [cuerpo del _commit_](#cuerpo-del-commit).
 
-El _`footer`_ es opcional. El formato para la [parte inferior del _commit_](#parte-inferior-del-commit) detalla la estructura que debe tener.
+El _`footer`_ es opcional.
+El formato para la [parte inferior del _commit_](#parte-inferior-del-commit) detalla su estructura.
 
 ### Cabecera del _commit_
 
@@ -309,7 +311,8 @@ La sección de cambios de última hora debe comenzar con la frase "_BREAKING CHA
 resumen del cambio, una línea en blanco y una descripción detallada del cambio que incluya también
 instrucciones de migración.
 
-Del mismo modo, una sección de desaprobación debe comenzar con "_DEPRECATED_:" seguido de una breve descripción sobre lo que quedó obsoleto, una línea en blanco y una descripción detallada que también
+Del mismo modo, una sección de desaprobación debe comenzar con "_DEPRECATED_:" seguido de una breve
+descripción sobre lo que quedó obsoleto, una línea en blanco y una descripción detallada que también
 recomiende una alternativa.
 
 > Esta guía de contribución está inspirada en la

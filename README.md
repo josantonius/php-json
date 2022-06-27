@@ -4,9 +4,10 @@
 [![License](https://poser.pugx.org/josantonius/json/license)](LICENSE)
 [![Total Downloads](https://poser.pugx.org/josantonius/json/downloads)](https://packagist.org/packages/josantonius/json)
 [![CI](https://github.com/josantonius/php-json/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/josantonius/php-json/actions/workflows/ci.yml)
-[![PSR2](https://img.shields.io/badge/PSR-2-1abc9c.svg)](http://www.php-fig.org/psr/psr-2/)
-[![PSR4](https://img.shields.io/badge/PSR-4-9b59b6.svg)](http://www.php-fig.org/psr/psr-4/)
 [![CodeCov](https://codecov.io/gh/josantonius/php-json/branch/main/graph/badge.svg)](https://codecov.io/gh/josantonius/php-json)
+[![PSR1](https://img.shields.io/badge/PSR-1-f57046.svg)](https://www.php-fig.org/psr/psr-1/)
+[![PSR4](https://img.shields.io/badge/PSR-4-9b59b6.svg)](https://www.php-fig.org/psr/psr-4/)
+[![PSR12](https://img.shields.io/badge/PSR-12-1abc9c.svg)](https://www.php-fig.org/psr/psr-12/)
 
 **Translations**: [Español](.github/lang/es-ES/README.md)
 
@@ -30,15 +31,7 @@ PHP simple library for managing JSON files.
 
 ## Requirements
 
-This library is compatible from **PHP 8.0** version to **PHP 8.1** version.
-
-To continue using the version with static methods without the new features:
-
-- For older versions of PHP (from **5.6** to **7.4**),
-[version 1.1.9](https://github.com/josantonius/php-json/tree/1.1.9) of this library can be used.
-
-- For PHP versions **8.0** and **8.1**,
-[version 1.2.0](https://github.com/josantonius/php-json/tree/1.2.0) of this library can be used.
+This library is compatible with the PHP versions: 8.0 | 8.1.
 
 ## Installation
 
@@ -73,9 +66,13 @@ Available methods in this library:
 $json->get();
 ```
 
-**@throws** _CreateDirectoryException_ | _CreateFileException_ | _JsonErrorException_
+**@throws** `CreateDirectoryException` If there is an error when creating a directory
 
-**@Return** `array` - _File contents_
+**@throws** `CreateFileException` If there is an error when creating a file
+
+**@throws** `JsonErrorException` If there is an error when parsing a JSON file
+
+**@Return** `array` File contents
 
 ### Set the content of the JSON file
 
@@ -83,7 +80,11 @@ $json->get();
 $json->set(array|object $content);
 ```
 
-**@throws** _CreateFileException_ | _JsonErrorException_ | _UnavailableMethodException_
+**@throws** `CreateFileException` If there is an error when creating a file
+
+**@throws** `JsonErrorException` If there is an error when parsing a JSON file
+
+**@throws** `UnavailableMethodException` If the method is not available
 
 **@Return** `void`
 
@@ -93,9 +94,15 @@ $json->set(array|object $content);
 $json->merge(array|object $content);
 ```
 
-**@throws** _CreateFileException_ | _GetFileException_ | _JsonErrorException_ | _UnavailableMethodException_
+**@throws** `CreateFileException` If there is an error when creating a file
 
-**@Return** `array` - _Resulting array_
+**@throws** `GetFileException` If there is an error when getting a file
+
+**@throws** `JsonErrorException` If there is an error when parsing a JSON file
+
+**@throws** `UnavailableMethodException` If the method is not available
+
+**@Return** `array` Resulting array
 
 ### Push on the JSON file
 
@@ -103,9 +110,15 @@ $json->merge(array|object $content);
 $json->push(array|object $content);
 ```
 
-**@throws** _CreateFileException_ | _GetFileException_ | _JsonErrorException_ | _UnavailableMethodException_
+**@throws** `CreateFileException` If there is an error when creating a file
 
-**@Return** `array` - _Resulting array_
+**@throws** `GetFileException` If there is an error when getting a file
+
+**@throws** `JsonErrorException` If there is an error when parsing a JSON file
+
+**@throws** `UnavailableMethodException` If the method is not available
+
+**@Return** `array` Resulting array
 
 ## Quick Start
 
@@ -230,8 +243,7 @@ Run unit tests with [PHPUnit](https://phpunit.de/):
 composer phpunit
 ```
 
-Run [PSR2](http://www.php-fig.org/psr/psr-2/) code standard tests with
-[PHPCS](https://github.com/squizlabs/PHP_CodeSniffer):
+Run code standard tests with [PHPCS](https://github.com/squizlabs/PHP_CodeSniffer):
 
 ```console
 composer phpcs
@@ -271,8 +283,8 @@ Thanks to all [contributors](https://github.com/josantonius/php-json/graphs/cont
 
 ## Sponsor
 
-If this project helps you to reduce your development time and you want to thank me,
-[you could sponsor me!](https://github.com/josantonius#sponsor) :blush:
+If this project helps you to reduce your development time,
+[you can sponsor me](https://github.com/josantonius#sponsor) to support my open source work :blush:
 
 ## License
 
