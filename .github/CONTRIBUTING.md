@@ -42,9 +42,10 @@ appropriate category for it:
 ## Add or Improve a Feature?
 
 - For a **Major Feature**,
-first [open a new discussion](https://github.com/josantonius/php-json/discussions/new) in the `Ideas` category and outline your proposal so that it can be discussed. This will also allow us to better
-coordinate our efforts, prevent duplication of work, and help you to craft the change so that it is
-successfully accepted into the project.
+first [open a new discussion](https://github.com/josantonius/php-json/discussions/new) in the
+`Ideas` category and outline your proposal so that it can be discussed. This will also allow us to
+better coordinate our efforts, prevent duplication of work, and help you to craft the change so that
+it is successfully accepted into the project.
 
 - **Small Features** can be crafted and directly
 [submitted as a Pull Request](#submitting-a-pull-request).
