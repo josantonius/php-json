@@ -19,9 +19,9 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/josantonius/php-asset/issues",
-        "forum": "http://stackoverflow.com/tags/josantonius/php-asset",
-        "source": "https://github.com/josantonius/php-asset"
+        "issues": "https://github.com/josantonius/php-json/issues",
+        "discussions": "https://github.com/josantonius/php-json/discussions",
+        "source": "https://github.com/josantonius/php-json"
     },
     "require": {
         "php": "^8.0"
