@@ -7,21 +7,20 @@
         "JSON",
         "File to array",
         "Array to file",
-        "JavaScript",
         "PHP"
     ],
     "authors": [
         {
             "name": "Josantonius",
-            "email": "hello@josantonius.com",
+            "email": "hello@josantonius.dev",
             "homepage": "https://josantonius.dev",
             "role": "Developer"
         }
     ],
     "support": {
         "issues": "https://github.com/josantonius/php-json/issues",
-        "discussions": "https://github.com/josantonius/php-json/discussions",
-        "source": "https://github.com/josantonius/php-json"
+        "source": "https://github.com/josantonius/php-json",
+        "discussions": "https://github.com/josantonius/php-json/discussions"
     },
     "require": {
         "php": "^8.0"
