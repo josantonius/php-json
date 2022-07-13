@@ -4,10 +4,10 @@
     "license": "MIT",
     "type": "library",
     "keywords": [
-        "JSON",
-        "File to array",
-        "Array to file",
-        "PHP"
+        "json",
+        "file-to-array",
+        "array-to-file",
+        "php"
     ],
     "authors": [
         {
