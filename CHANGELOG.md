@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## [2.0.1](https://github.com/josantonius/php-json/releases/tag/2.0.1) (2022-06-28)
+## [v2.0.2](https://github.com/josantonius/php-json/releases/tag/v2.0.2) (2022-07-13)
+
+* Improved documentation.
+
+## [v2.0.1](https://github.com/josantonius/php-json/releases/tag/v2.0.1) (2022-06-28)
 
 * Exceptions were refactored.
 
