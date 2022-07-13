@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [v2.0.3](https://github.com/josantonius/php-json/releases/tag/v2.0.3) (2022-07-13)
+
+* Fixed tags in `composer.json`.
+
 ## [v2.0.2](https://github.com/josantonius/php-json/releases/tag/v2.0.2) (2022-07-13)
 
 * Improved documentation.
