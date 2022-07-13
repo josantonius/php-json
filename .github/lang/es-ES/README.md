@@ -21,7 +21,7 @@ Biblioteca PHP para la gestión de archivos JSON.
 - [Cómo empezar](#cómo-empezar)
 - [Uso](#uso)
 - [Tests](#tests)
-- [Tareas pendientes](#☑-tareas-pendientes)
+- [Tareas pendientes](#tareas-pendientes)
 - [Registro de cambios](#registro-de-cambios)
 - [Contribuir](#contribuir)
 - [Patrocinar](#patrocinar)
@@ -63,62 +63,54 @@ Métodos disponibles en esta biblioteca:
 ### Obtener el contenido del archivo JSON
 
 ```php
-$json->get();
+$json->get(): array
 ```
 
-**@throws** `CreateDirectoryException` Si no se puede crear el directorio
+**@throws** `CreateDirectoryException` si no se puede crear el directorio.
 
-**@throws** `CreateFileException` Si no se puede crear el archivo
+**@throws** `CreateFileException` si no se puede crear el archivo.
 
-**@throws** `JsonErrorException` Si hay un error al analizar un archivo JSON
-
-**@Return** `array` Contenido del archivo
+**@throws** `JsonErrorException` si hay un error al analizar un archivo JSON.
 
 ### Establecer el contenido del archivo JSON
 
 ```php
-$json->set(array|object $content);
+$json->set(array|object $content): void
 ```
 
-**@throws** `CreateFileException` Si no se puede crear el archivo
+**@throws** `CreateFileException` si no se puede crear el archivo.
 
-**@throws** `JsonErrorException` Si hay un error al analizar un archivo JSON
+**@throws** `JsonErrorException` si hay un error al analizar un archivo JSON.
 
-**@throws** `UnavailableMethodException` Si el método no está disponible
-
-**@Return** `void`
+**@throws** `UnavailableMethodException` si el método no está disponible.
 
 ### Fusionar en el archivo JSON
 
 ```php
-$json->merge(array|object $content);
+$json->merge(array|object $content): array
 ```
 
-**@throws** `CreateFileException` Si no se puede crear el archivo
+**@throws** `CreateFileException` si no se puede crear el archivo.
 
-**@throws** `GetFileException` Si no se puede obtener el archivo
+**@throws** `GetFileException` si no se puede obtener el archivo.
 
-**@throws** `JsonErrorException` Si hay un error al analizar un archivo JSON
+**@throws** `JsonErrorException` si hay un error al analizar un archivo JSON.
 
-**@throws** `UnavailableMethodException` Si el método no está disponible
-
-**@Return** `array` Array resultante
+**@throws** `UnavailableMethodException` si el método no está disponible.
 
 ### Incluir en el archivo JSON
 
 ```php
-$json->push(array|object $content);
+$json->push(array|object $content): array
 ```
 
-**@throws** `CreateFileException` Si no se puede crear el archivo
+**@throws** `CreateFileException` si no se puede crear el archivo.
 
-**@throws** `GetFileException` Si no se puede obtener el archivo
+**@throws** `GetFileException` si no se puede obtener el archivo.
 
-**@throws** `JsonErrorException` Si hay un error al analizar un archivo JSON
+**@throws** `JsonErrorException` si hay un error al analizar un archivo JSON.
 
-**@throws** `UnavailableMethodException` Si el método no está disponible
-
-**@Return** `array` Array resultante
+**@throws** `UnavailableMethodException` si el método no está disponible.
 
 ## Cómo empezar
 
@@ -262,14 +254,14 @@ Ejecutar todas las pruebas anteriores:
 composer tests
 ```
 
-## ☑ Tareas pendientes
+## Tareas pendientes
 
-- [ ] Añadir nueva funcionalidad.
-- [ ] Mejorar pruebas.
-- [ ] Mejorar documentación.
-- [ ] Mejorar la traducción al inglés en el archivo README.
-- [ ] Refactorizar código para las reglas de estilo de código deshabilitadas.
-Ver [phpmd.xml](phpmd.xml) y [phpcs.xml](phpcs.xml).
+- [ ] Añadir nueva funcionalidad
+- [ ] Mejorar pruebas
+- [ ] Mejorar documentación
+- [ ] Mejorar la traducción al inglés en el archivo README
+- [ ] Refactorizar código para las reglas de estilo de código deshabilitadas
+(ver [phpmd.xml](phpmd.xml) y [phpcs.xml](phpcs.xml))
 
 ## Registro de cambios
 

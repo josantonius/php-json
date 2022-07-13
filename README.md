@@ -21,7 +21,7 @@ PHP simple library for managing JSON files.
 - [Quick Start](#quick-start)
 - [Usage](#usage)
 - [Tests](#tests)
-- [TODO](#-todo)
+- [TODO](#todo)
 - [Changelog](#changelog)
 - [Contribution](#contribution)
 - [Sponsor](#Sponsor)
@@ -63,62 +63,54 @@ Available methods in this library:
 ### Get JSON file contents
 
 ```php
-$json->get();
+$json->get(): array
 ```
 
-**@throws** `CreateDirectoryException` If there is an error when creating a directory
+**@throws** `CreateDirectoryException` if there is an error when creating a directory.
 
-**@throws** `CreateFileException` If there is an error when creating a file
+**@throws** `CreateFileException` if there is an error when creating a file.
 
-**@throws** `JsonErrorException` If there is an error when parsing a JSON file
-
-**@Return** `array` File contents
+**@throws** `JsonErrorException` if there is an error when parsing a JSON file.
 
 ### Set the content of the JSON file
 
 ```php
-$json->set(array|object $content);
+$json->set(array|object $content): void
 ```
 
-**@throws** `CreateFileException` If there is an error when creating a file
+**@throws** `CreateFileException` if there is an error when creating a file.
 
-**@throws** `JsonErrorException` If there is an error when parsing a JSON file
+**@throws** `JsonErrorException` if there is an error when parsing a JSON file.
 
-**@throws** `UnavailableMethodException` If the method is not available
-
-**@Return** `void`
+**@throws** `UnavailableMethodException` if the method is not available.
 
 ### Merge into JSON file
 
 ```php
-$json->merge(array|object $content);
+$json->merge(array|object $content): array
 ```
 
-**@throws** `CreateFileException` If there is an error when creating a file
+**@throws** `CreateFileException` if there is an error when creating a file.
 
-**@throws** `GetFileException` If there is an error when getting a file
+**@throws** `GetFileException` if there is an error when getting a file.
 
-**@throws** `JsonErrorException` If there is an error when parsing a JSON file
+**@throws** `JsonErrorException` if there is an error when parsing a JSON file.
 
-**@throws** `UnavailableMethodException` If the method is not available
-
-**@Return** `array` Resulting array
+**@throws** `UnavailableMethodException` if the method is not available.
 
 ### Push on the JSON file
 
 ```php
-$json->push(array|object $content);
+$json->push(array|object $content): array
 ```
 
-**@throws** `CreateFileException` If there is an error when creating a file
+**@throws** `CreateFileException` if there is an error when creating a file.
 
-**@throws** `GetFileException` If there is an error when getting a file
+**@throws** `GetFileException` if there is an error when getting a file.
 
-**@throws** `JsonErrorException` If there is an error when parsing a JSON file
+**@throws** `JsonErrorException` if there is an error when parsing a JSON file.
 
-**@throws** `UnavailableMethodException` If the method is not available
-
-**@Return** `array` Resulting array
+**@throws** `UnavailableMethodException` if the method is not available.
 
 ## Quick Start
 
@@ -261,13 +253,13 @@ Run all previous tests:
 composer tests
 ```
 
-## ☑ TODO
+## TODO
 
-- [ ] Add new feature.
-- [ ] Improve tests.
-- [ ] Improve documentation.
-- [ ] Improve English translation in the README file.
-- [ ] Refactor code for disabled code style rules. See [phpmd.xml](phpmd.xml) and [phpcs.xml](phpcs.xml).
+- [ ] Add new feature
+- [ ] Improve tests
+- [ ] Improve documentation
+- [ ] Improve English translation in the README file
+- [ ] Refactor code for disabled code style rules (see phpmd.xml and phpcs.xml)
 
 ## Changelog
 
