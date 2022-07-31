@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [v2.0.4](https://github.com/josantonius/php-json/releases/tag/v2.0.4) (2022-07-13)
+
+* Fix exceptions comment.
+
+* The namespaces in the test classes were sorted.
+
+* Changed the PHPUnit version from `9.0` to `9.5`.
+
+* Fixed blank line at the beginning of the file in `FUNDING.yml`.
+
 ## [v2.0.3](https://github.com/josantonius/php-json/releases/tag/v2.0.3) (2022-07-13)
 
 * Fixed tags in `composer.json`.
