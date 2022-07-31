@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Josantonius\Json;
 
-use Josantonius\Json\Exception\CreateDirectoryException;
-use Josantonius\Json\Exception\CreateFileException;
 use Josantonius\Json\Exception\GetFileException;
 use Josantonius\Json\Exception\JsonErrorException;
+use Josantonius\Json\Exception\CreateFileException;
+use Josantonius\Json\Exception\CreateDirectoryException;
 use Josantonius\Json\Exception\UnavailableMethodException;
 
 /**

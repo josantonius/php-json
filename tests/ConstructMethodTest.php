@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Josantonius\Json\Tests;
 
-use Josantonius\Json\Exception\CreateDirectoryException;
-use Josantonius\Json\Exception\CreateFileException;
 use Josantonius\Json\Json;
 use PHPUnit\Framework\TestCase;
+use Josantonius\Json\Exception\CreateFileException;
+use Josantonius\Json\Exception\CreateDirectoryException;
 
 class ConstructMethodTest extends TestCase
 {

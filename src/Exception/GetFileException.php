@@ -13,11 +13,6 @@ declare(strict_types=1);
 
 namespace Josantonius\Json\Exception;
 
-/**
- * You can use an exception and error handler with this library.
- *
- * @see https://github.com/josantonius/php-error-handler
- */
 class GetFileException extends \Exception
 {
     public function __construct(string $filepath)

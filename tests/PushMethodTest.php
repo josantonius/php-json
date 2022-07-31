@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Josantonius\Json\Tests;
 
-use Josantonius\Json\Exception\GetFileException;
-use Josantonius\Json\Exception\UnavailableMethodException;
 use Josantonius\Json\Json;
 use PHPUnit\Framework\TestCase;
+use Josantonius\Json\Exception\GetFileException;
+use Josantonius\Json\Exception\UnavailableMethodException;
 
 class PushMethodTest extends TestCase
 {
