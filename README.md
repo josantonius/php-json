@@ -17,8 +17,9 @@ PHP simple library for managing JSON files.
 
 - [Requirements](#requirements)
 - [Installation](#installation)
-- [Available Methods](#available-methods)
-- [Quick Start](#quick-start)
+- [Available Classes](#available-classes)
+  - [Json Class](#json-class)
+- [Exceptions Used](#exceptions-used)
 - [Usage](#usage)
 - [Tests](#tests)
 - [TODO](#todo)
@@ -56,84 +57,68 @@ You can also **clone the complete repository** with Git:
 git clone https://github.com/josantonius/php-json.git
 ```
 
-## Available Methods
+## Available Classes
 
-Available methods in this library:
-
-### Get JSON file contents
+Json Class
 
 ```php
+use Josantonius\Json\Json;
+```
+
+Get JSON file contents:
+
+```php
+/**
+ * @throws CreateDirectoryException if there is an error when creating a directory.
+ * @throws CreateFileException      if there is an error when creating a file.
+ * @throws JsonErrorException       if there is an error when parsing a JSON file.
+ */
 $json->get(): array
 ```
 
-**@throws** `CreateDirectoryException` if there is an error when creating a directory.
-
-**@throws** `CreateFileException` if there is an error when creating a file.
-
-**@throws** `JsonErrorException` if there is an error when parsing a JSON file.
-
-### Set the content of the JSON file
+Set the content of the JSON file:
 
 ```php
+/**
+ * @throws CreateFileException        if there is an error when creating a file.
+ * @throws JsonErrorException         if there is an error when parsing a JSON file.
+ * @throws UnavailableMethodException if the method is not available.
+ */
 $json->set(array|object $content): void
 ```
 
-**@throws** `CreateFileException` if there is an error when creating a file.
-
-**@throws** `JsonErrorException` if there is an error when parsing a JSON file.
-
-**@throws** `UnavailableMethodException` if the method is not available.
-
-### Merge into JSON file
+Merge into JSON file:
 
 ```php
+/**
+ * @throws CreateFileException        if there is an error when creating a file.
+ * @throws GetFileException           if there is an error when getting a file.
+ * @throws JsonErrorException         if there is an error when parsing a JSON file.
+ * @throws UnavailableMethodException if the method is not available.
+ */
 $json->merge(array|object $content): array
 ```
 
-**@throws** `CreateFileException` if there is an error when creating a file.
-
-**@throws** `GetFileException` if there is an error when getting a file.
-
-**@throws** `JsonErrorException` if there is an error when parsing a JSON file.
-
-**@throws** `UnavailableMethodException` if the method is not available.
-
-### Push on the JSON file
+Push on the JSON file:
 
 ```php
+/**
+ * @throws CreateFileException        if there is an error when creating a file.
+ * @throws GetFileException           if there is an error when getting a file.
+ * @throws JsonErrorException         if there is an error when parsing a JSON file.
+ * @throws UnavailableMethodException if the method is not available.
+ */
 $json->push(array|object $content): array
 ```
 
-**@throws** `CreateFileException` if there is an error when creating a file.
-
-**@throws** `GetFileException` if there is an error when getting a file.
-
-**@throws** `JsonErrorException` if there is an error when parsing a JSON file.
-
-**@throws** `UnavailableMethodException` if the method is not available.
-
-## Quick Start
-
-To use this library with **Composer**:
+## Exceptions Used
 
 ```php
-require __DIR__ . '/vendor/autoload.php';
-
-use josantonius\Json\Json;
-```
-
-```php
-$json = new Json('path/to/file.json');
-
-# If the file does not exist it will be created.
-```
-
-OR
-
-```php
-$json = new Json('https://site.com/file.json');
-
-# When the JSON file is obtained from a URL, only the "get" method is available.
+use Josantonius\Json\Exceptions\CreateDirectoryException;
+use Josantonius\Json\Exceptions\CreateFileException;
+use Josantonius\Json\Exceptions\GetFileException;
+use Josantonius\Json\Exceptions\JsonErrorException;
+use Josantonius\Json\Exceptions\UnavailableMethodException;
 ```
 
 ## Usage
@@ -142,25 +127,37 @@ Example of use for this library:
 
 ### Get the JSON file contents
 
+**`file.json`**
+
 ```json
 {
     "foo": "bar"
 }
 ```
 
-```php
-$json->get();
-```
+**`index.php`**
 
 ```php
-['foo' => 'bar']
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
+$json->get(); // ['foo' => 'bar']
 ```
 
 ### Set the JSON file contents
 
+**`index.php`**
+
 ```php
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
 $json->set(['foo' => 'bar']);
 ```
+
+**`file.json`**
 
 ```json
 {
@@ -170,15 +167,25 @@ $json->set(['foo' => 'bar']);
 
 ### Merge data into JSON file
 
+**`file.json`**
+
 ```json
 {
     "foo": "bar"
 }
 ```
 
+**`index.php`**
+
 ```php
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
 $json->merge(['bar' => 'foo']);
 ```
+
+**`file.json`**
 
 ```json
 {
@@ -189,6 +196,8 @@ $json->merge(['bar' => 'foo']);
 
 ### Push data on the JSON file
 
+**`file.json`**
+
 ```json
 [
     {
@@ -197,9 +206,17 @@ $json->merge(['bar' => 'foo']);
 ]
 ```
 
+**`index.php`**
+
 ```php
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
 $json->push(['name'  => 'bar']);
 ```
+
+**`file.json`**
 
 ```json
 [

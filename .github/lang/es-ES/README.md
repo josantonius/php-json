@@ -17,8 +17,9 @@ Biblioteca PHP para la gestión de archivos JSON.
 
 - [Requisitos](#requisitos)
 - [Instalación](#instalación)
-- [Métodos disponibles](#métodos-disponibles)
-- [Cómo empezar](#cómo-empezar)
+- [Clases disponibles](#clases-disponibles)
+  - [Clase Json](#clase-json)
+- [Excepciones usadas](#excepciones-usadas)
 - [Uso](#uso)
 - [Tests](#tests)
 - [Tareas pendientes](#tareas-pendientes)
@@ -56,84 +57,68 @@ También puedes **clonar el repositorio** completo con Git:
 git clone https://github.com/josantonius/php-json.git
 ```
 
-## Métodos disponibles
+## Clases disponibles
 
-Métodos disponibles en esta biblioteca:
-
-### Obtener el contenido del archivo JSON
+### Clase Json
 
 ```php
+use Josantonius\Json\Json;
+```
+
+Obtener el contenido del archivo JSON:
+
+```php
+/**
+ * @throws CreateDirectoryException if there is an error when creating a directory.
+ * @throws CreateFileException      if there is an error when creating a file.
+ * @throws JsonErrorException       if there is an error when parsing a JSON file.
+ */
 $json->get(): array
 ```
 
-**@throws** `CreateDirectoryException` si no se puede crear el directorio.
-
-**@throws** `CreateFileException` si no se puede crear el archivo.
-
-**@throws** `JsonErrorException` si hay un error al analizar un archivo JSON.
-
-### Establecer el contenido del archivo JSON
+Establecer el contenido del archivo JSON:
 
 ```php
+/**
+ * @throws CreateFileException        if there is an error when creating a file.
+ * @throws JsonErrorException         if there is an error when parsing a JSON file.
+ * @throws UnavailableMethodException if the method is not available.
+ */
 $json->set(array|object $content): void
 ```
 
-**@throws** `CreateFileException` si no se puede crear el archivo.
-
-**@throws** `JsonErrorException` si hay un error al analizar un archivo JSON.
-
-**@throws** `UnavailableMethodException` si el método no está disponible.
-
-### Fusionar en el archivo JSON
+Fusionar en el archivo JSON:
 
 ```php
+/**
+ * @throws CreateFileException        if there is an error when creating a file.
+ * @throws GetFileException           if there is an error when getting a file.
+ * @throws JsonErrorException         if there is an error when parsing a JSON file.
+ * @throws UnavailableMethodException if the method is not available.
+ */
 $json->merge(array|object $content): array
 ```
 
-**@throws** `CreateFileException` si no se puede crear el archivo.
-
-**@throws** `GetFileException` si no se puede obtener el archivo.
-
-**@throws** `JsonErrorException` si hay un error al analizar un archivo JSON.
-
-**@throws** `UnavailableMethodException` si el método no está disponible.
-
-### Incluir en el archivo JSON
+Incluir en el archivo JSON:
 
 ```php
+/**
+ * @throws CreateFileException        if there is an error when creating a file.
+ * @throws GetFileException           if there is an error when getting a file.
+ * @throws JsonErrorException         if there is an error when parsing a JSON file.
+ * @throws UnavailableMethodException if the method is not available.
+ */
 $json->push(array|object $content): array
 ```
 
-**@throws** `CreateFileException` si no se puede crear el archivo.
-
-**@throws** `GetFileException` si no se puede obtener el archivo.
-
-**@throws** `JsonErrorException` si hay un error al analizar un archivo JSON.
-
-**@throws** `UnavailableMethodException` si el método no está disponible.
-
-## Cómo empezar
-
-Para utilizar esta biblioteca con **Composer**:
+## Excepciones utilizadas
 
 ```php
-require __DIR__ . '/vendor/autoload.php';
-
-use josantonius\Json\Json;
-```
-
-```php
-$json = new Json('path/to/file.json');
-
-# Si el archivo no existe, se creará.
-```
-
-O
-
-```php
-$json = new Json('https://site.com/file.json');
-
-# Cuando el archivo JSON se obtiene desde una URL, sólo estará disponible el método "get".
+use Josantonius\Json\Exceptions\CreateDirectoryException;
+use Josantonius\Json\Exceptions\CreateFileException;
+use Josantonius\Json\Exceptions\GetFileException;
+use Josantonius\Json\Exceptions\JsonErrorException;
+use Josantonius\Json\Exceptions\UnavailableMethodException;
 ```
 
 ## Uso
@@ -142,25 +127,37 @@ Ejemplo de uso para esta biblioteca:
 
 ### Obtener el contenido del archivo
 
+**`file.json`**
+
 ```json
 {
     "foo": "bar"
 }
 ```
 
-```php
-$json->get();
-```
+**`index.php`**
 
 ```php
-['foo' => 'bar']
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
+$json->get(); // ['foo' => 'bar']
 ```
 
 ### Establecer el contenido del archivo
 
+**`index.php`**
+
 ```php
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
 $json->set(['foo' => 'bar']);
 ```
+
+**`file.json`**
 
 ```json
 {
@@ -170,15 +167,25 @@ $json->set(['foo' => 'bar']);
 
 ### Fusionar en el archivo
 
+**`file.json`**
+
 ```json
 {
     "foo": "bar"
 }
 ```
 
+**`index.php`**
+
 ```php
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
 $json->merge(['bar' => 'foo']);
 ```
+
+**`file.json`**
 
 ```json
 {
@@ -189,6 +196,8 @@ $json->merge(['bar' => 'foo']);
 
 ### Incluir en el archivo
 
+**`file.json`**
+
 ```json
 [
     {
@@ -197,9 +206,17 @@ $json->merge(['bar' => 'foo']);
 ]
 ```
 
+**`index.php`**
+
 ```php
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
 $json->push(['name'  => 'bar']);
 ```
+
+**`file.json`**
 
 ```json
 [
