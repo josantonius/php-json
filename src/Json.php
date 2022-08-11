@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace Josantonius\Json;
 
-use Josantonius\Json\Exception\GetFileException;
-use Josantonius\Json\Exception\JsonErrorException;
-use Josantonius\Json\Exception\CreateFileException;
-use Josantonius\Json\Exception\CreateDirectoryException;
-use Josantonius\Json\Exception\UnavailableMethodException;
+use Josantonius\Json\Exceptions\GetFileException;
+use Josantonius\Json\Exceptions\JsonErrorException;
+use Josantonius\Json\Exceptions\CreateFileException;
+use Josantonius\Json\Exceptions\CreateDirectoryException;
+use Josantonius\Json\Exceptions\UnavailableMethodException;
 
 /**
  * PHP simple library for managing JSON files.
@@ -30,9 +30,9 @@ class Json
     private bool $isUrl;
 
     /**
-     * @throws CreateDirectoryException
-     * @throws CreateFileException
-     * @throws JsonErrorException
+     * @throws CreateDirectoryException if the directory cannot be created.
+     * @throws CreateFileException      if the file cannot be created.
+     * @throws JsonErrorException       if the JSON has errors.
      */
     public function __construct(private string $filepath)
     {
@@ -46,8 +46,8 @@ class Json
     /**
      * Get the content of the JSON file or a remote JSON file.
      *
-     * @throws GetFileException
-     * @throws JsonErrorException
+     * @throws GetFileException   if the file cannot be read.
+     * @throws JsonErrorException if the JSON has errors.
      */
     public function get(): array
     {
@@ -57,9 +57,9 @@ class Json
     /**
      * Set the content of the JSON file.
      *
-     * @throws CreateFileException
-     * @throws JsonErrorException
-     * @throws UnavailableMethodException
+     * @throws CreateFileException        if the file cannot be created.
+     * @throws JsonErrorException         if the JSON has errors.
+     * @throws UnavailableMethodException if an unavailable method is accessed.
      */
     public function set(array|object $content): void
     {
@@ -69,10 +69,10 @@ class Json
     /**
      * Merge into JSON file.
      *
-     * @throws CreateFileException
-     * @throws GetFileException
-     * @throws JsonErrorException
-     * @throws UnavailableMethodException
+     * @throws CreateFileException        if the file cannot be created.
+     * @throws GetFileException           if the file cannot be read.
+     * @throws JsonErrorException         if the JSON has errors.
+     * @throws UnavailableMethodException if an unavailable method is accessed.
      */
     public function merge(array|object $content): array
     {
@@ -86,10 +86,10 @@ class Json
     /**
      * Push on the JSON file.
      *
-     * @throws CreateFileException
-     * @throws GetFileException
-     * @throws JsonErrorException
-     * @throws UnavailableMethodException
+     * @throws CreateFileException        if the file cannot be created.
+     * @throws GetFileException           if the file cannot be read.
+     * @throws JsonErrorException         if the JSON has errors.
+     * @throws UnavailableMethodException if an unavailable method is accessed.
      */
     public function push(array|object $content): array
     {
@@ -105,9 +105,9 @@ class Json
     /**
      * Create file if not exists.
      *
-     * @throws CreateDirectoryException
-     * @throws CreateFileException
-     * @throws JsonErrorException
+     * @throws CreateDirectoryException if the directory cannot be created.
+     * @throws CreateFileException      if the file cannot be created.
+     * @throws JsonErrorException       if the JSON has errors.
      */
     private function createFileIfNotExists(): void
     {
@@ -120,7 +120,7 @@ class Json
     /**
      * Create directory if not exists.
      *
-     * @throws CreateDirectoryException
+     * @throws CreateDirectoryException if the directory cannot be created.
      */
     private function createDirIfNotExists(): void
     {
@@ -134,8 +134,8 @@ class Json
     /**
      * Get the content of the JSON file or a remote JSON file.
      *
-     * @throws GetFileException
-     * @throws JsonErrorException
+     * @throws GetFileException   if the file cannot be read.
+     * @throws JsonErrorException if the JSON has errors.
      */
     private function getFileContents(): array
     {
@@ -155,8 +155,8 @@ class Json
     /**
      * Save content in JSON file.
      *
-     * @throws CreateFileException
-     * @throws JsonErrorException
+     * @throws CreateFileException if the file cannot be created.
+     * @throws JsonErrorException  if the JSON has errors.
      */
     private function saveToJsonFile(array|object $array): void
     {
@@ -172,7 +172,7 @@ class Json
     /**
      * Check for JSON errors.
      *
-     * @throws JsonErrorException
+     * @throws JsonErrorException if the JSON has errors.
      */
     private function checkJsonLastError(): void
     {
@@ -184,7 +184,7 @@ class Json
     /**
      * Throw exception if the method is not available for remote JSON files.
      *
-     * @throws UnavailableMethodException
+     * @throws UnavailableMethodException if an unavailable method is accessed.
      */
     private function throwUnavailableMethodException(): void
     {
