@@ -11,16 +11,13 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Josantonius\Json\Exception;
+namespace Josantonius\Json\Exceptions;
 
-class CreateFileException extends \Exception
+class JsonErrorException extends \Exception
 {
-    public function __construct(string $filepath)
+    public function __construct()
     {
-        $lastError =  error_get_last()['message'] ?? '';
-
-        $message  = "Could not create file '$filepath'.";
-        $message .= $lastError ? " $lastError." : '';
+        $message = 'JSON error: ' . json_last_error_msg();
 
         parent::__construct($message);
     }

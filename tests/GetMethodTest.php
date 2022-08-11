@@ -15,7 +15,7 @@ namespace Josantonius\Json\Tests;
 
 use Josantonius\Json\Json;
 use PHPUnit\Framework\TestCase;
-use Josantonius\Json\Exception\JsonErrorException;
+use Josantonius\Json\Exceptions\JsonErrorException;
 
 class GetMethodTest extends TestCase
 {

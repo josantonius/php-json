@@ -11,15 +11,15 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Josantonius\Json\Exception;
+namespace Josantonius\Json\Exceptions;
 
-class CreateDirectoryException extends \Exception
+class GetFileException extends \Exception
 {
-    public function __construct(string $path)
+    public function __construct(string $filepath)
     {
         $lastError =  error_get_last()['message'] ?? '';
 
-        $message  = "Could not create directory in '$path'.";
+        $message  = "Error reading file: '$filepath'.";
         $message .= $lastError ? " $lastError." : '';
 
         parent::__construct($message);
