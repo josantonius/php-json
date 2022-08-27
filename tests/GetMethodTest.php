@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of https://github.com/josantonius/php-json repository.
  *
@@ -9,6 +7,8 @@ declare(strict_types=1);
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
+ * @phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
  */
 
 namespace Josantonius\Json\Tests;
@@ -35,21 +35,21 @@ class GetMethodTest extends TestCase
         }
     }
 
-    public function testShouldGetFileContents(): void
+    public function test_should_get_file_contents(): void
     {
         $jsonFile = new Json($this->filepath);
 
         $this->assertEquals([], $jsonFile->get());
     }
 
-    public function testShouldGetRemoteFileContents(): void
+    public function test_should_get_remote_file_contents(): void
     {
         $jsonFile = new Json($this->url);
 
         $this->assertArrayHasKey('name', $jsonFile->get());
     }
 
-    public function testShouldThrowExceptionWhenThereAreJsonErrorsInTheFile(): void
+    public function test_should_throw_exception_when_there_are_json_errors_in_the_file(): void
     {
         $jsonFile = new Json($this->filepath);
 

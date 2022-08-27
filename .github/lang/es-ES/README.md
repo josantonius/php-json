@@ -19,7 +19,7 @@ Biblioteca PHP para la gestión de archivos JSON.
 - [Instalación](#instalación)
 - [Clases disponibles](#clases-disponibles)
   - [Clase Json](#clase-json)
-- [Excepciones usadas](#excepciones-usadas)
+- [Excepciones utilizadas](#excepciones-utilizadas)
 - [Uso](#uso)
 - [Tests](#tests)
 - [Tareas pendientes](#tareas-pendientes)
@@ -61,9 +61,7 @@ git clone https://github.com/josantonius/php-json.git
 
 ### Clase Json
 
-```php
-use Josantonius\Json\Json;
-```
+`Josantonius\Json\Json`
 
 Obtener el contenido del archivo JSON:
 
@@ -73,7 +71,7 @@ Obtener el contenido del archivo JSON:
  * @throws CreateFileException      if there is an error when creating a file.
  * @throws JsonErrorException       if there is an error when parsing a JSON file.
  */
-$json->get(): array
+public function get(): array;
 ```
 
 Establecer el contenido del archivo JSON:
@@ -84,7 +82,7 @@ Establecer el contenido del archivo JSON:
  * @throws JsonErrorException         if there is an error when parsing a JSON file.
  * @throws UnavailableMethodException if the method is not available.
  */
-$json->set(array|object $content): void
+public function set(array|object $content): void;
 ```
 
 Fusionar en el archivo JSON:
@@ -96,7 +94,7 @@ Fusionar en el archivo JSON:
  * @throws JsonErrorException         if there is an error when parsing a JSON file.
  * @throws UnavailableMethodException if the method is not available.
  */
-$json->merge(array|object $content): array
+public function merge(array|object $content): array;
 ```
 
 Incluir en el archivo JSON:
@@ -108,7 +106,7 @@ Incluir en el archivo JSON:
  * @throws JsonErrorException         if there is an error when parsing a JSON file.
  * @throws UnavailableMethodException if the method is not available.
  */
-$json->push(array|object $content): array
+public function push(array|object $content): array;
 ```
 
 ## Excepciones utilizadas

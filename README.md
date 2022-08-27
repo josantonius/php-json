@@ -25,7 +25,7 @@ PHP simple library for managing JSON files.
 - [TODO](#todo)
 - [Changelog](#changelog)
 - [Contribution](#contribution)
-- [Sponsor](#Sponsor)
+- [Sponsor](#sponsor)
 - [License](#license)
 
 ---
@@ -59,11 +59,9 @@ git clone https://github.com/josantonius/php-json.git
 
 ## Available Classes
 
-Json Class
+### Json Class
 
-```php
-use Josantonius\Json\Json;
-```
+`Josantonius\Json\Json`
 
 Get JSON file contents:
 
@@ -73,7 +71,7 @@ Get JSON file contents:
  * @throws CreateFileException      if there is an error when creating a file.
  * @throws JsonErrorException       if there is an error when parsing a JSON file.
  */
-$json->get(): array
+public function get(): array;
 ```
 
 Set the content of the JSON file:
@@ -84,7 +82,7 @@ Set the content of the JSON file:
  * @throws JsonErrorException         if there is an error when parsing a JSON file.
  * @throws UnavailableMethodException if the method is not available.
  */
-$json->set(array|object $content): void
+public function set(array|object $content): void;
 ```
 
 Merge into JSON file:
@@ -96,7 +94,7 @@ Merge into JSON file:
  * @throws JsonErrorException         if there is an error when parsing a JSON file.
  * @throws UnavailableMethodException if the method is not available.
  */
-$json->merge(array|object $content): array
+public function merge(array|object $content): array;
 ```
 
 Push on the JSON file:
@@ -108,7 +106,7 @@ Push on the JSON file:
  * @throws JsonErrorException         if there is an error when parsing a JSON file.
  * @throws UnavailableMethodException if the method is not available.
  */
-$json->push(array|object $content): array
+public function push(array|object $content): array;
 ```
 
 ## Exceptions Used

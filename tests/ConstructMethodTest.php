@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of https://github.com/josantonius/php-json repository.
  *
@@ -9,6 +7,8 @@ declare(strict_types=1);
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
+ * @phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
  */
 
 namespace Josantonius\Json\Tests;
@@ -34,7 +34,7 @@ class ConstructMethodTest extends TestCase
         }
     }
 
-    public function testShouldCreateTheFileIfNotExist(): void
+    public function test_should_create_the_file_if_not_exist(): void
     {
         $this->assertFalse(file_exists($this->filepath));
 
@@ -45,14 +45,14 @@ class ConstructMethodTest extends TestCase
         $this->assertEquals('[]', file_get_contents($this->filepath));
     }
 
-    public function testShouldThrowExceptionIfPathIsWrong(): void
+    public function test_should_throw_exception_if_path_is_wrong(): void
     {
         $this->expectException(CreateDirectoryException::class);
 
         new Json('/foo:/filename.json');
     }
 
-    public function testShouldThrowExceptionIfFilenameIsWrong(): void
+    public function test_should_throw_exception_if_filename_is_wrong(): void
     {
         $this->expectException(CreateFileException::class);
 
