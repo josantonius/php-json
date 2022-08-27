@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of https://github.com/josantonius/php-json repository.
  *
@@ -9,6 +7,8 @@ declare(strict_types=1);
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
+ * @phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
  */
 
 namespace Josantonius\Json\Tests;
@@ -35,7 +35,7 @@ class MergeMethodTest extends TestCase
         }
     }
 
-    public function testShouldMergeArrayOnJsonFile(): void
+    public function test_should_merge_array_on_json_file(): void
     {
         $jsonFile = new Json($this->filepath);
 
@@ -49,7 +49,7 @@ class MergeMethodTest extends TestCase
         ], json_decode(file_get_contents($this->filepath), true));
     }
 
-    public function testShouldMergeObjectOnJsonFile(): void
+    public function test_should_merge_object_on_json_file(): void
     {
         $jsonFile = new Json($this->filepath);
 
@@ -65,7 +65,7 @@ class MergeMethodTest extends TestCase
         ], json_decode(file_get_contents($this->filepath), true));
     }
 
-    public function testShouldThrowExceptionIfMergeMethodIsUsedWithRemoteFile(): void
+    public function test_should_throw_exception_if_merge_method_is_used_with_remote_file(): void
     {
         $jsonFile = new Json($this->url);
 
