@@ -14,7 +14,6 @@
 
 ### Deleted
 
-* `Josantonius\Json\Exceptions\CreateDirectoryException` class.
 * `Josantonius\Json\Tests\ExistsMethodTest` class.
 * `Josantonius\Json\Tests\GetFilepathMethodTest` class.
 * `Josantonius\Json\Json->createFileIfNotExists()` method.
