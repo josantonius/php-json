@@ -16,6 +16,7 @@ namespace Josantonius\Json\Tests;
 use Josantonius\Json\Json;
 use PHPUnit\Framework\TestCase;
 use Josantonius\Json\Exceptions\CreateFileException;
+use Josantonius\Json\Exceptions\CreateDirectoryException;
 use Josantonius\Json\Exceptions\UnavailableMethodException;
 
 class SetMethodTest extends TestCase
@@ -74,5 +75,14 @@ class SetMethodTest extends TestCase
         $this->expectException(UnavailableMethodException::class);
 
         $jsonFile->set(['foo' => 'bar']);
+    }
+
+    public function test_should_throw_exception_if_path_is_wrong(): void
+    {
+        $this->expectException(CreateDirectoryException::class);
+
+        $jsonFile = new Json('/foo:/filename.json');
+
+        $jsonFile->set();
     }
 }
