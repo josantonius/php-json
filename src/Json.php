@@ -16,6 +16,7 @@ namespace Josantonius\Json;
 use Josantonius\Json\Exceptions\GetFileException;
 use Josantonius\Json\Exceptions\JsonErrorException;
 use Josantonius\Json\Exceptions\CreateFileException;
+use Josantonius\Json\Exceptions\CreateDirectoryException;
 use Josantonius\Json\Exceptions\UnavailableMethodException;
 
 /**
@@ -67,6 +68,7 @@ class Json
      *
      * @throws CreateFileException        if the file cannot be created.
      * @throws UnavailableMethodException if an unavailable method is accessed.
+     * @throws CreateDirectoryException   if the directory cannot be created.
      */
     public function set(array|object $content = []): void
     {
@@ -108,10 +110,24 @@ class Json
     }
 
     /**
+     * Create directory if not exists.
+     *
+     * @throws CreateDirectoryException if the directory cannot be created.
+     */
+    private function createDirIfNotExists(): void
+    {
+        $path = dirname($this->filepath) . DIRECTORY_SEPARATOR;
+        if (!is_dir($path) && !@mkdir($path, 0777, true)) {
+            throw new CreateDirectoryException($path);
+        }
+    }
+
+    /**
      * Get the content of the JSON file or a remote JSON file.
      *
-     * @throws GetFileException   if the file cannot be read.
-     * @throws JsonErrorException if the JSON has errors.
+     * @throws GetFileException         if the file cannot be read.
+     * @throws JsonErrorException       if the JSON has errors.
+     * @throws CreateDirectoryException if the directory cannot be created.
      */
     private function getFileContents(): array
     {
@@ -136,6 +152,8 @@ class Json
     private function saveToJsonFile(array|object $array): void
     {
         $json = json_encode($array, JSON_PRETTY_PRINT);
+
+        $this->createDirIfNotExists();
 
         if (@file_put_contents($this->filepath, $json) === false) {
             throw new CreateFileException($this->filepath);
