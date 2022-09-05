@@ -16,6 +16,7 @@ namespace Josantonius\Json\Tests;
 use Josantonius\Json\Json;
 use PHPUnit\Framework\TestCase;
 use Josantonius\Json\Exceptions\GetFileException;
+use Josantonius\Json\Exceptions\JsonErrorException;
 use Josantonius\Json\Exceptions\UnavailableMethodException;
 
 class PushMethodTest extends TestCase
@@ -73,11 +74,9 @@ class PushMethodTest extends TestCase
         $jsonFile->push(['bar' => 'foo']);
     }
 
-    public function test_should_throw_exception_if_file_cannot_be_obtained(): void
+    public function test_should_fail_if_the_file_does_not_exists(): void
     {
         $jsonFile = new Json($this->filepath);
-
-        unlink($this->filepath);
 
         $this->expectException(GetFileException::class);
 
@@ -89,6 +88,17 @@ class PushMethodTest extends TestCase
         $jsonFile = new Json($this->url . 'wrong');
 
         $this->expectException(GetFileException::class);
+
+        $jsonFile->push((object) ['bar' => 'foo']);
+    }
+
+    public function test_should_throw_exception_when_there_are_json_errors_in_the_file(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        file_put_contents($this->filepath, '{');
+
+        $this->expectException(JsonErrorException::class);
 
         $jsonFile->push((object) ['bar' => 'foo']);
     }

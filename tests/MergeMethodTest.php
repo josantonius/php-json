@@ -15,6 +15,8 @@ namespace Josantonius\Json\Tests;
 
 use Josantonius\Json\Json;
 use PHPUnit\Framework\TestCase;
+use Josantonius\Json\Exceptions\GetFileException;
+use Josantonius\Json\Exceptions\JsonErrorException;
 use Josantonius\Json\Exceptions\UnavailableMethodException;
 
 class MergeMethodTest extends TestCase
@@ -65,11 +67,31 @@ class MergeMethodTest extends TestCase
         ], json_decode(file_get_contents($this->filepath), true));
     }
 
+    public function test_should_fail_if_the_file_does_not_exists(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        $this->expectException(GetFileException::class);
+
+        $jsonFile->merge((object) ['bar' => 'foo']);
+    }
+
     public function test_should_throw_exception_if_merge_method_is_used_with_remote_file(): void
     {
         $jsonFile = new Json($this->url);
 
         $this->expectException(UnavailableMethodException::class);
+
+        $jsonFile->merge(['bar' => 'foo']);
+    }
+
+    public function test_should_throw_exception_when_there_are_json_errors_in_the_file(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        file_put_contents($this->filepath, '{');
+
+        $this->expectException(JsonErrorException::class);
 
         $jsonFile->merge(['bar' => 'foo']);
     }

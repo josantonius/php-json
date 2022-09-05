@@ -15,6 +15,7 @@ namespace Josantonius\Json\Tests;
 
 use Josantonius\Json\Json;
 use PHPUnit\Framework\TestCase;
+use Josantonius\Json\Exceptions\GetFileException;
 use Josantonius\Json\Exceptions\JsonErrorException;
 
 class GetMethodTest extends TestCase
@@ -35,8 +36,19 @@ class GetMethodTest extends TestCase
         }
     }
 
-    public function test_should_get_file_contents(): void
+    public function test_should_get_file_contents_if_the_file_exists(): void
     {
+        $jsonFile = new Json($this->filepath);
+
+        $jsonFile->set();
+
+        $this->assertEquals([], $jsonFile->get());
+    }
+
+    public function test_should_fail_if_the_file_does_not_exists(): void
+    {
+        $this->expectException(GetFileException::class);
+
         $jsonFile = new Json($this->filepath);
 
         $this->assertEquals([], $jsonFile->get());
