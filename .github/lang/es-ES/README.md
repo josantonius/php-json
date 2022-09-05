@@ -82,7 +82,7 @@ public function get(): array;
 Obtiene la ruta o URL del archivo JSON.
 
 ```php
-public function getFilepath(): string;
+public function filepath(): string;
 ```
 
 Establecer el contenido del archivo JSON:
@@ -203,7 +203,7 @@ use Josantonius\Json\Json;
 
 $json = new Json('file.json');
 
-$json->getFilepath(); // 'file.json'
+$json->filepath(); // 'file.json'
 ```
 
 ### Obtiene la URL del archivo JSON remoto
@@ -215,7 +215,7 @@ use Josantonius\Json\Json;
 
 $json = new Json('https://example.com/file.json');
 
-$json->getFilepath(); // 'https://example.com/file.json'
+$json->filepath(); // 'https://example.com/file.json'
 ```
 
 ### Establecer una matriz vacía en el contenido del archivo JSON
