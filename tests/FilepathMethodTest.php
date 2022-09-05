@@ -16,7 +16,7 @@ namespace Josantonius\Json\Tests;
 use Josantonius\Json\Json;
 use PHPUnit\Framework\TestCase;
 
-class GetFilepathMethodTest extends TestCase
+class FilepathMethodTest extends TestCase
 {
     private string $filepath =  __DIR__ . '/filename.json';
 
@@ -38,13 +38,13 @@ class GetFilepathMethodTest extends TestCase
     {
         $jsonFile = new Json($this->filepath);
 
-        $this->assertEquals($this->filepath, $jsonFile->getFilepath());
+        $this->assertEquals($this->filepath, $jsonFile->filepath());
     }
 
     public function test_should_get_the_path_to_a_remote_file(): void
     {
         $jsonFile = new Json($this->url);
 
-        $this->assertEquals($this->url, $jsonFile->getFilepath());
+        $this->assertEquals($this->url, $jsonFile->filepath());
     }
 }
