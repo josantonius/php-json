@@ -16,7 +16,6 @@ namespace Josantonius\Json;
 use Josantonius\Json\Exceptions\GetFileException;
 use Josantonius\Json\Exceptions\JsonErrorException;
 use Josantonius\Json\Exceptions\CreateFileException;
-use Josantonius\Json\Exceptions\CreateDirectoryException;
 use Josantonius\Json\Exceptions\UnavailableMethodException;
 
 /**
@@ -24,23 +23,24 @@ use Josantonius\Json\Exceptions\UnavailableMethodException;
  */
 class Json
 {
-    /**
-     * If the file path is a URL.
-     */
     private bool $isUrl;
 
     /**
-     * @throws CreateDirectoryException if the directory cannot be created.
-     * @throws CreateFileException      if the file cannot be created.
-     * @throws JsonErrorException       if the JSON has errors.
+     * Create new instance.
      */
     public function __construct(private string $filepath)
     {
         $this->isUrl = filter_var($filepath, FILTER_VALIDATE_URL) !== false;
+    }
 
-        if (!$this->isUrl) {
-            $this->createFileIfNotExists($filepath);
-        }
+    /**
+     * Check whether a local or remote file exists.
+     */
+    public function exists(): bool
+    {
+        $filepath = $this->filepath;
+
+        return $this->isUrl ? @file_get_contents($filepath) !== false : file_exists($filepath);
     }
 
     /**
@@ -55,13 +55,20 @@ class Json
     }
 
     /**
+     * Get the path or URL of the JSON file.
+     */
+    public function getFilepath(): string
+    {
+        return $this->filepath;
+    }
+
+    /**
      * Set the content of the JSON file.
      *
      * @throws CreateFileException        if the file cannot be created.
-     * @throws JsonErrorException         if the JSON has errors.
      * @throws UnavailableMethodException if an unavailable method is accessed.
      */
-    public function set(array|object $content): void
+    public function set(array|object $content = []): void
     {
         $this->isUrl ? $this->throwUnavailableMethodException() : $this->saveToJsonFile($content);
     }
@@ -69,7 +76,6 @@ class Json
     /**
      * Merge into JSON file.
      *
-     * @throws CreateFileException        if the file cannot be created.
      * @throws GetFileException           if the file cannot be read.
      * @throws JsonErrorException         if the JSON has errors.
      * @throws UnavailableMethodException if an unavailable method is accessed.
@@ -86,7 +92,6 @@ class Json
     /**
      * Push on the JSON file.
      *
-     * @throws CreateFileException        if the file cannot be created.
      * @throws GetFileException           if the file cannot be read.
      * @throws JsonErrorException         if the JSON has errors.
      * @throws UnavailableMethodException if an unavailable method is accessed.
@@ -100,35 +105,6 @@ class Json
         $this->isUrl ? $this->throwUnavailableMethodException() : $this->saveToJsonFile($data);
 
         return $data;
-    }
-
-    /**
-     * Create file if not exists.
-     *
-     * @throws CreateDirectoryException if the directory cannot be created.
-     * @throws CreateFileException      if the file cannot be created.
-     * @throws JsonErrorException       if the JSON has errors.
-     */
-    private function createFileIfNotExists(): void
-    {
-        if (!file_exists($this->filepath)) {
-            $this->createDirIfNotExists();
-            $this->saveToJsonFile([]);
-        }
-    }
-
-    /**
-     * Create directory if not exists.
-     *
-     * @throws CreateDirectoryException if the directory cannot be created.
-     */
-    private function createDirIfNotExists(): void
-    {
-        $path = dirname($this->filepath) . DIRECTORY_SEPARATOR;
-
-        if (!is_dir($path) && !@mkdir($path, 0777, true)) {
-            throw new CreateDirectoryException($path);
-        }
     }
 
     /**
@@ -156,13 +132,10 @@ class Json
      * Save content in JSON file.
      *
      * @throws CreateFileException if the file cannot be created.
-     * @throws JsonErrorException  if the JSON has errors.
      */
     private function saveToJsonFile(array|object $array): void
     {
         $json = json_encode($array, JSON_PRETTY_PRINT);
-
-        $this->checkJsonLastError();
 
         if (@file_put_contents($this->filepath, $json) === false) {
             throw new CreateFileException($this->filepath);
