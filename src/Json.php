@@ -44,6 +44,14 @@ class Json
     }
 
     /**
+     * Get the path or URL of the JSON file.
+     */
+    public function filepath(): string
+    {
+        return $this->filepath;
+    }
+
+    /**
      * Get the content of the JSON file or a remote JSON file.
      *
      * @throws GetFileException   if the file cannot be read.
@@ -52,14 +60,6 @@ class Json
     public function get(): array
     {
         return $this->getFileContents();
-    }
-
-    /**
-     * Get the path or URL of the JSON file.
-     */
-    public function getFilepath(): string
-    {
-        return $this->filepath;
     }
 
     /**
