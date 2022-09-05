@@ -90,6 +90,7 @@ Set the content of the JSON file:
 ```php
 /**
  * @throws CreateFileException        if there is an error when creating a file.
+ * @throws CreateDirectoryException   if the directory cannot be created.
  * @throws UnavailableMethodException if the method is not available.
  */
 public function set(array|object $content = []): void;
@@ -120,9 +121,10 @@ public function push(array|object $content): array;
 ## Exceptions Used
 
 ```php
-use Josantonius\Json\Exceptions\CreateFileException;
 use Josantonius\Json\Exceptions\GetFileException;
+use Josantonius\Json\Exceptions\CreateFileException;
 use Josantonius\Json\Exceptions\JsonErrorException;
+use Josantonius\Json\Exceptions\CreateDirectoryException;
 use Josantonius\Json\Exceptions\UnavailableMethodException;
 ```
 
