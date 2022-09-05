@@ -19,7 +19,7 @@ Biblioteca PHP para la gestión de archivos JSON.
 - [Instalación](#instalación)
 - [Clases disponibles](#clases-disponibles)
   - [Clase Json](#clase-json)
-- [Excepciones usadas](#excepciones-usadas)
+- [Excepciones utilizadas](#excepciones-utilizadas)
 - [Uso](#uso)
 - [Tests](#tests)
 - [Tareas pendientes](#tareas-pendientes)
@@ -61,19 +61,28 @@ git clone https://github.com/josantonius/php-json.git
 
 ### Clase Json
 
+`Josantonius\Json\Json`
+
+Comprueba si existe un archivo local o remoto.
+
 ```php
-use Josantonius\Json\Json;
+public function exists(): bool;
 ```
 
 Obtener el contenido del archivo JSON:
 
 ```php
 /**
- * @throws CreateDirectoryException if there is an error when creating a directory.
- * @throws CreateFileException      if there is an error when creating a file.
- * @throws JsonErrorException       if there is an error when parsing a JSON file.
+ * @throws GetFileException   if there is an error when getting a file.
+ * @throws JsonErrorException if there is an error when parsing a JSON file.
  */
-$json->get(): array
+public function get(): array;
+```
+
+Obtiene la ruta o URL del archivo JSON.
+
+```php
+public function getFilepath(): string;
 ```
 
 Establecer el contenido del archivo JSON:
@@ -81,40 +90,36 @@ Establecer el contenido del archivo JSON:
 ```php
 /**
  * @throws CreateFileException        if there is an error when creating a file.
- * @throws JsonErrorException         if there is an error when parsing a JSON file.
  * @throws UnavailableMethodException if the method is not available.
  */
-$json->set(array|object $content): void
+public function set(array|object $content = []): void;
 ```
 
 Fusionar en el archivo JSON:
 
 ```php
 /**
- * @throws CreateFileException        if there is an error when creating a file.
  * @throws GetFileException           if there is an error when getting a file.
  * @throws JsonErrorException         if there is an error when parsing a JSON file.
  * @throws UnavailableMethodException if the method is not available.
  */
-$json->merge(array|object $content): array
+public function merge(array|object $content): array;
 ```
 
 Incluir en el archivo JSON:
 
 ```php
 /**
- * @throws CreateFileException        if there is an error when creating a file.
  * @throws GetFileException           if there is an error when getting a file.
  * @throws JsonErrorException         if there is an error when parsing a JSON file.
  * @throws UnavailableMethodException if the method is not available.
  */
-$json->push(array|object $content): array
+public function push(array|object $content): array;
 ```
 
 ## Excepciones utilizadas
 
 ```php
-use Josantonius\Json\Exceptions\CreateDirectoryException;
 use Josantonius\Json\Exceptions\CreateFileException;
 use Josantonius\Json\Exceptions\GetFileException;
 use Josantonius\Json\Exceptions\JsonErrorException;
@@ -124,6 +129,30 @@ use Josantonius\Json\Exceptions\UnavailableMethodException;
 ## Uso
 
 Ejemplo de uso para esta biblioteca:
+
+### Comprueba si existe un archivo local
+
+**`index.php`**
+
+```php
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
+$json->exists(); // bool
+```
+
+### Comprueba si existe un archivo remoto
+
+**`index.php`**
+
+```php
+use Josantonius\Json\Json;
+
+$json = new Json('https://example.com/file.json');
+
+$json->exists(); // bool
+```
 
 ### Obtener el contenido del archivo
 
@@ -143,6 +172,68 @@ use Josantonius\Json\Json;
 $json = new Json('file.json');
 
 $json->get(); // ['foo' => 'bar']
+```
+
+### Obtener el contenido del archivo desde una URL
+
+**`https://example.com/file.json`**
+
+```json
+{
+    "foo": "bar"
+}
+```
+
+**`index.php`**
+
+```php
+use Josantonius\Json\Json;
+
+$json = new Json('https://example.com/file.json');
+
+$json->get(); // ['foo' => 'bar']
+```
+
+### Obtiene la ruta del archivo JSON
+
+**`index.php`**
+
+```php
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
+$json->getFilepath(); // 'file.json'
+```
+
+### Obtiene la URL del archivo JSON remoto
+
+**`index.php`**
+
+```php
+use Josantonius\Json\Json;
+
+$json = new Json('https://example.com/file.json');
+
+$json->getFilepath(); // 'https://example.com/file.json'
+```
+
+### Establecer una matriz vacía en el contenido del archivo JSON
+
+**`index.php`**
+
+```php
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
+$json->set();
+```
+
+**`file.json`**
+
+```json
+[]
 ```
 
 ### Establecer el contenido del archivo

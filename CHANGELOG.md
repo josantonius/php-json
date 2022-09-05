@@ -1,5 +1,35 @@
 # CHANGELOG
 
+## [v2.0.6](https://github.com/josantonius/php-json/releases/tag/v2.0.6) (2022-09-05)
+
+### Added
+
+* `Josantonius\Json\Json->getFilepath()` method.
+* `Josantonius\Json\Json->exists()` method.
+
+### Changed
+
+* The file is no longer created if it does not exist when the instance is created.
+* The `$content` parameter of the `set` method is now optional and contains an empty array by default.
+
+### Deleted
+
+* `Josantonius\Json\Exceptions\CreateDirectoryException` class.
+* `Josantonius\Json\Tests\ExistsMethodTest` class.
+* `Josantonius\Json\Tests\GetFilepathMethodTest` class.
+* `Josantonius\Json\Json->createFileIfNotExists()` method.
+
+### Refactor
+
+* The notation type in the test function names has been changed from camel to snake case for readability.
+* Functions were added to document the methods and avoid confusion.
+* Disabled the ´CamelCaseMethodName´ rule in ´phpmd.xml´ to avoid warnings about function names in tests.
+* The alignment of the asterisks in the comments has been fixed.
+
+### Updated
+
+* Tests.
+
 ## [v2.0.5](https://github.com/josantonius/php-json/releases/tag/v2.0.5) (2022-08-11)
 
 * The exceptions directory was renamed from `exception` to `exceptions`.

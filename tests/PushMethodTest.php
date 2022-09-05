@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of https://github.com/josantonius/php-json repository.
  *
@@ -9,6 +7,8 @@ declare(strict_types=1);
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
+ * @phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
  */
 
 namespace Josantonius\Json\Tests;
@@ -16,6 +16,7 @@ namespace Josantonius\Json\Tests;
 use Josantonius\Json\Json;
 use PHPUnit\Framework\TestCase;
 use Josantonius\Json\Exceptions\GetFileException;
+use Josantonius\Json\Exceptions\JsonErrorException;
 use Josantonius\Json\Exceptions\UnavailableMethodException;
 
 class PushMethodTest extends TestCase
@@ -36,7 +37,7 @@ class PushMethodTest extends TestCase
         }
     }
 
-    public function testShouldPushArrayOnJsonFile(): void
+    public function test_should_push_array_on_json_file(): void
     {
         $jsonFile = new Json($this->filepath);
 
@@ -50,7 +51,7 @@ class PushMethodTest extends TestCase
         );
     }
 
-    public function testShouldPushObjectOnJsonFile(): void
+    public function test_should_push_object_on_json_file(): void
     {
         $jsonFile = new Json($this->filepath);
 
@@ -64,7 +65,7 @@ class PushMethodTest extends TestCase
         );
     }
 
-    public function testShouldThrowExceptionIfPushMethodIsUsedWithRemoteFile(): void
+    public function test_should_throw_exception_if_push_method_is_used_with_remote_file(): void
     {
         $jsonFile = new Json($this->url);
 
@@ -73,22 +74,31 @@ class PushMethodTest extends TestCase
         $jsonFile->push(['bar' => 'foo']);
     }
 
-    public function testShouldThrowExceptionIfFileCannotBeObtained(): void
+    public function test_should_fail_if_the_file_does_not_exists(): void
     {
         $jsonFile = new Json($this->filepath);
-
-        unlink($this->filepath);
 
         $this->expectException(GetFileException::class);
 
         $jsonFile->push((object) ['bar' => 'foo']);
     }
 
-    public function testShouldThrowExceptionIfRemoteFileCannotBeObtained(): void
+    public function test_should_throw_exception_if_remote_file_cannot_be_obtained(): void
     {
         $jsonFile = new Json($this->url . 'wrong');
 
         $this->expectException(GetFileException::class);
+
+        $jsonFile->push((object) ['bar' => 'foo']);
+    }
+
+    public function test_should_throw_exception_when_there_are_json_errors_in_the_file(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        file_put_contents($this->filepath, '{');
+
+        $this->expectException(JsonErrorException::class);
 
         $jsonFile->push((object) ['bar' => 'foo']);
     }

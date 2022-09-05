@@ -25,7 +25,7 @@ PHP simple library for managing JSON files.
 - [TODO](#todo)
 - [Changelog](#changelog)
 - [Contribution](#contribution)
-- [Sponsor](#Sponsor)
+- [Sponsor](#sponsor)
 - [License](#license)
 
 ---
@@ -59,21 +59,30 @@ git clone https://github.com/josantonius/php-json.git
 
 ## Available Classes
 
-Json Class
+### Json Class
+
+`Josantonius\Json\Json`
+
+Check whether a local or remote file exists.
 
 ```php
-use Josantonius\Json\Json;
+public function exists(): bool;
 ```
 
 Get JSON file contents:
 
 ```php
 /**
- * @throws CreateDirectoryException if there is an error when creating a directory.
- * @throws CreateFileException      if there is an error when creating a file.
- * @throws JsonErrorException       if there is an error when parsing a JSON file.
+ * @throws GetFileException   if there is an error when getting a file.
+ * @throws JsonErrorException if there is an error when parsing a JSON file.
  */
-$json->get(): array
+public function get(): array;
+```
+
+Get the path or URL of the JSON file.
+
+```php
+public function getFilepath(): string;
 ```
 
 Set the content of the JSON file:
@@ -81,40 +90,36 @@ Set the content of the JSON file:
 ```php
 /**
  * @throws CreateFileException        if there is an error when creating a file.
- * @throws JsonErrorException         if there is an error when parsing a JSON file.
  * @throws UnavailableMethodException if the method is not available.
  */
-$json->set(array|object $content): void
+public function set(array|object $content = []): void;
 ```
 
 Merge into JSON file:
 
 ```php
 /**
- * @throws CreateFileException        if there is an error when creating a file.
  * @throws GetFileException           if there is an error when getting a file.
  * @throws JsonErrorException         if there is an error when parsing a JSON file.
  * @throws UnavailableMethodException if the method is not available.
  */
-$json->merge(array|object $content): array
+public function merge(array|object $content): array;
 ```
 
 Push on the JSON file:
 
 ```php
 /**
- * @throws CreateFileException        if there is an error when creating a file.
  * @throws GetFileException           if there is an error when getting a file.
  * @throws JsonErrorException         if there is an error when parsing a JSON file.
  * @throws UnavailableMethodException if the method is not available.
  */
-$json->push(array|object $content): array
+public function push(array|object $content): array;
 ```
 
 ## Exceptions Used
 
 ```php
-use Josantonius\Json\Exceptions\CreateDirectoryException;
 use Josantonius\Json\Exceptions\CreateFileException;
 use Josantonius\Json\Exceptions\GetFileException;
 use Josantonius\Json\Exceptions\JsonErrorException;
@@ -124,6 +129,30 @@ use Josantonius\Json\Exceptions\UnavailableMethodException;
 ## Usage
 
 Example of use for this library:
+
+### Check whether a local file exists
+
+**`index.php`**
+
+```php
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
+$json->exists(); // bool
+```
+
+### Check whether a remote file exists
+
+**`index.php`**
+
+```php
+use Josantonius\Json\Json;
+
+$json = new Json('https://example.com/file.json');
+
+$json->exists(); // bool
+```
 
 ### Get the JSON file contents
 
@@ -143,6 +172,68 @@ use Josantonius\Json\Json;
 $json = new Json('file.json');
 
 $json->get(); // ['foo' => 'bar']
+```
+
+### Get the JSON file contents from URL
+
+**`https://example.com/file.json`**
+
+```json
+{
+    "foo": "bar"
+}
+```
+
+**`index.php`**
+
+```php
+use Josantonius\Json\Json;
+
+$json = new Json('https://example.com/file.json');
+
+$json->get(); // ['foo' => 'bar']
+```
+
+### Get the path of the JSON file
+
+**`index.php`**
+
+```php
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
+$json->getFilepath(); // 'file.json'
+```
+
+### Get the URL of the remote JSON file
+
+**`index.php`**
+
+```php
+use Josantonius\Json\Json;
+
+$json = new Json('https://example.com/file.json');
+
+$json->getFilepath(); // 'https://example.com/file.json'
+```
+
+### Set an empty array in the JSON file contents
+
+**`index.php`**
+
+```php
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
+$json->set();
+```
+
+**`file.json`**
+
+```json
+[]
 ```
 
 ### Set the JSON file contents
