@@ -4,7 +4,7 @@
 
 ### Added
 
-* `Josantonius\Json\Json->getFilepath()` method.
+* `Josantonius\Json\Json->filepath()` method.
 * `Josantonius\Json\Json->exists()` method.
 
 ### Changed
