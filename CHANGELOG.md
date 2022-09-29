@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [v2.0.7](https://github.com/josantonius/php-json/releases/tag/v2.0.7) (2022-09-29)
+
+* Tests for Windows have been added.
+
+* Tests for PHP 8.2 have been added.
+
 ## [v2.0.6](https://github.com/josantonius/php-json/releases/tag/v2.0.6) (2022-09-05)
 
 ### Added
