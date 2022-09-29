@@ -32,7 +32,7 @@ PHP simple library for managing JSON files.
 
 ## Requirements
 
-- Operating System: Linux | Windows.
+- Operating System: Linux.
 
 - PHP versions: 8.0 | 8.1 | 8.2.
 

@@ -32,7 +32,7 @@ Biblioteca PHP para la gestión de archivos JSON.
 
 ## Requisitos
 
-- Sistema operativo: Linux | Windows.
+- Sistema operativo: Linux.
 
 - Versiones de PHP: 8.0 | 8.1 | 8.2.
 
