@@ -17,13 +17,12 @@ use Josantonius\Json\Json;
 use PHPUnit\Framework\TestCase;
 use Josantonius\Json\Exceptions\GetFileException;
 use Josantonius\Json\Exceptions\JsonErrorException;
-use Josantonius\Json\Exceptions\UnavailableMethodException;
+use Josantonius\Json\Exceptions\NoIterableFileException;
+use Josantonius\Json\Exceptions\NoIterableElementException;
 
 class MergeMethodTest extends TestCase
 {
     private string $filepath =  __DIR__ . '/filename.json';
-
-    private string $url = 'https://raw.githubusercontent.com/josantonius/php-json/main/composer.json';
 
     public function setUp(): void
     {
@@ -43,12 +42,12 @@ class MergeMethodTest extends TestCase
 
         $jsonFile->set(['foo' => 'bar']);
 
-        $jsonFile->merge(['bar' => 'foo']);
+        $result = $jsonFile->merge(['bar' => 'foo']);
 
         $this->assertEquals([
             'foo' => 'bar',
             'bar' => 'foo'
-        ], json_decode(file_get_contents($this->filepath), true));
+        ], $result);
     }
 
     public function test_should_merge_object_on_json_file(): void
@@ -57,14 +56,43 @@ class MergeMethodTest extends TestCase
 
         $jsonFile->set(['foo' => 'bar']);
 
-        $object = (object) ['bar' => 'foo'];
-
-        $jsonFile->merge($object);
+        $result = $jsonFile->merge((object) ['bar' => 'foo']);
 
         $this->assertEquals([
             'foo' => 'bar',
             'bar' => 'foo'
-        ], json_decode(file_get_contents($this->filepath), true));
+        ], $result);
+    }
+
+    public function test_should_merge_the_content_for_a_specific_level_from_dot_notation(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        $jsonFile->set(['foo' => ['bar' => 'baz']]);
+
+        $result = $jsonFile->merge((object) ['baz' => 'bar'], 'foo');
+
+        $this->assertEquals(['foo' => [
+            'bar' => 'baz',
+            'baz' => 'bar'
+        ]], $result);
+
+        $jsonFile->set(['foo' => [['bar']]]);
+
+        $result = $jsonFile->merge(['baz'], 'foo.0');
+
+        $this->assertEquals(['foo' => [
+            ['bar', 'baz']
+        ]], $result);
+
+        $jsonFile->set([['foo'], ['bar']]);
+
+        $result = $jsonFile->merge(['baz'], 1);
+
+        $this->assertEquals([
+            ['foo'],
+            ['bar', 'baz'],
+        ], $result);
     }
 
     public function test_should_fail_if_the_file_does_not_exists(): void
@@ -76,16 +104,7 @@ class MergeMethodTest extends TestCase
         $jsonFile->merge((object) ['bar' => 'foo']);
     }
 
-    public function test_should_throw_exception_if_merge_method_is_used_with_remote_file(): void
-    {
-        $jsonFile = new Json($this->url);
-
-        $this->expectException(UnavailableMethodException::class);
-
-        $jsonFile->merge(['bar' => 'foo']);
-    }
-
-    public function test_should_throw_exception_when_there_are_json_errors_in_the_file(): void
+    public function test_should_fail_when_there_are_json_errors_in_the_file(): void
     {
         $jsonFile = new Json($this->filepath);
 
@@ -94,5 +113,27 @@ class MergeMethodTest extends TestCase
         $this->expectException(JsonErrorException::class);
 
         $jsonFile->merge(['bar' => 'foo']);
+    }
+
+    public function test_should_fail_if_the_dot_path_does_not_contain_an_array(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        $jsonFile->set(['foo' => null]);
+
+        $this->expectException(NoIterableElementException::class);
+
+        $jsonFile->merge(['bar'], 'foo');
+    }
+
+    public function test_should_fail_if_the_file_does_not_contain_an_array(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        $jsonFile->set('foo');
+
+        $this->expectException(NoIterableFileException::class);
+
+        $jsonFile->merge(['bar'], 'foo');
     }
 }

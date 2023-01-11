@@ -15,15 +15,16 @@ namespace Josantonius\Json\Tests;
 
 use Josantonius\Json\Json;
 use PHPUnit\Framework\TestCase;
+use Josantonius\Json\Exceptions\GetFileException;
+use Josantonius\Json\Exceptions\JsonErrorException;
 use Josantonius\Json\Exceptions\CreateFileException;
+use Josantonius\Json\Exceptions\NoIterableFileException;
 use Josantonius\Json\Exceptions\CreateDirectoryException;
-use Josantonius\Json\Exceptions\UnavailableMethodException;
+use Josantonius\Json\Exceptions\NoIterableElementException;
 
 class SetMethodTest extends TestCase
 {
     private string $filepath =  __DIR__ . '/filename.json';
-
-    private string $url = 'https://raw.githubusercontent.com/josantonius/php-json/main/composer.json';
 
     public function setUp(): void
     {
@@ -37,29 +38,105 @@ class SetMethodTest extends TestCase
         }
     }
 
-    public function test_should_set_array_on_json_file(): void
+    public function test_should_set_an_associative_array_on_json_file(): void
     {
         $jsonFile = new Json($this->filepath);
 
-        $array = ['foo' => 'bar'];
+        $value = ['foo' => 'bar'];
 
-        $jsonFile->set($array);
+        $result = $jsonFile->set($value);
 
-        $this->assertEquals($array, json_decode(file_get_contents($this->filepath), true));
+        $this->assertEquals($value, $result);
     }
 
-    public function test_should_set_object_on_json_file(): void
+    public function test_should_set_a_numeric_array_on_json_file(): void
     {
         $jsonFile = new Json($this->filepath);
 
-        $object = (object) ['foo' => 'bar'];
+        $value = ['foo', 'bar'];
 
-        $jsonFile->set($object);
+        $result = $jsonFile->set($value);
 
-        $this->assertEquals($object, json_decode(file_get_contents($this->filepath)));
+        $this->assertEquals($value, $result);
     }
 
-    public function test_should_throw_exception_if_filename_is_wrong(): void
+    public function test_should_set_an_object_on_json_file(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        $value = ['foo' => 'bar'];
+
+        $result = $jsonFile->set((object) $value);
+
+        $this->assertEquals($value, $result);
+    }
+
+    public function test_should_set_a_boolean_on_json_file(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        $value = false;
+
+        $result = $jsonFile->set($value);
+
+        $this->assertEquals($value, $result);
+    }
+
+    public function test_should_set_an_integer_on_json_file(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        $value = 8;
+
+        $result = $jsonFile->set($value);
+
+        $this->assertEquals($value, $result);
+    }
+
+    public function test_should_set_a_string_on_json_file(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        $value = 'foo';
+
+        $result = $jsonFile->set($value);
+
+        $this->assertEquals($value, $result);
+    }
+
+    public function test_should_set_a_null_on_json_file(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        $value = null;
+
+        $result = $jsonFile->set($value);
+
+        $this->assertEquals($value, $result);
+    }
+
+    public function test_should_set_the_content_for_a_specific_level_from_dot_notation(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        $jsonFile->set(['foo' => ['bar']]);
+
+        $result = $jsonFile->set('baz', 'foo.1');
+
+        $this->assertEquals(['foo' => ['bar', 'baz']], $result);
+
+        $jsonFile->set([[]]);
+
+        $result = $jsonFile->set('foo', '0.0');
+
+        $this->assertEquals([['foo']], $result);
+
+        $result = $jsonFile->set('foo', 0);
+
+        $this->assertEquals(['foo'], $result);
+    }
+
+    public function test_should_fail_if_filename_is_wrong(): void
     {
         $this->expectException(CreateFileException::class);
 
@@ -68,21 +145,43 @@ class SetMethodTest extends TestCase
         $jsonFile->set();
     }
 
-    public function test_should_throw_exception_if_set_method_is_used_with_remote_file(): void
+    public function test_should_fail_if_path_is_wrong(): void
     {
-        $jsonFile = new Json($this->url);
-
-        $this->expectException(UnavailableMethodException::class);
-
-        $jsonFile->set(['foo' => 'bar']);
-    }
-
-    public function test_should_throw_exception_if_path_is_wrong(): void
-    {
-        $this->expectException(CreateDirectoryException::class);
-
         $jsonFile = new Json('/foo:/filename.json');
 
+        $this->expectException(CreateDirectoryException::class);
+
         $jsonFile->set();
+    }
+
+    public function test_should_fail_if_the_file_does_not_exists(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        $this->expectException(GetFileException::class);
+
+        $jsonFile->set(['foo'], 'bar');
+    }
+
+    public function test_should_fail_when_there_are_json_errors_in_the_file(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        file_put_contents($this->filepath, '{');
+
+        $this->expectException(JsonErrorException::class);
+
+        $jsonFile->set(['foo'], 'bar');
+    }
+
+    public function test_should_fail_if_the_file_does_not_contain_an_array(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        $jsonFile->set('foo');
+
+        $this->expectException(NoIterableElementException::class);
+
+        $jsonFile->set(true, 'bar');
     }
 }

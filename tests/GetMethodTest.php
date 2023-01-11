@@ -20,48 +20,121 @@ use Josantonius\Json\Exceptions\JsonErrorException;
 
 class GetMethodTest extends TestCase
 {
-    private string $filepath =  __DIR__ . '/filename.json';
+    protected string $filepath =  __DIR__ . '/filename.json';
 
-    private string $url = 'https://raw.githubusercontent.com/josantonius/php-json/main/composer.json';
-
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setup();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         if (file_exists($this->filepath)) {
             unlink($this->filepath);
         }
     }
 
-    public function test_should_get_file_contents_if_the_file_exists(): void
+    public function test_should_get_file_contents_as_associative_array(): void
     {
         $jsonFile = new Json($this->filepath);
 
-        $jsonFile->set();
+        $value = ['foo' => 'bar'];
 
-        $this->assertEquals([], $jsonFile->get());
+        file_put_contents($this->filepath, json_encode($value));
+
+        $content = $jsonFile->get();
+
+        $this->assertEquals($value, $content);
+    }
+
+    public function test_should_get_file_contents_as_numeric_array(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        $value = ['foo', 'bar'];
+
+        file_put_contents($this->filepath, json_encode($value));
+
+        $content = $jsonFile->get();
+
+        $this->assertEquals($value, $content);
+    }
+
+    public function test_should_get_file_contents_as_object(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        $value = ['foo' => 'bar'];
+
+        file_put_contents($this->filepath, json_encode($value));
+
+        $content = $jsonFile->get(false);
+
+        $this->assertEquals((object) $value, $content);
+    }
+
+    public function test_should_get_file_contents_as_boolean(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        $value = false;
+
+        file_put_contents($this->filepath, json_encode($value));
+
+        $content = $jsonFile->get();
+
+        $this->assertEquals($value, $content);
+    }
+
+    public function test_should_get_file_contents_as_integer(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        $value = 8;
+
+        file_put_contents($this->filepath, json_encode($value));
+
+        $content = $jsonFile->get();
+
+        $this->assertEquals($value, $content);
+    }
+
+    public function test_should_get_file_contents_as_string(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        $value = 'foo';
+
+        file_put_contents($this->filepath, json_encode($value));
+
+        $content = $jsonFile->get();
+
+        $this->assertEquals($value, $content);
+    }
+
+    public function test_should_get_file_contents_as_null(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        $value = null;
+
+        file_put_contents($this->filepath, json_encode($value));
+
+        $content = $jsonFile->get();
+
+        $this->assertNull($content);
     }
 
     public function test_should_fail_if_the_file_does_not_exists(): void
     {
-        $this->expectException(GetFileException::class);
-
         $jsonFile = new Json($this->filepath);
 
-        $this->assertEquals([], $jsonFile->get());
+        $this->expectException(GetFileException::class);
+
+        $jsonFile->get();
     }
 
-    public function test_should_get_remote_file_contents(): void
-    {
-        $jsonFile = new Json($this->url);
-
-        $this->assertArrayHasKey('name', $jsonFile->get());
-    }
-
-    public function test_should_throw_exception_when_there_are_json_errors_in_the_file(): void
+    public function test_should_fail_when_there_are_json_errors_in_the_file(): void
     {
         $jsonFile = new Json($this->filepath);
 
