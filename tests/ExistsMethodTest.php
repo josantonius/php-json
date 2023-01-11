@@ -18,16 +18,14 @@ use PHPUnit\Framework\TestCase;
 
 class ExistsMethodTest extends TestCase
 {
-    private string $filepath =  __DIR__ . '/filename.json';
+    protected string $filepath =  __DIR__ . '/filename.json';
 
-    private string $url = 'https://raw.githubusercontent.com/josantonius/php-json/main/composer.json';
-
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setup();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         if (file_exists($this->filepath)) {
             unlink($this->filepath);
@@ -43,17 +41,6 @@ class ExistsMethodTest extends TestCase
         $jsonFile = new Json($this->filepath);
 
         $jsonFile->set();
-
-        $this->assertTrue($jsonFile->exists());
-    }
-
-    public function test_should_check_if_a_remote_file_exists(): void
-    {
-        $jsonFile = new Json($this->url . '.foo');
-
-        $this->assertFalse($jsonFile->exists());
-
-        $jsonFile = new Json($this->url);
 
         $this->assertTrue($jsonFile->exists());
     }

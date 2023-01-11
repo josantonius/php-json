@@ -9,8 +9,6 @@
 [![PSR4](https://img.shields.io/badge/PSR-4-9b59b6.svg)](https://www.php-fig.org/psr/psr-4/)
 [![PSR12](https://img.shields.io/badge/PSR-12-1abc9c.svg)](https://www.php-fig.org/psr/psr-12/)
 
-**Translations**: [Español](.github/lang/es-ES/README.md)
-
 PHP simple library for managing JSON files.
 
 ---
@@ -34,7 +32,7 @@ PHP simple library for managing JSON files.
 
 - Operating System: Linux.
 
-- PHP versions: 8.0 | 8.1 | 8.2.
+- PHP versions: 8.1 | 8.2.
 
 ## Installation
 
@@ -65,78 +63,189 @@ git clone https://github.com/josantonius/php-json.git
 
 `Josantonius\Json\Json`
 
-Check whether a local or remote file exists.
+Create object referencing the JSON file:
 
 ```php
+/**
+ * @param string $filepath The path to the JSON file to be handled.
+ */
+public function __construct(public readonly string $filepath)
+{
+}
+```
+
+Get the path to the JSON file:
+
+```php
+public readonly string $filepath;
+```
+
+Check if the JSON file has already been created:
+
+```php
+/**
+ * @return bool True if the file exists at the specified filepath, false otherwise.
+ */
 public function exists(): bool;
 ```
 
-Get JSON file contents:
+Get the contents of the JSON file:
 
 ```php
 /**
- * @throws GetFileException   if there is an error when getting a file.
- * @throws JsonErrorException if there is an error when parsing a JSON file.
+ * @param bool $asObject If true and the value is an array, it is returned as an object.
+ *
+ * @throws GetFileException   if the file could not be read.
+ * @throws JsonErrorException if the file contains invalid JSON.
+ *
+ * @return mixed the contents of the JSON file.
  */
-public function get(): array;
+public function get(bool $asObject = false): mixed;
 ```
 
-Get the path or URL of the JSON file.
-
-```php
-public function filepath(): string;
-```
-
-Set the content of the JSON file:
+Set the contents of a JSON or a key within the file:
 
 ```php
 /**
- * @throws CreateFileException        if there is an error when creating a file.
- * @throws CreateDirectoryException   if the directory cannot be created.
- * @throws UnavailableMethodException if the method is not available.
+ * @param mixed  $content The data that will be written to the file or a key within the file.
+ * @param string $dot     The dot notation string representing the key to be modified within the file.
+ *
+ * @throws GetFileException           if the file could not be read.
+ * @throws JsonErrorException         if the file contains invalid JSON.
+ * @throws CreateDirectoryException   if the file could not be created.
+ * @throws CreateFileException        if the directory could not be created.
+ * @throws NoIterableElementException if the location specified by $dot is not an array.
+ *
+ * @return mixed the content of the JSON file after the merge operation.
  */
-public function set(array|object $content = []): void;
+public function set(mixed $content = [], string $dot = null): array|bool|int|null|string;
 ```
 
-Merge into JSON file:
+Merge the provided data with the contents of a JSON file or a key within the file:
 
 ```php
 /**
- * @throws GetFileException           if there is an error when getting a file.
- * @throws JsonErrorException         if there is an error when parsing a JSON file.
- * @throws UnavailableMethodException if the method is not available.
+ * @param mixed  $content The data that will be written to the file or a key within the file.
+ * @param string $dot     The dot notation string representing the key to be modified within the file.
+ *
+ * @throws GetFileException           if the file could not be read.
+ * @throws JsonErrorException         if the file contains invalid JSON.
+ * @throws NoIterableFileException    if the file does not contain an array.
+ * @throws NoIterableElementException if the location specified by $dot is not an array.
+ *
+ * @return mixed the content of the JSON file after the merge operation.
  */
-public function merge(array|object $content): array;
+public function merge(array|object $content, string $dot = null): array;
 ```
 
-Push on the JSON file:
+Remove and get the last element of a JSON file or a key within the file:
 
 ```php
 /**
- * @throws GetFileException           if there is an error when getting a file.
- * @throws JsonErrorException         if there is an error when parsing a JSON file.
- * @throws UnavailableMethodException if the method is not available.
+ * @param string $dot The dot notation string representing the key to be modified within the file.
+ *
+ * @throws GetFileException           if the file could not be read.
+ * @throws JsonErrorException         if the file contains invalid JSON.
+ * @throws NoIterableFileException    if the file does not contain an array.
+ * @throws NoIterableElementException if the location specified by $dot is not an array.
+ *
+ * @return mixed|null the last value of JSON file, or null if array is empty.
  */
-public function push(array|object $content): array;
+public function pop(string $dot = null): mixed;
+```
+
+Add the provided data to the end of the contents of a JSON file or a key within the file:
+
+```php
+/**
+ * @param mixed  $content The data that will be written to the file or a key within the file.
+ * @param string $dot     The dot notation string representing the key to be modified within the file.
+ *
+ * @throws GetFileException           if the file could not be read.
+ * @throws JsonErrorException         if the file contains invalid JSON.
+ * @throws NoIterableFileException    if the file does not contain an array.
+ * @throws NoIterableElementException if the location specified by $dot is not an array.
+ *
+ * @return mixed the content of the JSON file after the push operation.
+ */
+public function push(mixed $content, string $dot = null): array;
+```
+
+Remove and get the first element of a JSON file or a key within the file:
+
+```php
+/**
+ * @param string $dot The dot notation string representing the key to be modified within the file.
+ *
+ * @throws GetFileException           if the file could not be read.
+ * @throws JsonErrorException         if the file contains invalid JSON.
+ * @throws NoIterableFileException    if the file does not contain an array.
+ * @throws NoIterableElementException if the location specified by $dot is not an array.
+ *
+ * @return mixed|null the shifted value, or null if array is empty.
+ */
+public function shift(string $dot = null): mixed(mixed $content, string $dot = null): array;
+```
+
+Remove a key and its value from the contents of a JSON file:
+
+```php
+/**
+ * @param string $dot       The dot notation string representing the key to be modified within the file.
+ * @param bool   $reindexed If true, the array will be re-indexed.
+ *
+ * @throws GetFileException         if the file could not be read.
+ * @throws JsonErrorException       if the file contains invalid JSON.
+ * @throws NoIterableFileException  if the file does not contain an array.
+ *
+ * @return array the content of the JSON file after the unset operation.
+ */
+public function unset(string $dot, bool $reindexed = false): array;
+```
+
+Add the provided data to the beginning of the contents of a JSON file or a key within the file:
+
+```php
+/**
+ * @param mixed  $content The data that will be written to the file or a key within the file.
+ * @param string $dot     The dot notation string representing the key to be modified within the file.
+ *
+ * @throws GetFileException           if the file could not be read.
+ * @throws JsonErrorException         if the file contains invalid JSON.
+ * @throws NoIterableFileException    if the file does not contain an array.
+ * @throws NoIterableElementException if the location specified by $dot is not an array.
+ *
+ * @return mixed the content of the JSON file after the unshift operation.
+ */
+public function unshift(mixed $content, string $dot = null): mixed;
 ```
 
 ## Exceptions Used
 
 ```php
-use Josantonius\Json\Exceptions\GetFileException;
-use Josantonius\Json\Exceptions\CreateFileException;
-use Josantonius\Json\Exceptions\JsonErrorException;
 use Josantonius\Json\Exceptions\CreateDirectoryException;
-use Josantonius\Json\Exceptions\UnavailableMethodException;
+use Josantonius\Json\Exceptions\CreateFileException;
+use Josantonius\Json\Exceptions\GetFileException;
+use Josantonius\Json\Exceptions\JsonErrorException;
+use Josantonius\Json\Exceptions\NoIterableElementException;
+use Josantonius\Json\Exceptions\NoIterableFileException;
 ```
 
 ## Usage
 
 Example of use for this library:
 
-### Check whether a local file exists
+### Get the path of the JSON file
 
-**`index.php`**
+```php
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
+$json->filepath; // 'file.json'
+```
+
+### Check whether a local file exists
 
 ```php
 use Josantonius\Json\Json;
@@ -146,19 +255,7 @@ $json = new Json('file.json');
 $json->exists(); // bool
 ```
 
-### Check whether a remote file exists
-
-**`index.php`**
-
-```php
-use Josantonius\Json\Json;
-
-$json = new Json('https://example.com/file.json');
-
-$json->exists(); // bool
-```
-
-### Get the JSON file contents
+### Get the JSON file contents as array
 
 **`file.json`**
 
@@ -178,9 +275,9 @@ $json = new Json('file.json');
 $json->get(); // ['foo' => 'bar']
 ```
 
-### Get the JSON file contents from URL
+### Get the JSON file contents as object
 
-**`https://example.com/file.json`**
+**`file.json`**
 
 ```json
 {
@@ -193,33 +290,9 @@ $json->get(); // ['foo' => 'bar']
 ```php
 use Josantonius\Json\Json;
 
-$json = new Json('https://example.com/file.json');
-
-$json->get(); // ['foo' => 'bar']
-```
-
-### Get the path of the JSON file
-
-**`index.php`**
-
-```php
-use Josantonius\Json\Json;
-
 $json = new Json('file.json');
 
-$json->filepath(); // 'file.json'
-```
-
-### Get the URL of the remote JSON file
-
-**`index.php`**
-
-```php
-use Josantonius\Json\Json;
-
-$json = new Json('https://example.com/file.json');
-
-$json->filepath(); // 'https://example.com/file.json'
+$json->get(asObject: true); // object(stdClass) { ["foo"] => string(3) "bar" }
 ```
 
 ### Set an empty array in the JSON file contents
@@ -240,7 +313,7 @@ $json->set();
 []
 ```
 
-### Set the JSON file contents
+### Set the contents of a JSON file
 
 **`index.php`**
 
@@ -260,7 +333,41 @@ $json->set(['foo' => 'bar']);
 }
 ```
 
-### Merge data into JSON file
+### Set the contents of a key within the JSON file using dot notation
+
+**`file.json`**
+
+```json
+{
+    "foo": {
+        "bar": []
+    }
+}
+```
+
+**`index.php`**
+
+```php
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
+$json->set('baz', 'foo.bar.0');
+```
+
+**`file.json`**
+
+```json
+{
+    "foo": {
+        "bar": [
+            "baz"
+        ]
+    }
+}
+```
+
+### Merge the provided data with the contents of the JSON file
 
 **`file.json`**
 
@@ -289,7 +396,110 @@ $json->merge(['bar' => 'foo']);
 }
 ```
 
-### Push data on the JSON file
+### Merge the provided data with the contents of a key within the file using dot notation
+
+**`file.json`**
+
+```json
+{
+    "foo": [
+        {
+            "bar": "baz"
+        }
+    ]
+}
+```
+
+**`index.php`**
+
+```php
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
+$json->merge(['baz' => 'bar'], 'foo.0');
+```
+
+**`file.json`**
+
+```json
+{
+    "foo": [
+        {
+            "bar": "baz",
+            "baz": "bar"
+        }
+    ]
+}
+```
+
+### Remove and get the last element of a JSON file
+
+**`file.json`**
+
+```json
+[
+    1,
+    2,
+    3
+]
+```
+
+**`index.php`**
+
+```php
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
+$json->pop(); // 3
+```
+
+**`file.json`**
+
+```json
+[
+    1,
+    2
+]
+```
+
+### Remove and get the last element of a key within the file using dot notation
+
+**`file.json`**
+
+```json
+{
+    "foo": [
+        1,
+        2,
+        3
+    ]
+}
+```
+
+**`index.php`**
+
+```php
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
+$json->pop(); // 3
+```
+
+**`file.json`**
+
+```json
+{
+    "foo": [
+        1,
+        2
+    ]
+}
+```
+
+### Add the provided data to the end of the contents of a JSON file
 
 **`file.json`**
 
@@ -322,6 +532,281 @@ $json->push(['name'  => 'bar']);
         "name": "bar"
     }
 ]
+```
+
+### Add the provided data to the end of the contents of a key within the file using dot notation
+
+**`file.json`**
+
+```json
+{
+    "foo": {
+        "bar": [
+            []
+        ]
+    }
+}
+```
+
+**`index.php`**
+
+```php
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
+$json->push('baz', 'foo.bar.0');
+```
+
+**`file.json`**
+
+```json
+{
+    "foo": {
+        "bar": [
+            [
+                "baz"
+            ]
+        ]
+    }
+}
+```
+
+### Remove and get the first element of the contents of a JSON file
+
+**`file.json`**
+
+```json
+[
+    1,
+    2,
+    3
+]
+```
+
+**`index.php`**
+
+```php
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
+$json->shift(); // 1
+```
+
+**`file.json`**
+
+```json
+[
+    2,
+    3
+]
+```
+
+### Remove and get the first element of the contents of a key within the file using dot notation
+
+**`file.json`**
+
+```json
+{
+    "foo": {
+        "bar": [
+            [
+                1
+            ]
+        ]
+    }
+}
+```
+
+**`index.php`**
+
+```php
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
+$json->shift('foo.bar.0'); // 1
+```
+
+**`file.json`**
+
+```json
+{
+    "foo": {
+        "bar": [
+            []
+        ]
+    }
+}
+```
+
+### Remove a string key and its value from the contents of a JSON file
+
+**`file.json`**
+
+```json
+{
+    "foo": {
+        "bar": [
+            []
+        ]
+    }
+}
+```
+
+**`index.php`**
+
+```php
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
+$json->unset('foo.bar');
+```
+
+**`file.json`**
+
+```json
+{
+    "foo": []
+}
+```
+
+### Remove a numeric key and its value from the contents of a JSON file
+
+**`file.json`**
+
+```json
+[
+    1,
+    2,
+    3
+]
+```
+
+**`index.php`**
+
+```php
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
+$json->unset('1');
+```
+
+**`file.json`**
+
+```json
+{
+    "0": 1,
+    "2": 3
+}
+```
+
+### Remove a numeric key and its value from the contents of a JSON file and re-index it
+
+**`file.json`**
+
+```json
+[
+    1,
+    2,
+    3
+]
+```
+
+**`index.php`**
+
+```php
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
+$json->unset('1', reindexed: true);
+```
+
+**`file.json`**
+
+```json
+[
+    1,
+    3
+]
+```
+
+### Add the provided data to the beginning of the contents of a JSON file
+
+**`file.json`**
+
+```json
+[
+    1,
+    2,
+    3
+]
+```
+
+**`index.php`**
+
+```php
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
+$json->unshift(0);
+```
+
+**`file.json`**
+
+```json
+[
+    0,
+    1,
+    2,
+    3
+]
+```
+
+### Add the provided data to the beginning of the contents of a key within the file using dot notation
+
+**`file.json`**
+
+```json
+{
+    "foo": {
+        "bar": [
+            [
+                1
+            ]
+        ]
+    }
+}
+```
+
+**`index.php`**
+
+```php
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
+$json->unshift(0, 'foo.bar.0');
+```
+
+**`file.json`**
+
+```json
+{
+    "foo": {
+        "bar": [
+            [
+                0,
+                1
+            ]
+        ]
+    }
+}
 ```
 
 ## Tests

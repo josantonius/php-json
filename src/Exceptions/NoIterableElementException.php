@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace Josantonius\Json\Exceptions;
 
-class UnavailableMethodException extends \Exception
+class NoIterableElementException extends \Exception
 {
-    public function __construct(string $method)
+    public function __construct(string $dot, string $method)
     {
-        $message = 'The "' . $method . '" method is not available for remote JSON files.';
-
-        parent::__construct($message);
+        parent::__construct(
+            "The location specified by '$dot' dot is not an array to perform a '$method' operation on."
+        );
     }
 }
