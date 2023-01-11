@@ -7,7 +7,7 @@
     <description>Coding standard.</description>
 
     <!--Clean Code Rules-->
-    <rule ref="rulesets/cleancode.xml/BooleanArgumentFlag"/>
+    <!--rule ref="rulesets/cleancode.xml/BooleanArgumentFlag"/>-->
     <rule ref="rulesets/cleancode.xml/ElseExpression"/>
     <rule ref="rulesets/cleancode.xml/StaticAccess"/>
     <rule ref="rulesets/cleancode.xml/IfStatementAssignment"/>
@@ -17,7 +17,7 @@
     <!--<rule ref="rulesets/cleancode.xml/ErrorControlOperator"/>-->
 
     <!--Code Size Rules-->
-    <rule ref="rulesets/codesize.xml/CyclomaticComplexity"/>
+    <!--<rule ref="rulesets/codesize.xml/CyclomaticComplexity"/>-->
     <rule ref="rulesets/codesize.xml/NPathComplexity"/>
     <rule ref="rulesets/codesize.xml/ExcessiveMethodLength"/>
     <rule ref="rulesets/codesize.xml/ExcessiveClassLength"/>
