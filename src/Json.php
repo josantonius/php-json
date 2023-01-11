@@ -47,20 +47,20 @@ class Json
     /**
      * Get the contents of the JSON file.
      *
-     * @param bool $associative If the returned object will be converted to an associative array.
+     * @param bool $asObject If true and the value is an array, it is returned as an object.
      *
      * @throws GetFileException   if the file could not be read.
      * @throws JsonErrorException if the file contains invalid JSON.
      *
      * @return mixed the contents of the JSON file.
      */
-    public function get(bool $associative = true): mixed
+    public function get(bool $asObject = false): mixed
     {
         $json = @file_get_contents($this->filepath);
 
         $json === false && throw new GetFileException($this->filepath);
 
-        $array = json_decode($json, $associative);
+        $array = json_decode($json, !$asObject);
 
         json_last_error() && throw new JsonErrorException();
 
@@ -269,7 +269,7 @@ class Json
      */
     protected function modifyArrayByDot(string $type, array &$array, string $dot, mixed $content = []): mixed
     {
-        $keys = explode('.', (string) $dot);
+        $keys = explode('.', $dot);
 
         if ($type == 'unset') {
             $last = array_pop($keys);
@@ -279,26 +279,30 @@ class Json
             $array = &$array[$key];
         }
 
-        if ($type == 'merge') {
-            $this->failIfNotArray('merge', $array, $dot);
-            $array = array_merge($array, (array) $content);
-        } elseif ($type == 'pop') {
-            $this->failIfNotArray('pop', $array, $dot);
-            return array_pop($array);
-        } elseif ($type == 'push') {
-            $this->failIfNotArray('push', $array, $dot);
-            array_push($array, is_object($content) ? (array) $content : $content);
-        } elseif ($type == 'set') {
-            $array = $content;
-        } elseif ($type == 'shift') {
-            $this->failIfNotArray('shift', $array, $dot);
-            return array_shift($array);
-        } elseif ($type == 'unset') {
-            unset($array[$last]);
-        } elseif ($type == 'unshift') {
-            $this->failIfNotArray('unshift', $array, $dot);
-            array_unshift($array, is_object($content) ? (array) $content : $content);
+        if (!str_contains($type, 'set')) {
+            $this->failIfNotArray($type, $array, $dot);
         }
+
+        switch ($type) {
+            case 'merge':
+                $array = array_merge($array, (array) $content);
+                break;
+            case 'pop':
+                return array_pop($array);
+            case 'push':
+                return array_push($array, is_object($content) ? (array) $content : $content);
+            case 'set':
+                $array = $content;
+                break;
+            case 'shift':
+                return array_shift($array);
+            case 'unset':
+                unset($array[$last]);
+                break;
+            case 'unshift':
+                return array_unshift($array, is_object($content) ? (array) $content : $content);
+        }
+
         return null;
     }
 
