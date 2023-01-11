@@ -93,14 +93,14 @@ Get the contents of the JSON file:
 
 ```php
 /**
- * @param bool $associative If the returned object will be converted to an associative array.
+ * @param bool $asObject If true and the value is an array, it is returned as an object.
  *
  * @throws GetFileException   if the file could not be read.
  * @throws JsonErrorException if the file contains invalid JSON.
  *
  * @return mixed the contents of the JSON file.
  */
-public function get(bool $associative = true): mixed;
+public function get(bool $asObject = false): mixed;
 ```
 
 Set the contents of a JSON or a key within the file:
@@ -292,7 +292,7 @@ use Josantonius\Json\Json;
 
 $json = new Json('file.json');
 
-$json->get(associative: false); // object(stdClass) { ["foo"] => string(3) "bar" }
+$json->get(asObject: true); // object(stdClass) { ["foo"] => string(3) "bar" }
 ```
 
 ### Set an empty array in the JSON file contents
@@ -641,7 +641,7 @@ $json->shift('foo.bar.0'); // 1
 }
 ```
 
-### Remove a key and its value from the contents of a JSON file
+### Remove a string key and its value from the contents of a JSON file
 
 **`file.json`**
 
@@ -671,6 +671,68 @@ $json->unset('foo.bar');
 {
     "foo": []
 }
+```
+
+### Remove a numeric key and its value from the contents of a JSON file
+
+**`file.json`**
+
+```json
+[
+    1,
+    2,
+    3
+]
+```
+
+**`index.php`**
+
+```php
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
+$json->unset('1');
+```
+
+**`file.json`**
+
+```json
+{
+    "0": 1,
+    "2": 3
+}
+```
+
+### Remove a numeric key and its value from the contents of a JSON file and re-index it
+
+**`file.json`**
+
+```json
+[
+    1,
+    2,
+    3
+]
+```
+
+**`index.php`**
+
+```php
+use Josantonius\Json\Json;
+
+$json = new Json('file.json');
+
+$json->unset('1', reindexed: true);
+```
+
+**`file.json`**
+
+```json
+[
+    1,
+    3
+]
 ```
 
 ### Add the provided data to the beginning of the contents of a JSON file
