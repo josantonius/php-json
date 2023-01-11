@@ -17,9 +17,7 @@ use Josantonius\Json\Json;
 use PHPUnit\Framework\TestCase;
 use Josantonius\Json\Exceptions\GetFileException;
 use Josantonius\Json\Exceptions\JsonErrorException;
-use Josantonius\Json\Exceptions\CreateFileException;
 use Josantonius\Json\Exceptions\NoIterableFileException;
-use Josantonius\Json\Exceptions\CreateDirectoryException;
 use Josantonius\Json\Exceptions\NoIterableElementException;
 
 class ShiftMethodTest extends TestCase

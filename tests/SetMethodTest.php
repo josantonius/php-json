@@ -18,7 +18,6 @@ use PHPUnit\Framework\TestCase;
 use Josantonius\Json\Exceptions\GetFileException;
 use Josantonius\Json\Exceptions\JsonErrorException;
 use Josantonius\Json\Exceptions\CreateFileException;
-use Josantonius\Json\Exceptions\NoIterableFileException;
 use Josantonius\Json\Exceptions\CreateDirectoryException;
 use Josantonius\Json\Exceptions\NoIterableElementException;
 
@@ -42,31 +41,31 @@ class SetMethodTest extends TestCase
     {
         $jsonFile = new Json($this->filepath);
 
-        $value = ['foo' => 'bar'];
+        $value  = ['foo' => 'bar'];
         $result = $jsonFile->set($value);
         $this->assertEquals($value, $result);
 
-        $value = ['foo', 'bar'];
+        $value  = ['foo', 'bar'];
         $result = $jsonFile->set($value);
         $this->assertEquals($value, $result);
 
-        $value = ['foo' => 'bar'];
+        $value  = ['foo' => 'bar'];
         $result = $jsonFile->set((object) $value);
         $this->assertEquals($value, $result);
 
-        $value = false;
+        $value  = false;
         $result = $jsonFile->set($value);
         $this->assertEquals($value, $result);
 
-        $value = 8;
+        $value  = 8;
         $result = $jsonFile->set($value);
         $this->assertEquals($value, $result);
 
-        $value = 'foo';
+        $value  = 'foo';
         $result = $jsonFile->set($value);
         $this->assertEquals($value, $result);
 
-        $value = null;
+        $value  = null;
         $result = $jsonFile->set($value);
         $this->assertEquals($value, $result);
     }
