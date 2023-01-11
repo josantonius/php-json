@@ -49,7 +49,7 @@ class Json
      *
      * @param bool $asObject If true and the value is an array, it is returned as an object.
      *
-     * @throws GetFileException   if the file could not be read.
+     * @throws GetFileException   if file reading failed.
      * @throws JsonErrorException if the file contains invalid JSON.
      *
      * @return mixed the contents of the JSON file.
@@ -71,15 +71,15 @@ class Json
      * Set the contents of a JSON or a key within the file.
      *
      * @param mixed  $content The data that will be written to the file or a key within the file.
-     * @param string $dot     The dot notation string representing the key to be modified within the file.
+     * @param string $dot     The dot notation representing the key to be modified within the file.
      *
-     * @throws GetFileException           if the file could not be read.
+     * @throws GetFileException           if file reading failed.
      * @throws JsonErrorException         if the file contains invalid JSON.
-     * @throws CreateDirectoryException   if the file could not be created.
-     * @throws CreateFileException        if the directory could not be created.
-     * @throws NoIterableElementException if the location specified by $dot is not an array.
+     * @throws CreateFileException        if file creation failed.
+     * @throws CreateDirectoryException   if directory creation failed.
+     * @throws NoIterableElementException if $dot isn't an array location.
      *
-     * @return mixed the content of the JSON file after the merge operation.
+     * @return mixed the content of the JSON file after the set operation.
      */
     public function set(mixed $content = [], string $dot = null): array|bool|int|null|string
     {
@@ -97,12 +97,12 @@ class Json
      * Merge the provided data with the contents of a JSON file or a key within the file.
      *
      * @param mixed  $content The data that will be written to the file or a key within the file.
-     * @param string $dot     The dot notation string representing the key to be modified within the file.
+     * @param string $dot     The dot notation representing the key to be modified within the file.
      *
-     * @throws GetFileException           if the file could not be read.
+     * @throws GetFileException           if file reading failed.
      * @throws JsonErrorException         if the file contains invalid JSON.
-     * @throws NoIterableFileException    if the file does not contain an array.
-     * @throws NoIterableElementException if the location specified by $dot is not an array.
+     * @throws NoIterableFileException    if the file isn't a JSON array.
+     * @throws NoIterableElementException if $dot isn't an array location.
      *
      * @return mixed the content of the JSON file after the merge operation.
      */
@@ -123,12 +123,12 @@ class Json
     /**
      * Remove and get the last element of a JSON file or a key within the file.
      *
-     * @param string $dot The dot notation string representing the key to be modified within the file.
+     * @param string $dot The dot notation representing the key to be modified within the file.
      *
-     * @throws GetFileException           if the file could not be read.
+     * @throws GetFileException           if file reading failed.
      * @throws JsonErrorException         if the file contains invalid JSON.
-     * @throws NoIterableFileException    if the file does not contain an array.
-     * @throws NoIterableElementException if the location specified by $dot is not an array.
+     * @throws NoIterableFileException    if the file isn't a JSON array.
+     * @throws NoIterableElementException if $dot isn't an array location.
      *
      * @return mixed|null the last value of JSON file, or null if array is empty.
      */
@@ -152,12 +152,12 @@ class Json
      * Add the provided data to the end of the contents of a JSON file or a key within the file.
      *
      * @param mixed  $content The data that will be written to the file or a key within the file.
-     * @param string $dot     The dot notation string representing the key to be modified within the file.
+     * @param string $dot     The dot notation representing the key to be modified within the file.
      *
-     * @throws GetFileException           if the file could not be read.
+     * @throws GetFileException           if file reading failed.
      * @throws JsonErrorException         if the file contains invalid JSON.
-     * @throws NoIterableFileException    if the file does not contain an array.
-     * @throws NoIterableElementException if the location specified by $dot is not an array.
+     * @throws NoIterableFileException    if the file isn't a JSON array.
+     * @throws NoIterableElementException if $dot isn't an array location.
      *
      * @return mixed the content of the JSON file after the push operation.
      */
@@ -179,12 +179,12 @@ class Json
     /**
      * Remove and get the first element of a JSON file or a key within the file.
      *
-     * @param string $dot The dot notation string representing the key to be modified within the file.
+     * @param string $dot The dot notation representing the key to be modified within the file.
      *
-     * @throws GetFileException           if the file could not be read.
+     * @throws GetFileException           if file reading failed.
      * @throws JsonErrorException         if the file contains invalid JSON.
-     * @throws NoIterableFileException    if the file does not contain an array.
-     * @throws NoIterableElementException if the location specified by $dot is not an array.
+     * @throws NoIterableFileException    if the file isn't a JSON array.
+     * @throws NoIterableElementException if $dot isn't an array location.
      *
      * @return mixed|null the shifted value, or null if array is empty.
      */
@@ -207,12 +207,12 @@ class Json
     /**
      * Remove a key and its value from the contents of a JSON file.
      *
-     * @param string $dot       The dot notation string representing the key to be modified within the file.
+     * @param string $dot       The dot notation representing the key to be modified within the file.
      * @param bool   $reindexed If true, the array will be re-indexed.
      *
-     * @throws GetFileException         if the file could not be read.
+     * @throws GetFileException         if file reading failed.
      * @throws JsonErrorException       if the file contains invalid JSON.
-     * @throws NoIterableFileException  if the file does not contain an array.
+     * @throws NoIterableFileException  if the file isn't a JSON array.
      *
      * @return array the content of the JSON file after the unset operation.
      */
@@ -230,12 +230,12 @@ class Json
      * Add the provided data to the beginning of the contents of a JSON file or a key within the file.
      *
      * @param mixed  $content The data that will be written to the file or a key within the file.
-     * @param string $dot     The dot notation string representing the key to be modified within the file.
+     * @param string $dot     The dot notation representing the key to be modified within the file.
      *
-     * @throws GetFileException           if the file could not be read.
+     * @throws GetFileException           if file reading failed.
      * @throws JsonErrorException         if the file contains invalid JSON.
-     * @throws NoIterableFileException    if the file does not contain an array.
-     * @throws NoIterableElementException if the location specified by $dot is not an array.
+     * @throws NoIterableFileException    if the file isn't a JSON array.
+     * @throws NoIterableElementException if $dot isn't an array location.
      *
      * @return mixed the content of the JSON file after the unshift operation.
      */
@@ -257,13 +257,12 @@ class Json
     /**
      * Modify a nested array key by a dot notation string.
      *
-     * @param string $type    The type of modification to perform on the array.
-     *                        This can be: merge|pop|push|set|unset.
+     * @param string $type    The type of operation to perform on the array.
      * @param mixed  $array   The array that will be modified.
      * @param mixed  $dot     The dot notation string representing the key of the nested array.
      * @param mixed  $content The value that will be set or pushed to the array.
      *
-     * @throws NoIterableElementException if the location specified by $dot is not an array.
+     * @throws NoIterableElementException if $dot isn't an array location.
      *
      * @return mixed the contents that have been written to the file after the unshift operation.
      */
@@ -311,8 +310,8 @@ class Json
      *
      * @param mixed $content The data to be encoded as JSON and saved to the file.
      *
-     * @throws CreateFileException      if the directory could not be created.
-     * @throws CreateDirectoryException if the file could not be created.
+     * @throws CreateFileException      if directory creation failed.
+     * @throws CreateDirectoryException if file creation failed.
      *
      * @return mixed the contents that have been saved to the file.
      */
@@ -339,8 +338,8 @@ class Json
      * @param mixed  $data  The array to check.
      * @param string $param The dot notation or filepath.
      *
-     * @throws NoIterableFileException    if the file does not contain an array.
-     * @throws NoIterableElementException if the location specified by $dot is not an array.
+     * @throws NoIterableFileException    if the file isn't a JSON array.
+     * @throws NoIterableElementException if $dot isn't an array location.
      */
     protected function failIfNotArray(string $type, mixed $data, string $param): void
     {
