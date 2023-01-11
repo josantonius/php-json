@@ -24,94 +24,50 @@ use Josantonius\Json\Exceptions\NoIterableElementException;
 
 class SetMethodTest extends TestCase
 {
-    private string $filepath =  __DIR__ . '/filename.json';
+    protected string $filepath =  __DIR__ . '/filename.json';
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setup();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         if (file_exists($this->filepath)) {
             unlink($this->filepath);
         }
     }
 
-    public function test_should_set_an_associative_array_on_json_file(): void
+    public function test_should_allow_set_any_type_of_data(): void
     {
         $jsonFile = new Json($this->filepath);
 
         $value = ['foo' => 'bar'];
-
         $result = $jsonFile->set($value);
-
         $this->assertEquals($value, $result);
-    }
-
-    public function test_should_set_a_numeric_array_on_json_file(): void
-    {
-        $jsonFile = new Json($this->filepath);
 
         $value = ['foo', 'bar'];
-
         $result = $jsonFile->set($value);
-
         $this->assertEquals($value, $result);
-    }
-
-    public function test_should_set_an_object_on_json_file(): void
-    {
-        $jsonFile = new Json($this->filepath);
 
         $value = ['foo' => 'bar'];
-
         $result = $jsonFile->set((object) $value);
-
         $this->assertEquals($value, $result);
-    }
-
-    public function test_should_set_a_boolean_on_json_file(): void
-    {
-        $jsonFile = new Json($this->filepath);
 
         $value = false;
-
         $result = $jsonFile->set($value);
-
         $this->assertEquals($value, $result);
-    }
-
-    public function test_should_set_an_integer_on_json_file(): void
-    {
-        $jsonFile = new Json($this->filepath);
 
         $value = 8;
-
         $result = $jsonFile->set($value);
-
         $this->assertEquals($value, $result);
-    }
-
-    public function test_should_set_a_string_on_json_file(): void
-    {
-        $jsonFile = new Json($this->filepath);
 
         $value = 'foo';
-
         $result = $jsonFile->set($value);
-
         $this->assertEquals($value, $result);
-    }
-
-    public function test_should_set_a_null_on_json_file(): void
-    {
-        $jsonFile = new Json($this->filepath);
 
         $value = null;
-
         $result = $jsonFile->set($value);
-
         $this->assertEquals($value, $result);
     }
 

@@ -38,15 +38,31 @@ class UnsetMethodTest extends TestCase
         }
     }
 
-    public function test_should_unset_element(): void
+    public function test_should_unset_element_by_numeric_key(): void
     {
         $jsonFile = new Json($this->filepath);
 
         $jsonFile->set([1, 2, 3]);
 
-        $value = $jsonFile->unset(2);
+        $value = $jsonFile->unset(1);
 
-        $this->assertEquals([1, 2], $value);
+        $this->assertEquals([0 => 1, 2 => 3], $value);
+    }
+
+    public function test_should_unset_element_by_numeric_key_and_reindexed(): void
+    {
+        $jsonFile = new Json($this->filepath);
+
+        $jsonFile->set([1, 2, 3]);
+
+        $value = $jsonFile->unset(1, reindexed: true);
+
+        $this->assertEquals([1, 3], $value);
+    }
+
+    public function test_should_unset_element_by_string_key(): void
+    {
+        $jsonFile = new Json($this->filepath);
 
         $jsonFile->set(['foo' => 'bar']);
 

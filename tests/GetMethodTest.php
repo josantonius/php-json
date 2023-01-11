@@ -68,7 +68,7 @@ class GetMethodTest extends TestCase
 
         file_put_contents($this->filepath, json_encode($value));
 
-        $content = $jsonFile->get(false);
+        $content = $jsonFile->get(asObject: true);
 
         $this->assertEquals((object) $value, $content);
     }
